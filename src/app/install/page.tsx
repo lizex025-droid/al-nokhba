@@ -12,11 +12,6 @@ export default function InstallPage() {
   return (
     <section className="install-page">
       <div className="container-wide install-page-inner">
-        <div className="install-page-heading">
-          <span className="eyebrow">دليل التثبيت</span>
-          <h1>تنزيل تطبيق <span dir="ltr">rehab ju</span></h1>
-          <p>أضف موقع النخبة إلى الشاشة الرئيسية على الآيفون للوصول إليه بسهولة. اتبع الخطوات المصوّرة بالأسفل.</p>
-        </div>
         <figure className="install-page-guide">
           <a href={guideImage} target="_blank" rel="noopener noreferrer" aria-label="فتح صورة تعليمات التنزيل بالحجم الكامل"><img
             src={guideImage}
