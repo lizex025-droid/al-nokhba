@@ -510,3 +510,17 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 #main-content .ai-prompt-section .trfr-expand-button{
   font-family:inherit;
 }
+
+/* /ai: match the homepage typography everywhere, including inherited
+   headings, tool cards, TRFR cards, integrity content and filter tabs.
+   Previously, section-local IBM Plex and Manrope declarations overrode
+   the shared font styles. Preserve existing sizes and weights. */
+#main-content .ai-news-feature,
+#main-content .ai-news-feature :where(h1,h2,h3,p,span,a,button),
+#main-content .ai-academic-guide,
+#main-content .ai-academic-guide :where(h1,h2,h3,h4,p,span,small,li,blockquote,strong,label,button,input,a,select,option),
+#main-content .ai-academic-guide .trfr-letter,
+#main-content .ai-academic-guide .trfr-index,
+#main-content .ai-academic-guide .ai-section-number{
+  font-family:var(--nokhba-body-font) !important;
+}
