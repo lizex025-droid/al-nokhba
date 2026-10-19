@@ -627,36 +627,3 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   font-family:'Segoe UI',Arial,sans-serif!important;
   font-weight:700;
 }
-
-/* Mobile navbar: single navy pill, brand right and hamburger left. */
-@media(max-width:800px){
-  .site-header{padding:10px 0 9px;background:#061B33}
-  .site-header .nav-wrap{
-    direction:rtl;display:flex;justify-content:space-between;align-items:center;
-    width:calc(100% - 24px);height:72px;padding:8px 13px;gap:10px;
-    border:1px solid rgba(198,161,91,.28);border-radius:999px;
-    background:linear-gradient(115deg,#103a66,#082846 70%,#0b355b);
-    box-shadow:0 8px 24px rgba(3,17,31,.2),inset 0 1px rgba(255,255,255,.09);
-  }
-  .site-header .brand{order:0;direction:rtl;display:flex;align-items:center;gap:9px;min-width:0;margin:0}
-  .site-header .brand-text{direction:rtl;text-align:right;gap:2px}
-  .site-header .brand-text strong{font-size:17px;color:#fff;font-weight:800}
-  .site-header .brand-text small{font-size:9px;color:#c2d0dc}
-  .site-header .brand-mark{
-    width:48px;height:48px;flex:0 0 48px;
-    border:0;border-radius:0;box-shadow:none;
-    background-color:transparent;background-image:none;
-  }
-  .site-header .brand-mark::after{
-    display:block;content:"";position:absolute;inset:1px;background-color:#dfc391;
-    -webkit-mask:url('/al-nokhba-logo.png?v=20261019') center/contain no-repeat;
-    mask:url('/al-nokhba-logo.png?v=20261019') center/contain no-repeat;
-    pointer-events:none;
-  }
-  .site-header .menu-toggle{
-    order:2;display:flex;flex:none;width:47px;height:47px;margin:0;
-    border-radius:14px;border:1px solid rgba(198,161,91,.5);
-    background:#03111F;box-shadow:0 4px 12px rgba(3,17,31,.2);
-  }
-  .site-header .menu-toggle span{background:#dfc391}
-}
