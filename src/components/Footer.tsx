@@ -6,7 +6,7 @@ export function Footer() { return <footer className="footer">
   <div className="container-wide footer-top">
     <div className="footer-intro">
       <Link href="/" className="brand brand-light"><span className="brand-mark" aria-hidden="true"><span>ن</span></span><span className="brand-text"><strong>النخبة</strong><small>علوم التأهيل</small></span></Link>
-      <p>موقع أكاديمي طلابي يخدم طلبة كلية علوم التأهيل في الجامعة الأردنية من خلال مركز مواد، ملخصات، مراجعات، اختبارات محوسبة، إيميلات الدكاترة، وخدمات دراسية تساعد الطالب على الدراسة بوضوح.</p>
+      <p>موقع أكاديمي طلابي يخدم طلبة كلية علوم التأهيل في الجامعة الأردنية من خلال مركز مواد، ملخصات، مراجعات، أدوات ذكاء اصطناعي، إيميلات الدكاترة، وخدمات دراسية تساعد الطالب على الدراسة بوضوح.</p>
       <strong className="footer-motto">من الطالب… وللطالب.</strong>
     </div>
     <div className="footer-links"><span className="footer-label">استكشف</span>{nav.slice(0, 6).map(item => <Link key={item.href} href={item.href}>{item.label}</Link>)}</div>

@@ -1,4 +1,4 @@
-const paths = ['/', '/materials', '/physical-therapy-materials', '/occupational-therapy-materials', '/prosthetics-orthotics-materials', '/hearing-speech-materials', '/computerized-tests', '/gpa-calculator', '/professors-emails', '/study-plans', '/about', '/request-help', '/join-us', '/contact'];
+const paths = ['/', '/materials', '/physical-therapy-materials', '/occupational-therapy-materials', '/prosthetics-orthotics-materials', '/hearing-speech-materials', '/ai', '/gpa-calculator', '/professors-emails', '/study-plans', '/about', '/request-help', '/join-us', '/contact'];
 let failed = false;
 for (const path of paths) {
   const response = await fetch(`http://127.0.0.1:3000${path}`);
