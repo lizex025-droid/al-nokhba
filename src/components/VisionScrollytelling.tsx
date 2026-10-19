@@ -47,13 +47,25 @@ export function VisionScrollytelling() {
     if (!root) return;
     const panels = Array.from(root.querySelectorAll<HTMLElement>('.vision-panel'));
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobileView = () => window.matchMedia('(max-width: 900px)').matches;
+    const syncHeader = () => {
+      const rect = root.getBoundingClientRect();
+      document.body.classList.toggle('vision-mobile-active', mobileView() && rect.top <= 0 && rect.bottom > window.innerHeight * .35);
+    };
+    syncHeader();
+    window.addEventListener('scroll', syncHeader, { passive: true });
+    window.addEventListener('resize', syncHeader);
 
     if (reducedMotion) {
       panels.forEach((panel) => panel.querySelectorAll<HTMLElement>('[data-vision-reveal]').forEach((item) => {
         item.style.opacity = '1';
         item.style.transform = 'none';
       }));
-      return;
+      return () => {
+        document.body.classList.remove('vision-mobile-active');
+        window.removeEventListener('scroll', syncHeader);
+        window.removeEventListener('resize', syncHeader);
+      };
     }
 
     let frame = 0;
@@ -61,6 +73,14 @@ export function VisionScrollytelling() {
       frame = 0;
       const viewportHeight = window.innerHeight;
       const compactLayout = window.innerWidth <= 900;
+      if (compactLayout) {
+        panels.forEach(panel => {
+          const content = panel.querySelector<HTMLElement>('.vision-panel-inner');
+          if (content) { content.style.opacity = '1'; content.style.transform = 'none'; content.style.filter = 'none'; }
+          panel.querySelectorAll<HTMLElement>('[data-vision-reveal]').forEach(item => { item.style.opacity = '1'; item.style.transform = 'none'; });
+        });
+        return;
+      }
       const headerHeight = document.querySelector<HTMLElement>('.site-header')?.getBoundingClientRect().height;
       const stickyTop = headerHeight ?? (viewportHeight < 700 ? 72 : 82);
       root.style.setProperty('--vision-sticky-top', `${stickyTop}px`);
@@ -99,6 +119,9 @@ export function VisionScrollytelling() {
     return () => {
       window.removeEventListener('scroll', requestUpdate);
       window.removeEventListener('resize', requestUpdate);
+      window.removeEventListener('scroll', syncHeader);
+      window.removeEventListener('resize', syncHeader);
+      document.body.classList.remove('vision-mobile-active');
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
