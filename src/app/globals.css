@@ -524,3 +524,81 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 #main-content .ai-academic-guide .ai-section-number{
   font-family:var(--nokhba-body-font) !important;
 }
+
+/* AI page readability refresh: sober institutional Arabic typography */
+#main-content .ai-news-feature,
+#main-content .ai-news-feature :where(h1,h2,h3,p,span,a,button),
+#main-content .ai-academic-guide,
+#main-content .ai-academic-guide :where(h1,h2,h3,h4,p,span,small,li,blockquote,strong,label,button,input,a,select,option),
+#main-content .ai-academic-guide .trfr-letter,
+#main-content .ai-academic-guide .trfr-index,
+#main-content .ai-academic-guide .ai-section-number{
+  font-family:Tahoma,Arial,sans-serif!important;
+  letter-spacing:normal;
+}
+#main-content .ai-academic-guide .ai-section-heading h2{
+  font-weight:800;
+  letter-spacing:-.015em;
+}
+#main-content .ai-academic-guide .ai-section-heading>p{
+  color:#34465a;
+  font-size:15px;
+  font-weight:500;
+  line-height:2;
+}
+#main-content .ai-academic-guide .ai-tool-card h3{
+  font-weight:800;
+}
+#main-content .ai-academic-guide .ai-tool-card p,
+#main-content .ai-academic-guide .risk-card p{
+  color:#36475c;
+  font-size:14px;
+  line-height:1.9;
+  font-weight:500;
+}
+#main-content .ai-academic-guide .ai-tool-use{
+  color:#634a20;
+  font-weight:800;
+  font-size:11px;
+}
+#main-content .ai-academic-guide .ai-category-filters button,
+#main-content .ai-academic-guide .ai-tool-card>a,
+#main-content .ai-academic-guide .ai-show-more{
+  font-size:13px;
+  font-weight:800;
+}
+#main-content .ai-academic-guide .trfr-card h3,
+#main-content .ai-academic-guide .risk-card h3{
+  font-weight:800;
+}
+#main-content .ai-academic-guide .trfr-card p,
+#main-content .ai-academic-guide .trfr-points,
+#main-content .ai-academic-guide .trfr-extra ul{
+  color:#edf2f7;
+  font-size:12.5px;
+  line-height:1.85;
+  font-weight:500;
+}
+#main-content .ai-academic-guide .trfr-index{
+  color:#c3d2e0;
+  font-weight:800;
+}
+#main-content .ai-academic-guide .trfr-expand-button{
+  font-size:12px;
+  font-weight:800;
+}
+#main-content .ai-academic-guide .ai-prompt-section .ai-section-heading>p,
+#main-content .ai-academic-guide .integrity-principle li{
+  color:#ecf1f6;
+}
+#main-content .ai-academic-guide .integrity-principle h3{
+  font-weight:800;
+}
+#main-content .ai-academic-guide .ai-detectors-note{
+  color:#49391e;
+  font-size:14px;
+}
+@media(max-width:600px){
+  #main-content .ai-academic-guide .ai-section-heading>p{font-size:14px}
+  #main-content .ai-academic-guide .ai-tool-card p{font-size:13.5px}
+}
