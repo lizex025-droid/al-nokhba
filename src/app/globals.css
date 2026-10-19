@@ -419,3 +419,10 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
   }
   .site-header .menu-toggle span{background-color:#C6A15B}
 }
+
+/* Restore sticky card-on-card mobile transitions rather than separate static sections */
+@media(max-width:900px){
+  .vision-panel{position:sticky;top:var(--vision-sticky-top,0px);min-height:100svh}
+  .vision-panel+.vision-panel{margin-top:-72px}
+  .vision-panel-inner{opacity:1;will-change:opacity,transform,filter}
+}
