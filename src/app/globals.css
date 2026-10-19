@@ -784,3 +784,20 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(prefers-reduced-motion:reduce){
   .site-header .desktop-nav a{transition:none}
 }
+
+/* Improved navigation tab legibility on iPad and desktop */
+@media(min-width:1051px){
+  .site-header .desktop-nav a{
+    color:#102033;
+    font-size:clamp(12.5px,.94vw,14px);
+    font-weight:800;
+  }
+  .site-header .nav-cta{font-size:13px}
+}
+@media(min-width:1051px) and (max-width:1250px){
+  .site-header .desktop-nav a{
+    font-size:12px;
+    padding-inline:6px;
+  }
+  .site-header .nav-cta{font-size:12px}
+}
