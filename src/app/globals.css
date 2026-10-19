@@ -477,26 +477,3 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
     height:46px;
   }
 }
-
-/* Study-help editorial split: entirely HTML/CSS, no large assets or JS */
-.help-section{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 22% 35%,#dfe9f1 0,transparent 46%),linear-gradient(120deg,#f4f7fa,#fff 72%);padding-block:105px 145px}
-.help-layout{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(35px,5vw,90px);direction:rtl;position:relative;z-index:2}
-.help-copy{max-width:750px}.help-copy .section-heading h2{color:#061B33}.help-copy p{font-size:15px;line-height:2.1}.help-copy .button{box-shadow:0 9px 18px rgba(3,17,31,.13)}
-.help-decoration{position:absolute;border:1px solid rgba(198,161,91,.35);border-radius:50%;pointer-events:none}
-.help-decoration-one{width:560px;height:560px;left:10%;top:0}.help-decoration-two{width:12px;height:12px;left:48%;top:14%;background:#c6a15b}
-.help-visual{position:relative;min-width:0;min-height:435px;display:flex;align-items:center;justify-content:center}
-.help-form-preview{position:relative;z-index:2;width:min(100%,515px);min-height:340px;border:1px solid #dce3eb;border-radius:22px;padding:28px;background:rgba(255,255,255,.96);box-shadow:0 22px 60px rgba(6,27,51,.11);direction:rtl}
-.help-preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#061B33;font-size:13px;font-weight:800}
-.help-preview-heading{display:inline-flex;align-items:center;gap:9px}.help-preview-heading i{width:9px;height:9px;border-radius:50%;background:#c6a15b}
-.help-preview-count{color:#7287a2;font:700 12px/1 Arial,sans-serif}
-.help-preview-rule{height:1px;background:linear-gradient(to left,#c6a15b 0 14%,#dce3eb 14% 100%);margin:23px 0 29px}
-.help-form-preview h3{font-size:20px;line-height:1.6;color:#061B33;margin:0 0 16px}
-.help-preview-input{min-height:55px;border:1px solid #d2dce7;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;color:#70839b;font-size:13px;transition:border-color .2s,background .2s}
-.help-preview-input:hover{border-color:#c6a15b;background:#fcfaf6}.help-preview-input span:last-child{color:#c6a15b;font-size:19px}
-.help-preview-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.help-preview-tags span{padding:8px 12px;border:1px solid #dce3eb;border-radius:9px;background:#f9fafc;color:#637791;font-size:11px;font-weight:700}
-.help-preview-footer{display:inline-flex;align-items:center;gap:12px;margin-top:29px;color:#061B33;font-size:12px;font-weight:800}.help-preview-footer .arrow-icon{width:16px;height:16px}
-.help-study-art{position:absolute;left:-12px;bottom:-26px;width:185px;height:145px;z-index:1;pointer-events:none;opacity:.83}
-.help-art-book{position:absolute;width:145px;height:26px;left:10px;bottom:15px;border-radius:4px 10px 9px 4px;background:linear-gradient(180deg,#174468,#061B33);box-shadow:inset 0 -6px #dae4ef,0 5px 8px rgba(3,17,31,.12);transform:skewY(-8deg)}.help-art-book-back{bottom:39px;left:21px}.help-art-book-front{bottom:12px}.help-art-cap{position:absolute;left:54px;top:3px;color:#c6a15b;font-size:44px;transform:rotate(45deg)}.help-art-orbit{position:absolute;inset:-30px -18px 8px;border:1px solid rgba(198,161,91,.3);border-radius:50%}
-.help-wave{position:absolute;bottom:-1px;left:0;right:0;height:60px;background:#061B33;clip-path:polygon(0 45%,12% 75%,26% 96%,43% 88%,60% 49%,75% 27%,89% 60%,100% 45%,100% 100%,0 100%);opacity:.95}
-@media(max-width:900px){.help-section{padding-block:72px 105px}.help-layout{grid-template-columns:1fr;gap:45px}.help-visual{min-height:360px}.help-form-preview{width:min(100%,560px)}.help-decoration-one{left:-35%}}
-@media(max-width:520px){.help-section{padding-block:55px 90px}.help-layout{gap:25px}.help-visual{min-height:330px}.help-form-preview{padding:20px;min-height:310px;border-radius:18px}.help-form-preview h3{font-size:17px}.help-preview-tags span{font-size:10px;padding:7px 9px}.help-study-art{opacity:.45;transform:scale(.7);transform-origin:bottom left}.help-wave{height:42px}}
