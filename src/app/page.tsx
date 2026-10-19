@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { categories } from '@/lib/content';
-import { SectionHeader, MaterialCard, CTASection } from '@/components/Blocks';
+import { SectionHeader, MaterialCard } from '@/components/Blocks';
 import { FAQAccordion } from '@/components/FAQAccordion';
 import { ArrowIcon, BookIcon } from '@/components/Icons';
 import { VisionScrollytelling } from '@/components/VisionScrollytelling';
@@ -28,8 +28,7 @@ export default function HomePage() { return <>
 
   <VisionScrollytelling />
 
-  <section className="help-section content-section"><div className="container-wide help-layout"><div data-reveal><SectionHeader kicker="نحن هنا" title="محتاج مساعدة في مادة؟" text="إذا كنت لا تعرف من أين تبدأ، أو تواجه صعوبة في مادة معينة، أرسل لنا طلبك وسنحاول مساعدتك بأقرب طريقة ممكنة." /><p>اكتب اسم المادة، الجزء الصعب عليك، وموعد الامتحان أو الكويز. حتى لو لم تكن تعرف ما تحتاجه بالضبط، اختر: <strong>لا أعرف، أحتاج توجيه.</strong></p><Link href="/request-help" className="button button-navy">إرسال طلب المساعدة <ArrowIcon className="arrow-icon" /></Link></div><div className="help-visual" data-reveal><div className="help-top"><span className="help-dot" /> طلب مساعدة دراسية <span>01/03</span></div><div className="help-question">ما المادة التي تحتاج مساعدة فيها؟</div><div className="help-input">اكتب اسم المادة هنا <span>✦</span></div><div className="help-options"><span>ملخص</span><span>شرح</span><span>مراجعة</span><span>أسئلة تدريبية</span></div><div className="help-bottom">اسأل بدون تردد <ArrowIcon className="arrow-icon" /></div></div></div></section>
+  <section className="help-section content-section"><div className="container-wide help-layout"><div className="help-copy" data-reveal><SectionHeader kicker="نحن هنا" title="محتاج مساعدة في مادة؟" text="إذا كنت لا تعرف من أين تبدأ، أو تواجه صعوبة في مادة معينة، أرسل لنا طلبك وسنحاول مساعدتك بأقرب طريقة ممكنة." /><p>اكتب اسم المادة، الجزء الصعب عليك، وموعد الامتحان أو الكويز. حتى لو لم تكن تعرف ما تحتاجه بالضبط، اختر: <strong>لا أعرف، أحتاج توجيه.</strong></p><Link href="/request-help" className="button button-navy">إرسال طلب المساعدة <ArrowIcon className="arrow-icon" /></Link></div></div></section>
 
   <section className="faq-section content-section section-tint"><div className="container-wide faq-layout"><SectionHeader kicker="أسئلة شائعة" title="إجابات تساعدك على البدء" text="كل ما تحتاج معرفته قبل أن تبدأ رحلتك مع النخبة." /><FAQAccordion /></div></section>
-  <CTASection title="ابدأ دراستك بوضوح مع النخبة" text="سواء كنت تبحث عن ملخص، مراجعة، أداة ذكاء اصطناعي، إيميل دكتور، أو خطة دراسية، النخبة هنا لتساعدك تبدأ من المكان الصحيح." label="تصفح مركز المواد" href="/materials" />
 </>; }
