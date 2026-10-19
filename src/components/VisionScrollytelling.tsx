@@ -81,8 +81,10 @@ export function VisionScrollytelling() {
         const rect = panel.getBoundingClientRect();
         const nextRect = panels[panelIndex + 1]?.getBoundingClientRect();
         const enterProgress = clamp((viewportHeight * .94 - rect.top) / (viewportHeight * .48));
-        const exitStart = compactLayout ? 1.06 : .58;
-        const exitDistance = compactLayout ? .17 : .58;
+        // On phones keep the current panel fully readable until the next panel
+        // has visibly entered and begun covering it; only then fade/blur.
+        const exitStart = compactLayout ? .40 : .58;
+        const exitDistance = compactLayout ? .25 : .58;
         const exitProgress = nextRect ? clamp((stickyTop + viewportHeight * exitStart - nextRect.top) / (viewportHeight * exitDistance)) : 0;
         const content = panel.querySelector<HTMLElement>('.vision-panel-inner');
 
