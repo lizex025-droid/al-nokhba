@@ -451,3 +451,12 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
   }
   .site-header .menu-toggle span{background-color:#C6A15B}
 }
+
+/* Match TRFR section typography to the other Arabic academic sections. */
+.ai-prompt-section,
+.ai-prompt-section .ai-section-heading,
+.ai-prompt-section .trfr-card-content,
+.ai-prompt-section .trfr-expand-button,
+.ai-prompt-section .trfr-index{
+  font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;
+}
