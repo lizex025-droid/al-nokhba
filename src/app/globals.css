@@ -358,3 +358,12 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
 .trfr-extra strong{display:block;margin-bottom:8px;color:#f3d69a;font-size:11px}
 .trfr-extra blockquote{font-size:11px}
 @media(max-width:640px){.trfr-card{height:310px;max-height:310px}}
+
+/* Mobile navbar: logo left, black hamburger right; desktop unchanged */
+@media(max-width:800px){
+  .site-header .nav-wrap{direction:ltr;display:flex;justify-content:space-between;align-items:center}
+  .site-header .brand{order:0;direction:ltr;display:inline-flex;align-items:center;gap:10px;margin:0}
+  .site-header .brand-text{direction:rtl;text-align:right}
+  .site-header .menu-toggle{order:2;margin-inline:0;background:#000;border-color:#000;flex-shrink:0}
+  .site-header .menu-toggle span{background:#fff}
+}
