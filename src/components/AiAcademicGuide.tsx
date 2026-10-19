@@ -61,6 +61,7 @@ const risks = [
 export function AiAcademicGuide() {
   const [activeCategory, setActiveCategory] = useState<'all' | ToolCategory>('all');
   const [query, setQuery] = useState('');
+  const [showAllTools, setShowAllTools] = useState(false);
 
   const visibleTools = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase('ar');
@@ -70,6 +71,8 @@ export function AiAcademicGuide() {
       return matchesCategory && (!normalizedQuery || searchableText.includes(normalizedQuery));
     });
   }, [activeCategory, query]);
+
+  const displayedTools = showAllTools || query.trim() || activeCategory !== 'all' ? visibleTools : visibleTools.filter((tool) => ['ChatGPT', 'Claude', 'Gemini'].includes(tool.name));
 
   return <main className="ai-academic-guide">
     <section className="ai-tools-section" id="ai-tools">
@@ -91,8 +94,8 @@ export function AiAcademicGuide() {
           </div>
         </div>
 
-        {visibleTools.length > 0 ? <div className="ai-tool-grid">
-          {visibleTools.map((tool) => <article className="ai-tool-card" key={tool.name}>
+        {displayedTools.length > 0 ? <div className="ai-tool-grid">
+          {displayedTools.map((tool) => <article className="ai-tool-card" key={tool.name}>
             <div className="ai-tool-card-top">
               <span className="ai-tool-mark"><img src={tool.logo} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
               <span className="ai-tool-use">{tool.bestFor}</span>
@@ -105,6 +108,7 @@ export function AiAcademicGuide() {
             </a>
           </article>)}
         </div> : <div className="ai-tools-empty"><strong>لم نجد أداة مطابقة</strong><p>جرّب كلمة أقصر أو اختر فئة أخرى.</p></div>}
+        {!query.trim() && activeCategory === 'all' && <button className="ai-show-more" type="button" aria-expanded={showAllTools} onClick={() => setShowAllTools((value) => !value)}>{showAllTools ? 'عرض أقل' : 'عرض المزيد من الأدوات'} <span aria-hidden="true">{showAllTools ? '↑' : '↓'}</span></button>}
 
       </div>
     </section>
@@ -151,6 +155,31 @@ export function AiAcademicGuide() {
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <section className="ai-detectors-section" id="ai-content-verification">
+      <div className="container-wide">
+        <header className="ai-section-heading">
+          <div><span className="ai-section-number">04</span><span className="eyebrow">التحقق من أصالة المحتوى</span></div>
+          <h2>أدوات التحقق من المحتوى والذكاء الاصطناعي</h2>
+          <p>أدوات تساعد على فحص النصوص وتقدير احتمالية إنشائها بالذكاء الاصطناعي، ولا تُعد نتائجها دليلًا قاطعًا.</p>
+        </header>
+        <div className="ai-tool-grid">
+          {[
+            { name: 'GPTZero', domain: 'gptzero.me', url: 'https://gptzero.me/', bestFor: 'فحص النصوص', description: 'تقدير احتمالية توليد النصوص بواسطة نماذج الذكاء الاصطناعي.' },
+            { name: 'Copyleaks', domain: 'copyleaks.com', url: 'https://copyleaks.com/ai-content-detector', bestFor: 'كشف المحتوى المولّد', description: 'فحص النصوص للكشف الاحتمالي عن المحتوى المنشأ بالذكاء الاصطناعي.' },
+            { name: 'Originality.ai', domain: 'originality.ai', url: 'https://originality.ai/', bestFor: 'مراجعة أصالة النص', description: 'أدوات لفحص المحتوى ومراجعة أصالته، وقد تتطلب بعض الخدمات اشتراكًا.' },
+          ].map((tool) => <article className="ai-tool-card" key={tool.name}>
+            <div className="ai-tool-card-top">
+              <span className="ai-tool-mark"><img src={officialLogo(tool.domain)} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
+              <span className="ai-tool-use">{tool.bestFor}</span>
+            </div>
+            <h3 dir="ltr">{tool.name}</h3><p>{tool.description}</p>
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" aria-label={`زيارة موقع ${tool.name}`}>زيارة الأداة <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7" /></svg></a>
+          </article>)}
+        </div>
+        <p className="ai-detectors-note">تنبيه: قد تخطئ أدوات الكشف في تصنيف النصوص البشرية أو المولّدة. لا تستخدم النتيجة وحدها لإثبات مخالفة أكاديمية، ولا ترفع بيانات حساسة أو معلومات مرضى.</p>
       </div>
     </section>
   </main>;
