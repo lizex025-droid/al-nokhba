@@ -1,0 +1,6 @@
+import type { SVGProps } from 'react';
+
+export function ArrowIcon(props: SVGProps<SVGSVGElement>) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}><path d="M19 12H5m0 0 6-6m-6 6 6 6" /></svg>; }
+export function PlusIcon(props: SVGProps<SVGSVGElement>) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true" {...props}><path d="M12 5v14M5 12h14" /></svg>; }
+export function BookIcon(props: SVGProps<SVGSVGElement>) { return <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}><path d="M20 10c-4-2-9-2-14 0v21c5-2 10-2 14 0 4-2 9-2 14 0V10c-5-2-10-2-14 0ZM20 10v21M10 15c2-.5 4-.5 6 0m8 0c2-.5 4-.5 6 0m-20 5c2-.5 4-.5 6 0m8 0c2-.5 4-.5 6 0" /></svg>; }
+export function SparkIcon(props: SVGProps<SVGSVGElement>) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}><path d="m12 2 1.9 7.1L21 11l-7.1 1.9L12 20l-1.9-7.1L3 11l7.1-1.9L12 2ZM19 18l.5 1.5L21 20l-1.5.5L19 22l-.5-1.5L17 20l1.5-.5L19 18Z" /></svg>; }
