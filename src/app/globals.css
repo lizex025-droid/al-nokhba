@@ -376,3 +376,12 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
   .site-header .menu-toggle{background:#111;border-color:#303030}
   .site-header .menu-toggle span{background:#fff}
 }
+
+/* Al Nokhba branded mobile navigation: navy, gold details */
+@media(max-width:800px){
+  .site-header .nav-wrap{background:#061B33;border-color:rgba(198,161,91,.28);box-shadow:0 10px 28px rgba(3,17,31,.24)}
+  .site-header .brand-text strong{color:#fff}
+  .site-header .brand-text small{color:#bac8d6}
+  .site-header .menu-toggle{background:#03111F;border-color:rgba(198,161,91,.45)}
+  .site-header .menu-toggle span{background:#C6A15B}
+}
