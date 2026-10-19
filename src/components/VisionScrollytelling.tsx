@@ -60,19 +60,23 @@ export function VisionScrollytelling() {
     const update = () => {
       frame = 0;
       const viewportHeight = window.innerHeight;
+      const compactLayout = window.innerWidth <= 900;
       const headerHeight = document.querySelector<HTMLElement>('.site-header')?.getBoundingClientRect().height;
       const stickyTop = headerHeight ?? (viewportHeight < 700 ? 72 : 82);
+      root.style.setProperty('--vision-sticky-top', `${stickyTop}px`);
 
       panels.forEach((panel, panelIndex) => {
         const rect = panel.getBoundingClientRect();
         const nextRect = panels[panelIndex + 1]?.getBoundingClientRect();
         const enterProgress = clamp((viewportHeight * .94 - rect.top) / (viewportHeight * .48));
-        const exitProgress = nextRect ? clamp((stickyTop + viewportHeight * .58 - nextRect.top) / (viewportHeight * .58)) : 0;
+        const exitStart = compactLayout ? 1.06 : .58;
+        const exitDistance = compactLayout ? .17 : .58;
+        const exitProgress = nextRect ? clamp((stickyTop + viewportHeight * exitStart - nextRect.top) / (viewportHeight * exitDistance)) : 0;
         const content = panel.querySelector<HTMLElement>('.vision-panel-inner');
 
         if (content) {
-          content.style.opacity = String(1 - exitProgress * .88);
-          content.style.transform = `translateY(${-exitProgress * 30}px) scale(${1 - exitProgress * .025})`;
+          content.style.opacity = String(1 - exitProgress);
+          content.style.transform = `translateY(${-exitProgress * (compactLayout ? 48 : 30)}px) scale(${1 - exitProgress * .025})`;
           content.style.filter = `blur(${exitProgress * 2}px)`;
         }
 
