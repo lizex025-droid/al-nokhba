@@ -426,3 +426,28 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
   .vision-panel+.vision-panel{margin-top:-72px}
   .vision-panel-inner{opacity:1;will-change:opacity,transform,filter}
 }
+
+/* Mobile navbar: match the logo badge TO the original dark hamburger, not vice versa. */
+@media(max-width:800px){
+  .site-header .brand-mark,
+  .site-header .menu-toggle{
+    background-color:#03111F;
+    border:1px solid rgba(198,161,91,.45);
+    box-shadow:0 2px 10px rgba(0,0,0,.14);
+  }
+  .site-header .brand-mark{
+    background-image:none;
+    position:relative;
+    overflow:hidden;
+  }
+  .site-header .brand-mark::after{
+    content:"";
+    position:absolute;
+    inset:5px;
+    background-color:#E5C58C;
+    -webkit-mask:url('/al-nokhba-logo.png?v=20261019') center/contain no-repeat;
+    mask:url('/al-nokhba-logo.png?v=20261019') center/contain no-repeat;
+    pointer-events:none;
+  }
+  .site-header .menu-toggle span{background-color:#C6A15B}
+}
