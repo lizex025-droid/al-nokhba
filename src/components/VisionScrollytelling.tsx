@@ -73,16 +73,8 @@ export function VisionScrollytelling() {
       frame = 0;
       const viewportHeight = window.innerHeight;
       const compactLayout = window.innerWidth <= 900;
-      if (compactLayout) {
-        panels.forEach(panel => {
-          const content = panel.querySelector<HTMLElement>('.vision-panel-inner');
-          if (content) { content.style.opacity = '1'; content.style.transform = 'none'; content.style.filter = 'none'; }
-          panel.querySelectorAll<HTMLElement>('[data-vision-reveal]').forEach(item => { item.style.opacity = '1'; item.style.transform = 'none'; });
-        });
-        return;
-      }
       const headerHeight = document.querySelector<HTMLElement>('.site-header')?.getBoundingClientRect().height;
-      const stickyTop = headerHeight ?? (viewportHeight < 700 ? 72 : 82);
+      const stickyTop = compactLayout ? 0 : (headerHeight ?? (viewportHeight < 700 ? 72 : 82));
       root.style.setProperty('--vision-sticky-top', `${stickyTop}px`);
 
       panels.forEach((panel, panelIndex) => {
