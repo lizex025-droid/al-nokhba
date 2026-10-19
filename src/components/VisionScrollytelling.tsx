@@ -5,31 +5,25 @@ import { useEffect, useRef } from 'react';
 const visionPanels = [
   {
     number: '01',
-    eyebrow: 'المعلومة في مكانها الصحيح',
-    title: 'الوضوح قبل الكثرة',
-    text: 'نجمع المحتوى الأكاديمي ونرتّبه، حتى يصل الطالب لما يحتاجه دون تشتت.',
-    metric: 'وضوح',
+    eyebrow: 'وجهتنا الأكاديمية',
+    title: 'رؤيتنا',
+    text: 'أن تكون النخبة المرجع الأكاديمي الطلابي الأول لطلبة كلية علوم التأهيل في الجامعة الأردنية، ومصدرًا موثوقًا يساعدهم على الدراسة بوضوح، والتفوق بثقة، وخدمة بعضهم بروح الفريق.',
+    metric: 'وضوح وثقة',
   },
   {
     number: '02',
-    eyebrow: 'من الطالب… وللطالب',
-    title: 'الطالب في قلب التجربة',
-    text: 'نصمم كل أداة وصفحة بناءً على احتياجات طالب علوم التأهيل اليومية.',
-    metric: 'الطالب أولًا',
+    eyebrow: 'دورنا تجاه الطالب',
+    title: 'رسالتنا',
+    text: 'تقديم دعم أكاديمي منظم وفعّال لطلبة كلية علوم التأهيل، من خلال توفير مواد دراسية، ملخصات، مراجعات، أدوات ذكية، وخدمات طلابية تساعد الطالب على فهم مواده والاستعداد لها بطريقة أفضل.',
+    metric: 'دعم أكاديمي',
   },
   {
     number: '03',
-    eyebrow: 'الطالب يساعد الطالب',
-    title: 'المعرفة بالمشاركة',
-    text: 'نبني مجتمعًا يشارك فيه الطلبة الملخصات والخبرات والمساعدة الأكاديمية بمسؤولية.',
-    metric: 'مشاركة',
-  },
-  {
-    number: '04',
-    eyebrow: 'نستمع، نطوّر، ونستمر',
-    title: 'أثر يستمر',
-    text: 'نطوّر المنصة والمحتوى باستمرار لتبقى النخبة مفيدة خلال كل مرحلة دراسية.',
-    metric: 'أثر',
+    eyebrow: 'الأثر الذي نبنيه',
+    title: 'أهداف النخبة',
+    text: '',
+    metric: 'أهداف واضحة',
+    goals: ['تسهيل الوصول للمحتوى', 'تبسيط المواد الدراسية', 'تعزيز التعاون الطلابي'],
   },
 ];
 
@@ -95,12 +89,7 @@ export function VisionScrollytelling() {
     };
   }, []);
 
-  return <section id="vision" className="vision-scrolly" ref={rootRef} aria-labelledby="vision-title">
-    <div className="container-wide vision-intro">
-      <span className="eyebrow"><span className="eyebrow-line" />رؤيتنا</span>
-      <h2 id="vision-title">كيف نصنع تجربة أكاديمية أوضح؟</h2>
-      <p>أربعة مبادئ توجه كل ما نقدمه لطلبة علوم التأهيل.</p>
-    </div>
+  return <section id="vision" className="vision-scrolly" ref={rootRef} aria-label="رؤية النخبة ورسالتها وأهدافها">
     <div className="vision-stack">
       {visionPanels.map((panel, index) => <article className={`vision-panel vision-panel-${index + 1}`} key={panel.number} style={{ zIndex: index + 1 }}>
         <div className="vision-progress" aria-hidden="true">{visionPanels.map((_, progressIndex) => <span className={progressIndex === index ? 'active' : ''} key={progressIndex}>0{progressIndex + 1}</span>)}</div>
@@ -108,7 +97,8 @@ export function VisionScrollytelling() {
           <div className="vision-copy">
             <div className="vision-panel-top" data-vision-reveal><span>{panel.eyebrow}</span></div>
             <h3 data-vision-reveal>{panel.title}</h3>
-            <p data-vision-reveal>{panel.text}</p>
+            {panel.text && <p data-vision-reveal>{panel.text}</p>}
+            {panel.goals && <ul className="vision-goals" data-vision-reveal>{panel.goals.map((goal, goalIndex) => <li key={goal}><span>0{goalIndex + 1}</span>{goal}</li>)}</ul>}
           </div>
           <div className="vision-visual" aria-hidden="true" data-vision-reveal>
             <span className="vision-number-ring"><span className="vision-big-number">{index + 1}</span><i /></span>
