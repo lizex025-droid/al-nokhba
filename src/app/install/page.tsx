@@ -18,12 +18,12 @@ export default function InstallPage() {
           <p>أضف موقع النخبة إلى الشاشة الرئيسية على الآيفون للوصول إليه بسهولة. اتبع الخطوات المصوّرة بالأسفل.</p>
         </div>
         <figure className="install-page-guide">
-          <img
+          <a href={guideImage} target="_blank" rel="noopener noreferrer" aria-label="فتح صورة تعليمات التنزيل بالحجم الكامل"><img
             src={guideImage}
             alt="طريقة إضافة موقع rehab ju إلى شاشة الآيفون الرئيسية خطوة بخطوة"
             loading="eager"
             decoding="async"
-          />
+          /></a>
           <figcaption>اضغط على الصورة لعرضها بحجمها الكامل، أو مرّر للأسفل لمتابعة جميع الخطوات.</figcaption>
         </figure>
         <div className="install-page-actions">
