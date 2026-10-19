@@ -367,3 +367,12 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
   .site-header .menu-toggle{order:2;margin-inline:0;background:#000;border-color:#000;flex-shrink:0}
   .site-header .menu-toggle span{background:#fff}
 }
+
+/* Black mobile navigation pill with accessible white brand text */
+@media(max-width:800px){
+  .site-header .nav-wrap{background:#000;border-color:#171717;box-shadow:0 10px 28px rgba(0,0,0,.25)}
+  .site-header .brand-text strong{color:#fff}
+  .site-header .brand-text small{color:#b8c0cb}
+  .site-header .menu-toggle{background:#111;border-color:#303030}
+  .site-header .menu-toggle span{background:#fff}
+}
