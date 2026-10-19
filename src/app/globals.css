@@ -460,3 +460,20 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
 .ai-prompt-section .trfr-index{
   font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;
 }
+
+/* Slightly larger mobile navigation while preserving the existing layout */
+@media(max-width:800px){
+  .site-header .nav-wrap{
+    height:72px;
+    padding:9px 15px;
+  }
+  .site-header .brand-mark{
+    width:54px;
+    height:54px;
+    flex-basis:54px;
+  }
+  .site-header .menu-toggle{
+    width:46px;
+    height:46px;
+  }
+}
