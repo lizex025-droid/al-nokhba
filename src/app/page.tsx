@@ -28,7 +28,40 @@ export default function HomePage() { return <>
 
   <VisionScrollytelling />
 
-  <section className="help-section content-section"><div className="container-wide help-layout"><div className="help-copy" data-reveal><SectionHeader kicker="نحن هنا" title="محتاج مساعدة في مادة؟" text="إذا كنت لا تعرف من أين تبدأ، أو تواجه صعوبة في مادة معينة، أرسل لنا طلبك وسنحاول مساعدتك بأقرب طريقة ممكنة." /><p>اكتب اسم المادة، الجزء الصعب عليك، وموعد الامتحان أو الكويز. حتى لو لم تكن تعرف ما تحتاجه بالضبط، اختر: <strong>لا أعرف، أحتاج توجيه.</strong></p><Link href="/request-help" className="button button-navy">إرسال طلب المساعدة <ArrowIcon className="arrow-icon" /></Link></div></div></section>
+  <section className="help-section content-section" id="study-help">
+    <div className="help-decoration help-decoration-one" aria-hidden="true" />
+    <div className="help-decoration help-decoration-two" aria-hidden="true" />
+    <div className="container-wide help-layout">
+      <div className="help-copy" data-reveal>
+        <SectionHeader kicker="نحن هنا" title="محتاج مساعدة في مادة؟" text="إذا كنت لا تعرف من أين تبدأ، أو تواجه صعوبة في مادة معينة، أرسل لنا طلبك وسنحاول مساعدتك بأقرب طريقة ممكنة." />
+        <p>اكتب اسم المادة، الجزء الصعب عليك، وموعد الامتحان أو الكويز. حتى لو لم تكن تعرف ما تحتاجه بالضبط، اختر: <strong>لا أعرف، أحتاج توجيه.</strong></p>
+        <Link href="/request-help" className="button button-navy">إرسال طلب المساعدة <ArrowIcon className="arrow-icon" /></Link>
+      </div>
+      <div className="help-visual" data-reveal>
+        <div className="help-form-preview">
+          <div className="help-preview-head">
+            <span className="help-preview-heading"><i aria-hidden="true" /> طلب مساعدة دراسية</span>
+            <span className="help-preview-count" dir="ltr">01/03</span>
+          </div>
+          <div className="help-preview-rule" aria-hidden="true" />
+          <h3>ما المادة التي تحتاج مساعدة فيها؟</h3>
+          <Link className="help-preview-input" href="/request-help" aria-label="انتقل إلى نموذج طلب المساعدة لكتابة اسم المادة">
+            <span>اكتب اسم المادة هنا</span><span aria-hidden="true">✦</span>
+          </Link>
+          <div className="help-preview-tags" aria-label="أمثلة على أنواع المساعدة">
+            <span>ملخص</span><span>شرح</span><span>مراجعة</span><span>أسئلة تدريبية</span>
+          </div>
+          <Link className="help-preview-footer" href="/request-help">اسأل بدون تردد <ArrowIcon className="arrow-icon" /></Link>
+        </div>
+        <div className="help-study-art" aria-hidden="true">
+          <span className="help-art-book help-art-book-back"/><span className="help-art-book help-art-book-front"/>
+          <span className="help-art-cap">◆</span>
+          <span className="help-art-orbit"/>
+        </div>
+      </div>
+    </div>
+    <div className="help-wave" aria-hidden="true"/>
+  </section>
 
   <section className="faq-section content-section section-tint"><div className="container-wide faq-layout"><SectionHeader kicker="أسئلة شائعة" title="إجابات تساعدك على البدء" text="كل ما تحتاج معرفته قبل أن تبدأ رحلتك مع النخبة." /><FAQAccordion /></div></section>
 </>; }
