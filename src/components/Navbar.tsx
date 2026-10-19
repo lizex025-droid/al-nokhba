@@ -16,7 +16,7 @@ export function Navbar() {
   useEffect(() => setOpen(false), [pathname]);
   return <header className="site-header">
     <div className="nav-wrap container-wide">
-      <Link href="/" className="brand" aria-label="النخبة — الرئيسية" onClick={() => setOpen(false)}>
+      <Link href="/" className="brand" aria-label="النخبة — الرئيسية" onClick={() => { setOpen(false); if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
         <span className="brand-mark" aria-hidden="true"><span>ن</span></span>
         <span className="brand-text"><strong>النخبة</strong><small>علوم التأهيل</small></span>
       </Link>
