@@ -1,0 +1,18 @@
+{
+  "name": "rehab ju",
+  "short_name": "rehab ju",
+  "description": "النخبة — علوم التأهيل",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#061B33",
+  "theme_color": "#061B33",
+  "icons": [
+    {
+      "src": "/al-nokhba-logo.png",
+      "type": "image/png",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}
