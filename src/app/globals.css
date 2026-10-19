@@ -477,3 +477,36 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
     height:46px;
   }
 }
+
+/* Shared typography across home, inner pages, tabs, menus and form controls.
+   Preserve explicitly chosen display fonts (e.g. TRFR and academic integrity). */
+:root{--nokhba-body-font:'Segoe UI',Tahoma,Arial,sans-serif}
+body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
+#main-content .page-hero,
+#main-content .content-section,
+#main-content .specialty-materials-section,
+#main-content .specialty-material-grid,
+#main-content .calculator-page-section,
+#main-content .ai-news-feature,
+#main-content .ai-tools-section,
+#main-content .ai-detectors-section,
+#main-content .ai-prompt-section,
+#main-content .academic-integrity-section,
+.site-header .desktop-nav,
+.site-header .mobile-nav,
+.site-header .nav-cta,
+.site-footer{
+  font-family:var(--nokhba-body-font);
+}
+/* Consistent readable Arabic across form labels, input placeholders and tabs. */
+#main-content :is(input,textarea,select,button),
+.site-header :is(button,a){
+  font-family:var(--nokhba-body-font);
+}
+#main-content .ai-prompt-section,
+#main-content .academic-integrity-section{
+  font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;
+}
+#main-content .ai-prompt-section .trfr-expand-button{
+  font-family:inherit;
+}
