@@ -117,17 +117,17 @@ function AdmissionCalculator() {
   const [score, setScore] = useState(80);
   const [search, setSearch] = useState('');
   const filteredPrograms = useMemo(() => { const term = search.trim(); return term ? admissionPrograms.filter(program => `${program.major} ${program.faculty}`.includes(term)) : admissionPrograms; }, [search]);
-  const summary = useMemo(() => admissionPrograms.reduce((totals, program) => { if (score > program.minimum) totals.accepted += 1; else if (score === program.minimum) totals.edge += 1; else totals.rejected += 1; return totals; }, { accepted: 0, edge: 0, rejected: 0 }), [score]);
+  const summary = useMemo(() => admissionPrograms.reduce((totals, program) => { if (score >= program.minimum) totals.accepted += 1; else if (score >= program.minimum - 3) totals.edge += 1; else totals.rejected += 1; return totals; }, { accepted: 0, edge: 0, rejected: 0 }), [score]);
 
   return <div className="suite-panel admission-calculator">
     <div className="suite-panel-heading"><span className="suite-step">03</span><div><h2>حاسبة القبول</h2><p>حرّك المؤشر لمعرفة التخصصات المتاحة لك مبدئيًا بناءً على معدل التوجيهي.</p></div></div>
     <div className="admission-score-card">
-      <div className="admission-score-top"><div><span>معدل التوجيهي</span><strong>{score}<small>%</small></strong></div><div className="admission-summary" aria-live="polite"><span className="accepted"><i />مقبول: {summary.accepted}</span><span className="edge"><i />على الحد: {summary.edge}</span><span className="rejected"><i />غير مقبول: {summary.rejected}</span></div></div>
+      <div className="admission-score-top"><div><span>معدل التوجيهي</span><strong>{score}<small>%</small></strong></div><div className="admission-summary" aria-live="polite"><span className="accepted"><i />مقبول: {summary.accepted} تخصص</span><span className="edge"><i />على الحد: {summary.edge}</span><span className="rejected"><i />غير مقبول: {summary.rejected}</span></div></div>
       <input className="admission-range" aria-label="معدل التوجيهي" type="range" min="50" max="100" step="1" value={score} onChange={event => setScore(Number(event.target.value))} style={{ '--range-progress': `${(score - 50) * 2}%` } as React.CSSProperties} />
       <div className="range-labels"><span>50%</span><span>100%</span></div>
     </div>
-    <label className="admission-search"><span className="sr-only">ابحث عن تخصص أو كلية</span><input type="search" placeholder="ابحث عن تخصص أو كلية…" value={search} onChange={event => setSearch(event.target.value)} /><b aria-hidden="true">⌕</b></label>
-    <div className="admission-list" aria-label="نتائج التخصصات">{filteredPrograms.map(program => { const status = score > program.minimum ? 'accepted' : score === program.minimum ? 'edge' : 'rejected'; return <article className={`admission-program ${status}`} key={`${program.faculty}-${program.major}`}><div><h3>{program.major}</h3><p>{program.faculty}</p></div><span>{status === 'accepted' ? 'مقبول ✓' : status === 'edge' ? 'على الحد' : `${program.minimum}%`}</span></article>; })}{filteredPrograms.length === 0 && <p className="admission-empty">لا توجد تخصصات مطابقة للبحث.</p>}</div>
+    <label className="admission-search"><span className="sr-only">ابحث عن تخصص أو كلية</span><input type="search" placeholder="ابحث عن تخصص أو كلية…" value={search} onChange={event => setSearch(event.target.value)} /><b aria-hidden="true">🔍</b></label>
+    <div className="admission-list" aria-label="نتائج التخصصات">{filteredPrograms.map(program => { const status = score >= program.minimum ? 'accepted' : score >= program.minimum - 3 ? 'edge' : 'rejected'; return <article className={`admission-program ${status}`} key={`${program.faculty}-${program.major}`}><div><h3>{program.major}</h3><p>{program.faculty}</p></div><span>{status === 'accepted' ? 'مقبول ✓' : status === 'edge' ? `حدّك ${program.minimum}%` : `${program.minimum}%`}</span></article>; })}{filteredPrograms.length === 0 && <p className="admission-empty">لا توجد تخصصات مطابقة للبحث.</p>}</div>
     <p className="suite-note admission-note">* الأرقام تقديرية بناءً على معدلات القبول السابقة وقد تتغير سنويًا. راجع وحدة تنسيق القبول الموحد والمصادر الرسمية قبل اتخاذ أي قرار.</p>
   </div>;
 }
