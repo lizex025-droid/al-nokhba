@@ -44,10 +44,65 @@ const tools: AiTool[] = [
 ];
 
 const trfrSteps = [
-  { letter: 'T', title: 'Task — المهمة', text: 'حدّد بوضوح ما الذي تريد من الأداة أن تفعله، وابدأ بفعل مباشر.', example: 'اشرح مراحل دورة المشي الطبيعية.' },
-  { letter: 'R', title: 'Role — الدور والجمهور', text: 'حدّد الدور الذي يتقمصه المساعد، ومستوى الشخص الذي ستُقدَّم له الإجابة.', example: 'تصرّف كمحاضر علاج طبيعي واشرح لطالب سنة ثانية.' },
-  { letter: 'F', title: 'Format — التنسيق', text: 'اختر شكل الإجابة وطولها: جدول، نقاط، خطوات، ملخص أو أسئلة.', example: 'استخدم جدولًا، ثم أضف خمس نقاط مهمة للامتحان.' },
-  { letter: 'R', title: 'Rules — القواعد', text: 'ضع الحدود التي تحافظ على الدقة والأسلوب المطلوب وتمنع التخمين.', example: 'اكتب المصطلح الإنجليزي بجانب العربي، ولا تخترع مراجع.' },
+  {
+    "letter": "T",
+    "title": "Task — المهمة",
+    "text": "حدّد ما تريد تنفيذه بدقة، والهدف ومستوى التفصيل.",
+    "points": [
+      "حدّد الموضوع أو السؤال المطلوب.",
+      "وضّح الهدف من الطلب.",
+      "اختر نوع المهمة: شرح، تلخيص، مقارنة، تحليل أو حل أسئلة.",
+      "حدّد مستوى التفصيل المطلوب.",
+      "ركّز على الجوانب التي تريد فهمها.",
+      "تجنّب الطلبات العامة والغامضة."
+    ],
+    "example": "اشرح مراحل دورة المشي الطبيعية (Gait Cycle)، مع توضيح حركة المفاصل والعضلات المشاركة في كل مرحلة."
+  },
+  {
+    "letter": "R",
+    "title": "Role — الدور والجمهور",
+    "text": "حدّد الدور المطلوب والجمهور ومستواه الأكاديمي.",
+    "points": [
+      "حدّد التخصص أو الدور المطلوب.",
+      "وضّح المستوى الأكاديمي للجمهور.",
+      "حدّد المعرفة السابقة بالموضوع.",
+      "اختر أسلوب الشرح المناسب.",
+      "وضّح إن كان الهدف الدراسة أو المراجعة أو التطبيق.",
+      "حدّد المنظور الأكاديمي أو السريري."
+    ],
+    "example": "تصرّف كمحاضر جامعي متخصص في العلاج الطبيعي، واشرح لطالب سنة ثانية يمتلك معرفة أساسية بالتشريح."
+  },
+  {
+    "letter": "F",
+    "title": "Format — التنسيق",
+    "text": "اختر شكل الإجابة وطولها وطريقة تنظيمها.",
+    "points": [
+      "حدّد الشكل: نقاط، فقرات، جداول أو خطوات.",
+      "استخدم الجداول للمقارنة بين المفاهيم.",
+      "اطلب عناوين رئيسية وفرعية واضحة.",
+      "حدّد طول الإجابة ومستوى تفصيلها.",
+      "اطلب أمثلة تطبيقية.",
+      "أضف ملخصًا لأهم النقاط.",
+      "اطلب أسئلة تدريبية لاختبار الفهم."
+    ],
+    "example": "نظّم الشرح في جدول مقارنة، ثم أضف خمس نقاط مهمة للامتحان وثلاثة أسئلة اختيار من متعدد (MCQs)."
+  },
+  {
+    "letter": "R",
+    "title": "Rules — القواعد",
+    "text": "ضع قواعد واضحة لدقة الإجابة وجودتها.",
+    "points": [
+      "حدّد لغة الإجابة والمصطلحات المطلوبة.",
+      "اطلب معلومات علمية موثوقة.",
+      "حدّد المصادر أو الملفات المعتمدة.",
+      "امنع اختلاق المعلومات والمراجع.",
+      "اطلب توضيح المعلومات غير المؤكدة.",
+      "حدّد الموضوعات التي يجب تجنبها.",
+      "اطلب شرح المصطلحات الصعبة.",
+      "تجنّب الحشو والتكرار."
+    ],
+    "example": "استخدم العربية مع المصطلحات الطبية الإنجليزية، والتزم بالمعلومات العلمية الموثوقة، ولا تختلق مراجع أو معلومات غير مؤكدة."
+  }
 ];
 
 const risks = [
@@ -62,6 +117,7 @@ export function AiAcademicGuide() {
   const [activeCategory, setActiveCategory] = useState<'all' | ToolCategory>('all');
   const [query, setQuery] = useState('');
   const [showAllTools, setShowAllTools] = useState(false);
+  const [expandedTrfr, setExpandedTrfr] = useState<number | null>(null);
 
   const visibleTools = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase('ar');
@@ -123,7 +179,7 @@ export function AiAcademicGuide() {
         <div className="trfr-grid">
           {trfrSteps.map((step, index) => <article className="trfr-card" key={`${step.letter}-${index}`}>
             <span className="trfr-letter">{step.letter}</span>
-            <div><span className="trfr-index">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><blockquote>{step.example}</blockquote></div>
+            <div className="trfr-card-content"><span className="trfr-index">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><ul className="trfr-points">{step.points.slice(0, 3).map((point) => <li key={point}>{point}</li>)}</ul><button type="button" className="trfr-expand-button" aria-expanded={expandedTrfr === index} onClick={() => setExpandedTrfr(expandedTrfr === index ? null : index)}>{expandedTrfr === index ? "عرض أقل" : "عرض المزيد"}</button>{expandedTrfr === index && <div className="trfr-extra"><ul>{step.points.slice(3).map((point) => <li key={point}>{point}</li>)}</ul><strong>مثال تطبيقي</strong><blockquote>{step.example}</blockquote></div>}</div>
           </article>)}
         </div>
       </div>
