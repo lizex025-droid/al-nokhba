@@ -56,7 +56,8 @@ export function VisionScrollytelling() {
     const update = () => {
       frame = 0;
       const viewportHeight = window.innerHeight;
-      const stickyTop = viewportHeight < 700 ? 72 : 82;
+      const headerHeight = document.querySelector<HTMLElement>('.site-header')?.getBoundingClientRect().height;
+      const stickyTop = headerHeight ?? (viewportHeight < 700 ? 72 : 82);
 
       panels.forEach((panel, panelIndex) => {
         const rect = panel.getBoundingClientRect();
@@ -94,7 +95,7 @@ export function VisionScrollytelling() {
     };
   }, []);
 
-  return <section className="vision-scrolly" ref={rootRef} aria-labelledby="vision-title">
+  return <section id="vision" className="vision-scrolly" ref={rootRef} aria-labelledby="vision-title">
     <div className="container-wide vision-intro">
       <span className="eyebrow"><span className="eyebrow-line" />رؤيتنا</span>
       <h2 id="vision-title">كيف نصنع تجربة أكاديمية أوضح؟</h2>
