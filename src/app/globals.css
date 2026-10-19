@@ -627,3 +627,109 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   font-family:'Segoe UI',Arial,sans-serif!important;
   font-weight:700;
 }
+
+/* Desktop reference-inspired navigation: mobile version only.
+   Two compact rows keep every link accessible without shrinking the text. */
+.mobile-nav-strip,.mobile-top-cta{display:none}
+@media(max-width:800px){
+  .site-header{padding:10px 0 9px;background:#061B33}
+  .site-header .nav-wrap{
+    direction:rtl;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:calc(100% - 24px);
+    height:68px;
+    gap:8px;
+    padding:7px 12px;
+    border:1px solid rgba(198,161,91,.22);
+    border-radius:999px;
+    background:linear-gradient(115deg,#103a66,#082846 70%,#0b355b);
+    box-shadow:0 8px 24px rgba(3,17,31,.2),inset 0 1px rgba(255,255,255,.09);
+  }
+  .site-header .brand{
+    order:0;
+    direction:rtl;
+    display:flex;
+    gap:8px;
+    min-width:0;
+    margin:0;
+  }
+  .site-header .brand-text{direction:rtl;text-align:right;gap:2px}
+  .site-header .brand-text strong{font-size:16px;font-weight:800;color:#fff}
+  .site-header .brand-text small{font-size:9px;color:#c2d0dc}
+  .site-header .brand-mark{
+    width:45px;height:45px;flex:0 0 45px;
+    border:0;border-radius:0;
+    background-color:transparent;
+    background-image:url('/al-nokhba-logo.png?v=20261019');
+    background-size:contain;background-position:center;background-repeat:no-repeat;
+    box-shadow:none;
+  }
+  .site-header .brand-mark::after{display:none}
+  .site-header .menu-toggle{display:none}
+  .site-header .mobile-top-cta{
+    order:2;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    flex:none;
+    padding:9px 13px;
+    min-height:39px;
+    background:#fff;
+    color:#061B33;
+    border:1px solid #e0e5ec;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  .site-header .mobile-top-cta .arrow-icon{width:14px;height:14px}
+  .site-header .mobile-nav-strip{
+    direction:rtl;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    width:calc(100% - 24px);
+    margin:8px auto 0;
+    padding:4px 1px 7px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;
+  }
+  .site-header .mobile-nav-strip::-webkit-scrollbar{display:none}
+  .site-header .mobile-nav-strip a{
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    padding:8px 13px;
+    min-height:37px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:999px;
+    color:#e5edf5;
+    background:rgba(255,255,255,.05);
+    font-size:11px;
+    font-weight:700;
+    white-space:nowrap;
+    line-height:1.7;
+    text-decoration:none;
+  }
+  .site-header .mobile-nav-strip a.active{
+    color:#061B33;
+    background:#f7f5ef;
+    border-color:rgba(198,161,91,.65);
+  }
+  .site-header .mobile-nav-strip a:focus-visible,
+  .site-header .mobile-top-cta:focus-visible{
+    outline:2px solid #C6A15B;outline-offset:2px;
+  }
+}
+@media(max-width:360px){
+  .site-header .nav-wrap{padding:7px 10px}
+  .site-header .brand-text strong{font-size:14px}
+  .site-header .brand-mark{width:40px;height:40px;flex-basis:40px}
+  .site-header .mobile-top-cta{padding:8px 10px;font-size:10px}
+}
