@@ -8,7 +8,7 @@ export const nav = [
   { label: 'حاسبة المعدل', href: '/gpa-calculator' },
   { label: 'إيميلات الدكاترة', href: '/professors-emails' },
   { label: 'الخطط الدراسية', href: '/study-plans' },
-  { label: 'من نحن', href: '/about' },
+  { label: 'من نحن', href: '/#about' },
   { label: 'اطلب مساعدة', href: '/request-help' },
 ];
 

@@ -66,10 +66,10 @@ export function EmailDirectory() {
 
   return <div className="directory" data-reveal>
     <div className="directory-toolbar">
-      <div><span className="eyebrow">دليل التواصل</span><h2>قائمة أعضاء الهيئة التدريسية</h2><p>{professors.length} عضوًا من كلية علوم التأهيل</p></div>
+      <div><span className="eyebrow">دليل التواصل</span><h2>قائمة أعضاء الهيئة التدريسية</h2><p>{professors.length} عضوًا في الأقسام الأكاديمية</p></div>
       <label><span className="sr-only">ابحث عن دكتور أو قسم أو بريد إلكتروني</span><input type="search" placeholder="ابحث بالاسم أو القسم أو البريد..." value={query} onChange={(event) => setQuery(event.target.value)} /></label>
     </div>
-    <div className="table-scroll"><table><thead><tr><th>اسم الدكتور</th><th>الكلية</th><th>القسم</th><th>البريد الإلكتروني</th></tr></thead><tbody>
+    <div className="table-scroll"><table><thead><tr><th>اسم الدكتور</th><th>البريد الإلكتروني</th><th>القسم</th></tr></thead><tbody>
       {departmentOrder.map((department) => {
         const departmentProfessors = filtered.filter((professor) => professor.department === department);
         if (departmentProfessors.length === 0) return null;
@@ -81,7 +81,7 @@ export function EmailDirectory() {
 
 function DepartmentRows({ department, professors: departmentProfessors }: { department: string; professors: Professor[] }) {
   return <>
-    <tr className="directory-group-row"><th colSpan={4}>{department} <span>{departmentProfessors.length}</span></th></tr>
-    {departmentProfessors.map((professor) => <tr key={`${professor.name}-${professor.email}`}><td className="professor-name">{professor.name}</td><td>علوم التأهيل</td><td>{professor.department}</td><td><a className="professor-email" href={`mailto:${professor.email}`} dir="ltr">{professor.email}</a></td></tr>)}
+    <tr className="directory-group-row"><th colSpan={3}>{department} <span>{departmentProfessors.length}</span></th></tr>
+    {departmentProfessors.map((professor) => <tr key={`${professor.name}-${professor.email}`}><td className="professor-name">{professor.name}</td><td><a className="professor-email" href={`mailto:${professor.email}`} dir="ltr">{professor.email}</a></td><td>{professor.department}</td></tr>)}
   </>;
 }

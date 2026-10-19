@@ -1,24 +1,34 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { ArrowIcon } from './Icons';
 
 const visionPanels = [
   {
     number: '01',
+    eyebrow: 'من نحن؟',
+    title: 'فريق طلابي،\nبرؤية أكاديمية واضحة.',
+    text: 'النخبة فريق طلابي من كلية علوم التأهيل في الجامعة الأردنية، تأسس ليكون عونًا للطلبة في رحلتهم الأكاديمية. نعمل على توفير محتوى دراسي منظم، مراجعات، ملخصات، أدوات ذكية، وخدمات تساعد الطالب على الوصول إلى المعلومة بسهولة والاستعداد لمواده بثقة.',
+    metric: 'من الطالب… وللطالب',
+    cta: { label: 'تعرّف إلى النخبة', href: '/about' },
+  },
+  {
+    number: '02',
     eyebrow: 'وجهتنا الأكاديمية',
     title: 'رؤيتنا',
     text: 'أن تكون النخبة المرجع الأكاديمي الطلابي الأول لطلبة كلية علوم التأهيل في الجامعة الأردنية، ومصدرًا موثوقًا يساعدهم على الدراسة بوضوح، والتفوق بثقة، وخدمة بعضهم بروح الفريق.',
     metric: 'وضوح وثقة',
   },
   {
-    number: '02',
+    number: '03',
     eyebrow: 'دورنا تجاه الطالب',
     title: 'رسالتنا',
     text: 'تقديم دعم أكاديمي منظم وفعّال لطلبة كلية علوم التأهيل، من خلال توفير مواد دراسية، ملخصات، مراجعات، أدوات ذكية، وخدمات طلابية تساعد الطالب على فهم مواده والاستعداد لها بطريقة أفضل.',
     metric: 'دعم أكاديمي',
   },
   {
-    number: '03',
+    number: '04',
     eyebrow: 'الأثر الذي نبنيه',
     title: 'أهداف النخبة',
     text: '',
@@ -89,7 +99,7 @@ export function VisionScrollytelling() {
     };
   }, []);
 
-  return <section id="vision" className="vision-scrolly" ref={rootRef} aria-label="رؤية النخبة ورسالتها وأهدافها">
+  return <section id="about" className="vision-scrolly" ref={rootRef} aria-label="من نحن ورؤية النخبة ورسالتها وأهدافها">
     <div className="vision-stack">
       {visionPanels.map((panel, index) => <article className={`vision-panel vision-panel-${index + 1}`} key={panel.number} style={{ zIndex: index + 1 }}>
         <div className="vision-progress" aria-hidden="true">{visionPanels.map((_, progressIndex) => <span className={progressIndex === index ? 'active' : ''} key={progressIndex}>0{progressIndex + 1}</span>)}</div>
@@ -99,6 +109,7 @@ export function VisionScrollytelling() {
             <h3 data-vision-reveal>{panel.title}</h3>
             {panel.text && <p data-vision-reveal>{panel.text}</p>}
             {panel.goals && <ul className="vision-goals" data-vision-reveal>{panel.goals.map((goal, goalIndex) => <li key={goal}><span>0{goalIndex + 1}</span>{goal}</li>)}</ul>}
+            {panel.cta && <Link className="button button-outline-light vision-cta" href={panel.cta.href} data-vision-reveal>{panel.cta.label} <ArrowIcon className="arrow-icon" /></Link>}
           </div>
           <div className="vision-visual" aria-hidden="true" data-vision-reveal>
             <span className="vision-number-ring"><span className="vision-big-number">{index + 1}</span><i /></span>
