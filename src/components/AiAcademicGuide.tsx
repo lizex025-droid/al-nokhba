@@ -163,13 +163,12 @@ export function AiAcademicGuide() {
         <header className="ai-section-heading">
           <div><span className="ai-section-number">04</span><span className="eyebrow">التحقق من أصالة المحتوى</span></div>
           <h2>أدوات التحقق من المحتوى والذكاء الاصطناعي</h2>
-          <p>أدوات تساعد على فحص النصوص وتقدير احتمالية إنشائها بالذكاء الاصطناعي، ولا تُعد نتائجها دليلًا قاطعًا.</p>
+          <p>تستخدم بعض المؤسسات Turnitin وiThenticate لفحص النزاهة الأكاديمية والتشابه النصي. تختلف ميزات كشف الذكاء الاصطناعي عن فحص التشابه، ولا تُعد النتائج دليلًا قاطعًا.</p>
         </header>
         <div className="ai-tool-grid">
           {[
-            { name: 'GPTZero', domain: 'gptzero.me', url: 'https://gptzero.me/', bestFor: 'فحص النصوص', description: 'تقدير احتمالية توليد النصوص بواسطة نماذج الذكاء الاصطناعي.' },
-            { name: 'Copyleaks', domain: 'copyleaks.com', url: 'https://copyleaks.com/ai-content-detector', bestFor: 'كشف المحتوى المولّد', description: 'فحص النصوص للكشف الاحتمالي عن المحتوى المنشأ بالذكاء الاصطناعي.' },
-            { name: 'Originality.ai', domain: 'originality.ai', url: 'https://originality.ai/', bestFor: 'مراجعة أصالة النص', description: 'أدوات لفحص المحتوى ومراجعة أصالته، وقد تتطلب بعض الخدمات اشتراكًا.' },
+            { name: 'Turnitin', domain: 'turnitin.com', url: 'https://www.turnitin.com/', bestFor: 'النزاهة الأكاديمية', description: 'منصة تستخدمها مؤسسات تعليمية لفحص التشابه النصي، وتوفر خاصية الكشف عن الكتابة بالذكاء الاصطناعي في خدمات وخطط مؤهلة.' },
+            { name: 'iThenticate', domain: 'ithenticate.com', url: 'https://www.ithenticate.com/', bestFor: 'فحص الأبحاث والتشابه', description: 'منصة لفحص تشابه الأبحاث والمخطوطات العلمية؛ ليست أداة كشف ذكاء اصطناعي بالضرورة، وتختلف الميزات بحسب الخدمة والاشتراك.' },
           ].map((tool) => <article className="ai-tool-card" key={tool.name}>
             <div className="ai-tool-card-top">
               <span className="ai-tool-mark"><img src={officialLogo(tool.domain)} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
