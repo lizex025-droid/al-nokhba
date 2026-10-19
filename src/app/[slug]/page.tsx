@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { pages, seoTitles } from '@/lib/content';
-import { SectionHeader, ServiceCard, CTASection } from '@/components/Blocks';
+import { SectionHeader, ServiceCard } from '@/components/Blocks';
 import { GpaCalculator } from '@/components/GpaCalculator';
 import { HelpForm, JoinForm, ContactForm } from '@/components/Forms';
 import { EmailDirectory } from '@/components/EmailDirectory';
@@ -31,6 +31,5 @@ export default async function InnerPage({ params }: { params: Promise<{ slug: st
     {slug === 'join-us' && <section className="content-section"><div className="container-narrow"><JoinForm /></div></section>}
     {slug === 'contact' && <section className="content-section"><div className="container-narrow"><ContactForm /></div></section>}
     {slug === 'about' && <div className="about-closing container-wide">النخبة ليست مجرد اسم. النخبة مسؤولية، عمل، وأثر نثبته معكم.</div>}
-    <CTASection {...page.cta} />
   </>;
 }

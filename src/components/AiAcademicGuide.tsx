@@ -6,12 +6,14 @@ type ToolCategory = 'study' | 'assistants' | 'research' | 'data';
 
 type AiTool = {
   name: string;
-  mark: string;
+  logo: string;
   category: ToolCategory;
   description: string;
   url: string;
   bestFor: string;
 };
+
+const officialLogo = (domain: string) => `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 
 const categories: { id: 'all' | ToolCategory; label: string }[] = [
   { id: 'all', label: 'كل الأدوات' },
@@ -22,23 +24,23 @@ const categories: { id: 'all' | ToolCategory; label: string }[] = [
 ];
 
 const tools: AiTool[] = [
-  { name: 'NoteGPT', mark: 'NG', category: 'study', description: 'تلخيص المحاضرات والفيديوهات وملفات PDF، واستخراج الأفكار الرئيسية وتحويلها إلى مادة أسهل للمراجعة.', url: 'https://notegpt.io/', bestFor: 'التلخيص والمراجعة' },
-  { name: 'NotebookLM', mark: 'NL', category: 'study', description: 'ارفع مصادر المحاضرة واسأل عنها، وأنشئ ملخصات ومواد مراجعة مبنية على الملفات التي أضفتها.', url: 'https://notebooklm.google.com/', bestFor: 'الدراسة من المصادر' },
-  { name: 'Napkin AI', mark: 'NA', category: 'study', description: 'يحوّل النصوص والأفكار إلى مخططات ورسومات توضيحية قابلة للاستخدام في العروض والملخصات.', url: 'https://www.napkin.ai/', bestFor: 'المخططات البصرية' },
-  { name: 'ChatGPT', mark: 'CG', category: 'assistants', description: 'شرح المفاهيم، إنشاء أسئلة تدريبية، تنظيم خطة الدراسة، والمساعدة في الكتابة والتحليل والبرمجة.', url: 'https://chatgpt.com/', bestFor: 'شرح وتنظيم الدراسة' },
-  { name: 'Claude', mark: 'CL', category: 'assistants', description: 'مفيد لقراءة النصوص الطويلة، تنظيم الأفكار، تحسين الكتابة، وتحليل المستندات بصورة متسلسلة.', url: 'https://claude.ai/', bestFor: 'النصوص الطويلة' },
-  { name: 'Gemini', mark: 'GE', category: 'assistants', description: 'مساعد من Google لشرح المعلومات وتحليل المستندات والصور والمساعدة في التعلم والبحث.', url: 'https://gemini.google.com/', bestFor: 'الشرح متعدد الوسائط' },
-  { name: 'DeepSeek', mark: 'DS', category: 'assistants', description: 'يساعد في حل المسائل، شرح المفاهيم العلمية، الاستدلال المنطقي والمهام البرمجية.', url: 'https://chat.deepseek.com/', bestFor: 'الاستدلال وحل المسائل' },
-  { name: 'Microsoft Copilot', mark: 'CO', category: 'assistants', description: 'مساعد للكتابة والبحث والإنتاجية، ويتكامل مع أدوات Microsoft وفق الخطة المتاحة للمستخدم.', url: 'https://copilot.microsoft.com/', bestFor: 'الإنتاجية والكتابة' },
-  { name: 'Perplexity', mark: 'PX', category: 'assistants', description: 'محرك إجابات وبحث يعرض روابط للمصادر؛ افتح المصادر الأصلية وتحقق منها قبل الاستشهاد.', url: 'https://www.perplexity.ai/', bestFor: 'بحث أولي بالمصادر' },
-  { name: 'Poe', mark: 'PO', category: 'assistants', description: 'منصة تتيح تجربة عدة نماذج ومساعدات ذكاء اصطناعي من مكان واحد ومقارنة أساليب الإجابة.', url: 'https://poe.com/', bestFor: 'تجربة نماذج متعددة' },
-  { name: 'Manus', mark: 'MA', category: 'assistants', description: 'ينفّذ مهام متعددة الخطوات مثل جمع المعلومات، تنظيم النتائج، وإنشاء تقارير أو مخرجات مترابطة.', url: 'https://manus.im/', bestFor: 'المهام متعددة الخطوات' },
-  { name: 'ResearchRabbit', mark: 'RR', category: 'research', description: 'اكتشاف الأبحاث المتصلة ببعضها وتتبع المؤلفين وشبكات الاستشهادات لبناء خريطة للموضوع.', url: 'https://www.researchrabbit.ai/', bestFor: 'استكشاف الدراسات' },
-  { name: 'SciSpace', mark: 'SS', category: 'research', description: 'البحث عن الأوراق العلمية وفهم محتواها، مع تبسيط المنهجية والنتائج والمصطلحات الصعبة.', url: 'https://scispace.com/', bestFor: 'قراءة الأوراق العلمية' },
-  { name: 'Elicit', mark: 'EL', category: 'research', description: 'البحث في الدراسات واستخراج البيانات منها ومقارنتها للمساعدة في مراجعات الأدبيات.', url: 'https://elicit.com/', bestFor: 'مراجعة الأدبيات' },
-  { name: 'Julius AI', mark: 'JU', category: 'data', description: 'تحليل ملفات Excel وCSV باللغة الطبيعية، وإجراء التحليلات الإحصائية وإنشاء الرسوم البيانية.', url: 'https://julius.ai/', bestFor: 'تحليل البيانات' },
-  { name: 'Hugging Face', mark: 'HF', category: 'data', description: 'استكشاف نماذج الذكاء الاصطناعي ومجموعات البيانات والتطبيقات التجريبية المفتوحة.', url: 'https://huggingface.co/', bestFor: 'النماذج ومجموعات البيانات' },
-  { name: 'Kaggle', mark: 'KG', category: 'data', description: 'الوصول إلى مجموعات بيانات ودفاتر برمجية ومشاريع عملية في تحليل البيانات وتعلم الآلة.', url: 'https://www.kaggle.com/', bestFor: 'البيانات والمشاريع' },
+  { name: 'NoteGPT', logo: officialLogo('notegpt.io'), category: 'study', description: 'تلخيص المحاضرات والفيديوهات وملفات PDF، واستخراج الأفكار الرئيسية وتحويلها إلى مادة أسهل للمراجعة.', url: 'https://notegpt.io/', bestFor: 'التلخيص والمراجعة' },
+  { name: 'NotebookLM', logo: officialLogo('notebooklm.google.com'), category: 'study', description: 'ارفع مصادر المحاضرة واسأل عنها، وأنشئ ملخصات ومواد مراجعة مبنية على الملفات التي أضفتها.', url: 'https://notebooklm.google.com/', bestFor: 'الدراسة من المصادر' },
+  { name: 'Napkin AI', logo: officialLogo('napkin.ai'), category: 'study', description: 'يحوّل النصوص والأفكار إلى مخططات ورسومات توضيحية قابلة للاستخدام في العروض والملخصات.', url: 'https://www.napkin.ai/', bestFor: 'المخططات البصرية' },
+  { name: 'ChatGPT', logo: officialLogo('chatgpt.com'), category: 'assistants', description: 'شرح المفاهيم، إنشاء أسئلة تدريبية، تنظيم خطة الدراسة، والمساعدة في الكتابة والتحليل والبرمجة.', url: 'https://chatgpt.com/', bestFor: 'شرح وتنظيم الدراسة' },
+  { name: 'Claude', logo: officialLogo('claude.ai'), category: 'assistants', description: 'مفيد لقراءة النصوص الطويلة، تنظيم الأفكار، تحسين الكتابة، وتحليل المستندات بصورة متسلسلة.', url: 'https://claude.ai/', bestFor: 'النصوص الطويلة' },
+  { name: 'Gemini', logo: officialLogo('gemini.google.com'), category: 'assistants', description: 'مساعد من Google لشرح المعلومات وتحليل المستندات والصور والمساعدة في التعلم والبحث.', url: 'https://gemini.google.com/', bestFor: 'الشرح متعدد الوسائط' },
+  { name: 'DeepSeek', logo: officialLogo('deepseek.com'), category: 'assistants', description: 'يساعد في حل المسائل، شرح المفاهيم العلمية، الاستدلال المنطقي والمهام البرمجية.', url: 'https://chat.deepseek.com/', bestFor: 'الاستدلال وحل المسائل' },
+  { name: 'Microsoft Copilot', logo: officialLogo('copilot.microsoft.com'), category: 'assistants', description: 'مساعد للكتابة والبحث والإنتاجية، ويتكامل مع أدوات Microsoft وفق الخطة المتاحة للمستخدم.', url: 'https://copilot.microsoft.com/', bestFor: 'الإنتاجية والكتابة' },
+  { name: 'Perplexity', logo: officialLogo('perplexity.ai'), category: 'assistants', description: 'محرك إجابات وبحث يعرض روابط للمصادر؛ افتح المصادر الأصلية وتحقق منها قبل الاستشهاد.', url: 'https://www.perplexity.ai/', bestFor: 'بحث أولي بالمصادر' },
+  { name: 'Poe', logo: officialLogo('poe.com'), category: 'assistants', description: 'منصة تتيح تجربة عدة نماذج ومساعدات ذكاء اصطناعي من مكان واحد ومقارنة أساليب الإجابة.', url: 'https://poe.com/', bestFor: 'تجربة نماذج متعددة' },
+  { name: 'Manus', logo: officialLogo('manus.im'), category: 'assistants', description: 'ينفّذ مهام متعددة الخطوات مثل جمع المعلومات، تنظيم النتائج، وإنشاء تقارير أو مخرجات مترابطة.', url: 'https://manus.im/', bestFor: 'المهام متعددة الخطوات' },
+  { name: 'ResearchRabbit', logo: officialLogo('researchrabbit.ai'), category: 'research', description: 'اكتشاف الأبحاث المتصلة ببعضها وتتبع المؤلفين وشبكات الاستشهادات لبناء خريطة للموضوع.', url: 'https://www.researchrabbit.ai/', bestFor: 'استكشاف الدراسات' },
+  { name: 'SciSpace', logo: officialLogo('scispace.com'), category: 'research', description: 'البحث عن الأوراق العلمية وفهم محتواها، مع تبسيط المنهجية والنتائج والمصطلحات الصعبة.', url: 'https://scispace.com/', bestFor: 'قراءة الأوراق العلمية' },
+  { name: 'Elicit', logo: officialLogo('elicit.com'), category: 'research', description: 'البحث في الدراسات واستخراج البيانات منها ومقارنتها للمساعدة في مراجعات الأدبيات.', url: 'https://elicit.com/', bestFor: 'مراجعة الأدبيات' },
+  { name: 'Julius AI', logo: officialLogo('julius.ai'), category: 'data', description: 'تحليل ملفات Excel وCSV باللغة الطبيعية، وإجراء التحليلات الإحصائية وإنشاء الرسوم البيانية.', url: 'https://julius.ai/', bestFor: 'تحليل البيانات' },
+  { name: 'Hugging Face', logo: officialLogo('huggingface.co'), category: 'data', description: 'استكشاف نماذج الذكاء الاصطناعي ومجموعات البيانات والتطبيقات التجريبية المفتوحة.', url: 'https://huggingface.co/', bestFor: 'النماذج ومجموعات البيانات' },
+  { name: 'Kaggle', logo: officialLogo('kaggle.com'), category: 'data', description: 'الوصول إلى مجموعات بيانات ودفاتر برمجية ومشاريع عملية في تحليل البيانات وتعلم الآلة.', url: 'https://www.kaggle.com/', bestFor: 'البيانات والمشاريع' },
 ];
 
 const trfrSteps = [
@@ -56,15 +58,9 @@ const risks = [
   { title: 'ضعف النزاهة العلمية', english: 'Poor scientific integrity', text: 'إخفاء طريقة إعداد العمل أو استخدام نتائج غير موثوقة بما يضعف شفافية العمل الأكاديمي.' },
 ];
 
-const examplePrompt = `المهمة: اشرح مراحل دورة المشي (Gait Cycle).
-الدور والجمهور: تصرّف كمحاضر جامعي متخصص في العلاج الطبيعي يشرح لطالب سنة ثانية.
-التنسيق: قدّم الإجابة في جدول منظم، ثم أضف ملخصًا وخمس نقاط مهمة للامتحان.
-القواعد: اكتب المصطلحات الإنجليزية بجانب العربية، وميّز بين المعلومات المؤكدة وما يحتاج إلى مراجعة، ولا تخترع مراجع.`;
-
 export function AiAcademicGuide() {
   const [activeCategory, setActiveCategory] = useState<'all' | ToolCategory>('all');
   const [query, setQuery] = useState('');
-  const [copied, setCopied] = useState(false);
 
   const visibleTools = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase('ar');
@@ -75,28 +71,7 @@ export function AiAcademicGuide() {
     });
   }, [activeCategory, query]);
 
-  async function copyPrompt() {
-    await navigator.clipboard.writeText(examplePrompt);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
-  }
-
   return <main className="ai-academic-guide">
-    <section className="ai-guide-intro" id="ai-guide">
-      <div className="container-wide">
-        <div className="ai-guide-heading">
-          <span className="eyebrow"><span className="eyebrow-line" />دليل الطالب الرقمي</span>
-          <h1>استخدم الذكاء الاصطناعي بوعي، وادرس بطريقة أوضح</h1>
-          <p>دليل عربي عملي يجمع أدوات الدراسة والبحث وتحليل البيانات، ويشرح كيف تكتب طلبًا دقيقًا وتحافظ على النزاهة الأكاديمية.</p>
-        </div>
-        <nav className="ai-jump-links" aria-label="أقسام دليل الذكاء الاصطناعي">
-          <a href="#ai-tools">دليل الأدوات <span>17 أداة</span></a>
-          <a href="#prompt-engineering">هندسة الأوامر <span>TRFR</span></a>
-          <a href="#academic-integrity">النزاهة الأكاديمية <span>5 مخاطر</span></a>
-        </nav>
-      </div>
-    </section>
-
     <section className="ai-tools-section" id="ai-tools">
       <div className="container-wide">
         <header className="ai-section-heading">
@@ -117,9 +92,9 @@ export function AiAcademicGuide() {
         </div>
 
         {visibleTools.length > 0 ? <div className="ai-tool-grid">
-          {visibleTools.map((tool, index) => <article className="ai-tool-card" key={tool.name} style={{ '--tool-order': index } as React.CSSProperties}>
+          {visibleTools.map((tool) => <article className="ai-tool-card" key={tool.name}>
             <div className="ai-tool-card-top">
-              <span className="ai-tool-mark" aria-hidden="true">{tool.mark}</span>
+              <span className="ai-tool-mark"><img src={tool.logo} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
               <span className="ai-tool-use">{tool.bestFor}</span>
             </div>
             <h3 dir="ltr">{tool.name}</h3>
@@ -131,7 +106,6 @@ export function AiAcademicGuide() {
           </article>)}
         </div> : <div className="ai-tools-empty"><strong>لم نجد أداة مطابقة</strong><p>جرّب كلمة أقصر أو اختر فئة أخرى.</p></div>}
 
-        <p className="ai-tools-note">اختر الأداة بحسب المهمة، ثم تحقّق من كل معلومة ومرجع قبل استخدام النتيجة في واجب أو بحث أكاديمي.</p>
       </div>
     </section>
 
@@ -147,18 +121,6 @@ export function AiAcademicGuide() {
             <span className="trfr-letter">{step.letter}</span>
             <div><span className="trfr-index">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><blockquote>{step.example}</blockquote></div>
           </article>)}
-        </div>
-        <div className="prompt-example">
-          <div className="prompt-example-copy">
-            <span className="eyebrow"><span className="eyebrow-line" />مثال جاهز لطلبة التأهيل</span>
-            <h3>من فكرة عامة إلى طلب أكاديمي واضح</h3>
-            <p>يمكنك نسخ المثال وتعديل المادة، السنة الدراسية، وطريقة العرض بما يناسبك.</p>
-            <button type="button" onClick={copyPrompt} className={copied ? 'copied' : ''}>
-              {copied ? 'تم نسخ الأمر' : 'نسخ الأمر'}
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></svg>
-            </button>
-          </div>
-          <pre>{examplePrompt}</pre>
         </div>
       </div>
     </section>
@@ -189,10 +151,6 @@ export function AiAcademicGuide() {
           </div>
         </div>
 
-        <aside className="medical-ai-note">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3.5 7v5c0 4.8 3.4 8 8.5 9 5.1-1 8.5-4.2 8.5-9V7L12 3Z" /><path d="M9 12h6M12 9v6" /></svg>
-          <div><strong>تنبيه لطلبة التخصصات الصحية</strong><p>المحتوى المولّد لا يُستخدم للتشخيص أو اتخاذ قرار علاجي. ارجع إلى المراجع الطبية المعتمدة وإشراف عضو هيئة التدريس أو المختص.</p></div>
-        </aside>
       </div>
     </section>
   </main>;
