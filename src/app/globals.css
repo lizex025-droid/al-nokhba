@@ -344,3 +344,17 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
 .ai-detectors-section{padding:80px 0;background:#eef2f5}
 .ai-detectors-note{margin:25px 0 0;padding:17px 20px;border:1px solid rgba(198,161,91,.4);border-radius:12px;background:#fcf8ef;color:#5b4a2d;font-size:13px;line-height:1.9}
 @media(max-width:640px){.ai-detectors-section{padding:48px 0}.ai-show-more{width:100%}}
+
+/* TRFR: fixed card dimensions with internally scrollable expanded content */
+.trfr-grid{align-items:stretch}
+.trfr-card{height:310px;min-height:0;max-height:310px;overflow:hidden;align-items:start}
+.trfr-card-content{min-width:0;min-height:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(198,161,91,.6) transparent;padding-inline-end:5px}
+.trfr-points,.trfr-extra ul{margin:6px 0 9px;padding-inline-start:19px;color:#c5d1dd;font-size:11px;line-height:1.7}
+.trfr-points li,.trfr-extra li{margin-bottom:4px}
+.trfr-expand-button{display:inline-flex;align-items:center;justify-content:center;padding:7px 13px;border:1px solid rgba(198,161,91,.65);border-radius:8px;background:rgba(198,161,91,.12);color:#f3d69a;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.trfr-expand-button:hover{background:rgba(198,161,91,.23)}
+.trfr-expand-button:focus-visible{outline:2px solid #c6a15b;outline-offset:3px}
+.trfr-extra{padding-top:12px}
+.trfr-extra strong{display:block;margin-bottom:8px;color:#f3d69a;font-size:11px}
+.trfr-extra blockquote{font-size:11px}
+@media(max-width:640px){.trfr-card{height:310px;max-height:310px}}
