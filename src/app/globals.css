@@ -627,3 +627,67 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   font-family:'Segoe UI',Arial,sans-serif!important;
   font-weight:700;
 }
+
+/* Reference-inspired mobile navbar: navy glass pill, RTL brand on right, menu on left.
+   Desktop navigation remains unchanged. */
+@media(max-width:800px){
+  .site-header .nav-wrap{
+    direction:rtl;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:76px;
+    height:76px;
+    padding:9px 15px;
+    gap:12px;
+    border-radius:999px;
+    border:1px solid rgba(184,207,231,.20);
+    background:linear-gradient(110deg,#0B3055 0%,#092849 48%,#103D69 100%);
+    box-shadow:0 10px 26px rgba(3,17,31,.22),inset 0 1px 0 rgba(255,255,255,.07);
+  }
+  .site-header .brand{
+    direction:rtl;
+    order:0;
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    margin:0;
+    min-width:0;
+  }
+  .site-header .brand-text{
+    direction:rtl;
+    text-align:right;
+  }
+  .site-header .brand-text strong{color:#fff;font-size:19px}
+  .site-header .brand-text small{color:#c9d8e9}
+  .site-header .brand-mark{
+    flex:0 0 52px;
+    width:52px;
+    height:52px;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    overflow:visible;
+  }
+  .site-header .brand-mark::after{
+    content:"";
+    position:absolute;
+    inset:2px;
+    background:#E5C58C;
+    -webkit-mask:url('/al-nokhba-logo.png?v=20261019') center/contain no-repeat;
+    mask:url('/al-nokhba-logo.png?v=20261019') center/contain no-repeat;
+  }
+  .site-header .menu-toggle{
+    order:2;
+    margin:0;
+    width:48px;
+    height:48px;
+    flex:0 0 48px;
+    background:#061B33;
+    border:1px solid rgba(198,161,91,.55);
+    border-radius:14px;
+    box-shadow:0 4px 12px rgba(0,0,0,.14);
+  }
+  .site-header .menu-toggle span{background:#E5C58C}
+}
