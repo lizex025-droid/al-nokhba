@@ -33,7 +33,7 @@ export default async function SpecialtyPlansPage({ params }: { params: Promise<{
         <h1>الخطط الدراسية — {title}</h1>
         <p>اختر سنة الخطة الدراسية للاطلاع على معلوماتها عند توفر الملفات المعتمدة.</p>
       </header>
-      <StudyPlanYearPicker specialtyTitle={title} />
+      <StudyPlanYearPicker specialtyTitle={title} specialty={specialty} />
     </div>
   </main>;
 }
