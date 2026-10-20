@@ -1136,3 +1136,6 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   .iphone-guide-toolbar{padding:9px 12px}
   .iphone-guide-toolbar strong{font-size:13px}
 }
+
+/* About navigation lands at the opening "من نحن؟" panel rather than the scrollytelling wrapper. */
+.vision-panel-1#about{scroll-margin-top:0}
