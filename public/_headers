@@ -1,0 +1,12 @@
+# Applied by Cloudflare Pages to the exported static website.
+# These headers do not require JavaScript and keep third-party images/PDFs working.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  X-Permitted-Cross-Domain-Policies: none
+
+# Next.js fingerprints static asset URLs, so they can be cached long-term.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
