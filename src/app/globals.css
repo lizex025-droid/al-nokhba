@@ -859,3 +859,14 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 }
 
 .ai-news-image{display:block;cursor:zoom-in}
+
+/* Mobile: transparent surroundings, preserve the oval navbar's navy and gold styling. */
+@media(max-width:800px){
+  .site-header{
+    background:transparent;
+    background-image:none;
+    background-attachment:scroll;
+    box-shadow:none;
+    border:0;
+  }
+}
