@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { IphoneInstallGuide } from '@/components/IphoneInstallGuide';
 
 export const metadata: Metadata = {
   title: 'تنزيل تطبيق rehab ju',
@@ -23,7 +24,7 @@ export default function InstallPage() {
             <span className="install-choice-platform" dir="ltr">iPhone · iOS</span>
             <h2>تنزيل للآيفون</h2>
             <p>أضف الموقع إلى الشاشة الرئيسية عبر Safari، ليظهر باسم rehab ju وبأيقونة التطبيق.</p>
-            <a href={guideImage} target="_blank" rel="noopener noreferrer" className="install-choice-action">عرض طريقة الإضافة <span aria-hidden="true">←</span></a>
+            <IphoneInstallGuide imageUrl={guideImage} />
           </article>
           <article className="install-choice-card install-choice-desktop">
             <div className="install-choice-icon"><img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/svgs/solid/desktop.svg" width="44" height="44" alt="" loading="lazy" decoding="async" /></div>
