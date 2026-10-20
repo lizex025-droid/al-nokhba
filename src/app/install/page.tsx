@@ -23,7 +23,7 @@ export default function InstallPage() {
             <span className="install-choice-platform" dir="ltr">iPhone · iOS</span>
             <h2>تنزيل للآيفون</h2>
             <p>أضف الموقع إلى الشاشة الرئيسية عبر Safari، ليظهر باسم rehab ju وبأيقونة التطبيق.</p>
-            <a href="#iphone-guide" className="install-choice-action">عرض طريقة الإضافة <span aria-hidden="true">←</span></a>
+            <a href={guideImage} target="_blank" rel="noopener noreferrer" className="install-choice-action">عرض طريقة الإضافة <span aria-hidden="true">←</span></a>
           </article>
           <article className="install-choice-card install-choice-desktop">
             <div className="install-choice-icon"><img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/svgs/solid/desktop.svg" width="44" height="44" alt="" loading="lazy" decoding="async" /></div>
@@ -39,21 +39,6 @@ export default function InstallPage() {
             <p>نعمل على توفير طريقة مخصصة وسهلة للإضافة على أجهزة الأندرويد.</p>
             <span className="install-choice-soon">قريبًا</span>
           </article>
-        </div>
-        <div id="iphone-guide" className="install-iphone-guide">
-          <div className="install-guide-title">
-            <span className="install-choice-kicker">خطوات الآيفون</span>
-            <h2>طريقة إضافة rehab ju إلى الشاشة الرئيسية</h2>
-          </div>
-          <figure className="install-page-guide">
-            <a href={guideImage} target="_blank" rel="noopener noreferrer" aria-label="فتح صورة تعليمات التنزيل بالحجم الكامل">
-              <img src={guideImage} alt="طريقة إضافة موقع rehab ju إلى شاشة الآيفون الرئيسية خطوة بخطوة" loading="lazy" decoding="async" />
-            </a>
-            <figcaption>اضغط على الصورة لعرضها بالحجم الكامل.</figcaption>
-          </figure>
-        </div>
-        <div className="install-page-actions">
-          <Link href="/" className="install-page-return">العودة للصفحة الرئيسية ←</Link>
         </div>
       </div>
     </section>
