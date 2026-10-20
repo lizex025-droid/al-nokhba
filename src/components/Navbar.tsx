@@ -31,7 +31,6 @@ export function Navbar() {
       <nav className="mobile-nav-content" aria-label="التنقل على الهاتف">
         {nav.map(item => <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className={pathname === item.href ? 'active' : ''}>{item.label}<ArrowIcon className="arrow-icon" /></Link>)}
         <Link href="/join-us" onClick={() => setOpen(false)}>انضم إلى النخبة <ArrowIcon className="arrow-icon" /></Link>
-        <Link href="/contact" onClick={() => setOpen(false)}>تواصل معنا <ArrowIcon className="arrow-icon" /></Link>
         <Link href="/install" className="mobile-nav-cta" onClick={() => setOpen(false)}>تنزيل التطبيق <ArrowIcon className="arrow-icon" /></Link>
       </nav>
     </div>
