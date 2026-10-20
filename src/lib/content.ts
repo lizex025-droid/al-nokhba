@@ -38,12 +38,12 @@ export const services: Card[] = [
 ];
 
 export const categories: Card[] = [
-  { title: 'مواد العلاج الطبيعي', text: 'ملخصات، مراجعات، محاضرات، وأسئلة تدريبية تساعد طلبة العلاج الطبيعي على فهم موادهم والاستعداد للكويزات والامتحانات.', href: '/physical-therapy-materials', number: '01', image: '/materials/physical-therapy.png' },
-  { title: 'مواد العلاج الوظيفي', text: 'محتوى دراسي منظم لطلبة العلاج الوظيفي، يشمل الملفات، المراجعات، الملخصات، والأسئلة التدريبية.', href: '/occupational-therapy-materials', number: '02', image: '/materials/occupational-therapy.png' },
-  { title: 'مواد الأطراف الاصطناعية والأجهزة المساعدة', text: 'مصادر دراسية تساعد طلبة الأطراف الاصطناعية والأجهزة المساعدة على مراجعة المواد وفهم المفاهيم الأساسية.', href: '/prosthetics-orthotics-materials', number: '03', image: '/materials/prosthetics-orthotics.png' },
-  { title: 'مواد السمع والنطق', text: 'ملخصات ومراجعات تساعد طلبة السمع والنطق على الدراسة بطريقة أوضح وأكثر تنظيمًا.', href: '/hearing-speech-materials', number: '04', image: '/materials/hearing-speech.png' },
-  { title: 'متطلبات الكلية', text: 'ملفات ومراجعات للمواد المشتركة داخل كلية علوم التأهيل.', href: '/faculty-requirements', number: '05', image: '/materials/faculty-requirements.png' },
-  { title: 'متطلبات الجامعة', text: 'محتوى يساعدك في دراسة متطلبات الجامعة الإجبارية والاختيارية.', href: '/university-requirements', number: '06', image: '/materials/university-requirements.png' },
+  { title: 'مواد العلاج الطبيعي', text: 'ملخصات، مراجعات، محاضرات، وأسئلة تدريبية تساعد طلبة العلاج الطبيعي على فهم موادهم والاستعداد للكويزات والامتحانات.', href: '/physical-therapy-materials', number: '01', image: '/materials/physical-therapy.webp' },
+  { title: 'مواد العلاج الوظيفي', text: 'محتوى دراسي منظم لطلبة العلاج الوظيفي، يشمل الملفات، المراجعات، الملخصات، والأسئلة التدريبية.', href: '/occupational-therapy-materials', number: '02', image: '/materials/occupational-therapy.webp' },
+  { title: 'مواد الأطراف الاصطناعية والأجهزة المساعدة', text: 'مصادر دراسية تساعد طلبة الأطراف الاصطناعية والأجهزة المساعدة على مراجعة المواد وفهم المفاهيم الأساسية.', href: '/prosthetics-orthotics-materials', number: '03', image: '/materials/prosthetics-orthotics.webp' },
+  { title: 'مواد السمع والنطق', text: 'ملخصات ومراجعات تساعد طلبة السمع والنطق على الدراسة بطريقة أوضح وأكثر تنظيمًا.', href: '/hearing-speech-materials', number: '04', image: '/materials/hearing-speech.webp' },
+  { title: 'متطلبات الكلية', text: 'ملفات ومراجعات للمواد المشتركة داخل كلية علوم التأهيل.', href: '/faculty-requirements', number: '05', image: '/materials/faculty-requirements.webp' },
+  { title: 'متطلبات الجامعة', text: 'محتوى يساعدك في دراسة متطلبات الجامعة الإجبارية والاختيارية.', href: '/university-requirements', number: '06', image: '/materials/university-requirements.webp' },
 ];
 
 export const faqs = [
