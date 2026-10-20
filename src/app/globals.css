@@ -839,3 +839,21 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     min-height:0;
   }
 }
+
+/* Keep the university news screenshot fully visible on narrow screens. */
+@media(max-width:800px){
+  .ai-news-image{
+    width:100%;
+    height:auto;
+    aspect-ratio:1902 / 869;
+    overflow:hidden;
+    background:#fff;
+  }
+  .ai-news-image img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center;
+  }
+}
