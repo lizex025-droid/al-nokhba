@@ -1265,3 +1265,23 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(max-width:560px){
   .specialty-materials-section .specialty-course-card{background-position:center;min-height:280px}
 }
+
+/* Refine course card proportions: slightly wider presentation and less image crop. */
+.specialty-materials-section .specialty-course-card{
+  min-height:318px;
+  padding:20px;
+  background-size:100% 100%;
+  border-radius:19px;
+}
+.specialty-materials-section .course-card-top{margin-bottom:15px}
+.specialty-materials-section .course-help-link{margin:15px -20px -20px;padding:14px 20px}
+@media(min-width:1101px){
+  .specialty-materials-section .specialty-material-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+}
+@media(max-width:560px){
+  .specialty-materials-section .specialty-course-card{
+    min-height:300px;
+    padding:20px;
+    background-size:100% 100%;
+  }
+}
