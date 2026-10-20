@@ -1285,3 +1285,17 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     background-size:100% 100%;
   }
 }
+
+/* Course cards: remove the gray frame while preserving the background image. */
+.specialty-materials-section .specialty-course-card{
+  border:0;
+  box-shadow:none;
+  outline:0;
+}
+.specialty-materials-section .specialty-course-card:hover{
+  border:0;
+  box-shadow:none;
+}
+.specialty-materials-section .specialty-course-card::before{
+  display:none;
+}
