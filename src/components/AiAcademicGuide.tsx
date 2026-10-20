@@ -141,26 +141,10 @@ export function AiAcademicGuide() {
       </div>
     </section>
 
-    <section className="ai-prompt-section" id="prompt-engineering">
-      <div className="container-wide">
-        <header className="ai-section-heading ai-section-heading-light">
-          <div><span className="ai-section-number">02</span><span className="eyebrow">هندسة الأوامر</span></div>
-          <h2>اكتب طلبك بتقنية TRFR</h2>
-          <p>الأمر هو السؤال أو التعليمات التي تعطيها للأداة. كلما كان واضحًا ومنظمًا، أصبحت النتيجة أقرب إلى ما تحتاجه.</p>
-        </header>
-        <div className="trfr-grid">
-          {trfrSteps.map((step, index) => <article className="trfr-card" key={`${step.letter}-${index}`}>
-            <span className="trfr-letter">{step.letter}</span>
-            <div className="trfr-card-content"><span className="trfr-index">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><ul className="trfr-points">{step.points.map((point) => <li key={point}>{point}</li>)}</ul><div className="trfr-example"><strong>مثال تطبيقي</strong><blockquote>{step.example}</blockquote></div></div>
-          </article>)}
-        </div>
-      </div>
-    </section>
-
     <section className="ai-detectors-section" id="ai-content-verification">
       <div className="container-wide">
         <header className="ai-section-heading">
-          <div><span className="ai-section-number">03</span><span className="eyebrow">التحقق من أصالة المحتوى</span></div>
+          <div><span className="ai-section-number">02</span><span className="eyebrow">التحقق من أصالة المحتوى</span></div>
           <h2>أدوات التحقق من المحتوى والذكاء الاصطناعي</h2>
           <p>تستخدم بعض المؤسسات Turnitin وiThenticate لفحص النزاهة الأكاديمية والتشابه النصي. تختلف ميزات كشف الذكاء الاصطناعي عن فحص التشابه، ولا تُعد النتائج دليلًا قاطعًا.</p>
         </header>
@@ -180,5 +164,21 @@ export function AiAcademicGuide() {
         <p className="ai-detectors-note">تنبيه: قد تخطئ أدوات الكشف في تصنيف النصوص البشرية أو المولّدة. لا تستخدم النتيجة وحدها لإثبات مخالفة أكاديمية، ولا ترفع بيانات حساسة أو معلومات مرضى.</p>
       </div>
     </section>
+    <section className="ai-prompt-section" id="prompt-engineering">
+      <div className="container-wide">
+        <header className="ai-section-heading ai-section-heading-light">
+          <div><span className="ai-section-number">03</span><span className="eyebrow">هندسة الأوامر</span></div>
+          <h2>اكتب طلبك بتقنية TRFR</h2>
+          <p>الأمر هو السؤال أو التعليمات التي تعطيها للأداة. كلما كان واضحًا ومنظمًا، أصبحت النتيجة أقرب إلى ما تحتاجه.</p>
+        </header>
+        <div className="trfr-grid">
+          {trfrSteps.map((step, index) => <article className="trfr-card" key={`${step.letter}-${index}`}>
+            <span className="trfr-letter">{step.letter}</span>
+            <div className="trfr-card-content"><span className="trfr-index">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><ul className="trfr-points">{step.points.map((point) => <li key={point}>{point}</li>)}</ul><div className="trfr-example"><strong>مثال تطبيقي</strong><blockquote>{step.example}</blockquote></div></div>
+          </article>)}
+        </div>
+      </div>
+    </section>
+
   </main>;
 }
