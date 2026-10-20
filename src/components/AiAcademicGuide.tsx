@@ -142,26 +142,34 @@ export function AiAcademicGuide() {
     </section>
 
     <section className="ai-detectors-section" id="ai-content-verification">
-      <div className="container-wide">
-        <header className="ai-section-heading">
+      <div className="container-wide ai-verification-layout">
+        <header className="ai-section-heading ai-verification-heading">
           <div><span className="ai-section-number">02</span><span className="eyebrow">التحقق من أصالة المحتوى</span></div>
           <h2>أدوات التحقق من المحتوى والذكاء الاصطناعي</h2>
-          <p>تستخدم بعض المؤسسات Turnitin وiThenticate لفحص النزاهة الأكاديمية والتشابه النصي. تختلف ميزات كشف الذكاء الاصطناعي عن فحص التشابه، ولا تُعد النتائج دليلًا قاطعًا.</p>
+          <p>تعرّف على أدوات فحص التشابه النصي ومراجعة الكتابة الأكاديمية. تختلف خاصية كشف النصوص المولّدة بالذكاء الاصطناعي عن فحص التشابه، ولا تُعد نتائجها حكمًا نهائيًا.</p>
         </header>
-        <div className="ai-tool-grid">
+        <div className="ai-verification-grid">
           {[
-            { name: 'Turnitin', domain: 'turnitin.com', url: 'https://www.turnitin.com/', bestFor: 'النزاهة الأكاديمية', description: 'منصة تستخدمها مؤسسات تعليمية لفحص التشابه النصي، وتوفر خاصية الكشف عن الكتابة بالذكاء الاصطناعي في خدمات وخطط مؤهلة.' },
-            { name: 'iThenticate', domain: 'ithenticate.com', url: 'https://www.ithenticate.com/', bestFor: 'فحص الأبحاث والتشابه', description: 'منصة لفحص تشابه الأبحاث والمخطوطات العلمية؛ ليست أداة كشف ذكاء اصطناعي بالضرورة، وتختلف الميزات بحسب الخدمة والاشتراك.' },
-          ].map((tool) => <article className="ai-tool-card" key={tool.name}>
-            <div className="ai-tool-card-top">
-              <span className="ai-tool-mark"><img src={officialLogo(tool.domain)} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
-              <span className="ai-tool-use">{tool.bestFor}</span>
+            { name: 'Turnitin', domain: 'turnitin.com', url: 'https://www.turnitin.com/', bestFor: 'النزاهة الأكاديمية', number: '01', detail: 'فحص التشابه ومراجعة النصوص', description: 'تستخدمه مؤسسات تعليمية لفحص التشابه النصي، مع ميزة كشف الكتابة بالذكاء الاصطناعي في خدمات وخطط مؤهلة.' },
+            { name: 'iThenticate', domain: 'ithenticate.com', url: 'https://www.ithenticate.com/', bestFor: 'الأبحاث العلمية', number: '02', detail: 'مراجعة المخطوطات والمراجع', description: 'يركّز على فحص تشابه الأبحاث والمخطوطات العلمية. ميزات كشف الذكاء الاصطناعي ليست متاحة بالضرورة وتعتمد على الخدمة.' },
+          ].map((tool) => <article className="ai-verification-card" key={tool.name}>
+            <div className="ai-verification-card-top">
+              <span className="ai-verification-logo"><img src={officialLogo(tool.domain)} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
+              <span className="ai-verification-number" dir="ltr">{tool.number} / 02</span>
             </div>
-            <h3 dir="ltr">{tool.name}</h3><p>{tool.description}</p>
-            <a href={tool.url} target="_blank" rel="noopener noreferrer" aria-label={`زيارة موقع ${tool.name}`}>زيارة الأداة <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7" /></svg></a>
+            <span className="ai-verification-tag">{tool.bestFor}</span>
+            <h3 dir="ltr">{tool.name}</h3>
+            <strong className="ai-verification-detail">{tool.detail}</strong>
+            <p>{tool.description}</p>
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" aria-label={`زيارة موقع ${tool.name}`}>
+              <span>زيارة الموقع الرسمي</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7" /></svg>
+            </a>
           </article>)}
         </div>
-        <p className="ai-detectors-note">تنبيه: قد تخطئ أدوات الكشف في تصنيف النصوص البشرية أو المولّدة. لا تستخدم النتيجة وحدها لإثبات مخالفة أكاديمية، ولا ترفع بيانات حساسة أو معلومات مرضى.</p>
+        <aside className="ai-verification-caution">
+          <span className="ai-verification-caution-icon" aria-hidden="true">!</span>
+          <div><strong>مهم قبل الاعتماد على النتائج</strong><p>قد تُصنّف أدوات الكشف نصوصًا بشرية على أنها مولّدة، أو العكس. لا تعتمد على نتيجتها وحدها لإثبات مخالفة، ولا تشارك بيانات مرضى أو معلومات شخصية حساسة.</p></div>
+        </aside>
       </div>
     </section>
     <section className="ai-prompt-section" id="prompt-engineering">
