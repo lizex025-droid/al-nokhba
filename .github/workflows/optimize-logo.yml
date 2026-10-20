@@ -1,0 +1,43 @@
+name: Optimize brand logo
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/optimize-logo.yml'
+      - 'public/al-nokhba-logo.png'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Convert footer logo to optimized WebP
+        run: |
+          python -m pip install --disable-pip-version-check pillow
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          src=Path('public/al-nokhba-logo.png')
+          dst=Path('public/al-nokhba-logo.webp')
+          with Image.open(src) as im:
+              im.save(dst, 'WEBP', quality=83, method=6)
+          print('Original:', src.stat().st_size, 'WebP:', dst.stat().st_size)
+          footer=Path('src/components/Footer.tsx')
+          footer.write_text(footer.read_text().replace('/al-nokhba-logo.png', '/al-nokhba-logo.webp'))
+          PY
+      - name: Commit optimized logo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/al-nokhba-logo.webp src/components/Footer.tsx
+          if ! git diff --cached --quiet; then
+            git commit -m "Serve compressed WebP logo in footer"
+            git push
+          fi
