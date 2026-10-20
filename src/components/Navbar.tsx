@@ -23,7 +23,7 @@ export function Navbar() {
       <nav className="desktop-nav" aria-label="التنقل الرئيسي">
         {nav.map(item => <Link key={item.href} href={item.href} className={pathname === item.href ? 'active' : ''}>{item.label}</Link>)}
       </nav>
-      <Link className="nav-cta" href="/materials">ابدأ الدراسة <ArrowIcon className="arrow-icon" /></Link>
+      <Link className="nav-cta" href="/install">تنزيل التطبيق <ArrowIcon className="arrow-icon" /></Link>
       <button className="menu-toggle" type="button" aria-label={open ? 'إغلاق القائمة' : 'فتح القائمة'} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(v => !v)}><span /><span /><span /></button>
     </div>
     <div id="mobile-menu" className={`mobile-nav ${open ? 'open' : ''}`} aria-hidden={!open}>
