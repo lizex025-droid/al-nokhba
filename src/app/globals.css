@@ -857,4 +857,5 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     object-position:center;
   }
 }
-\n.ai-news-image{display:block;cursor:zoom-in}\n
+
+.ai-news-image{display:block;cursor:zoom-in}
