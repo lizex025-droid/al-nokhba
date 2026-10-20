@@ -1103,3 +1103,36 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(max-width:620px){.install-choice-grid{grid-template-columns:1fr;gap:12px}.install-choice-card{min-height:0;padding:22px}.install-choice-intro{margin-bottom:25px}.install-choice-intro p{font-size:13px}.install-iphone-guide{margin-top:37px;scroll-margin-top:105px}.install-page-guide{padding:10px}.install-choice-icon{width:58px;height:58px}.install-choice-icon img{width:34px;height:34px}}
 
 .course-title-link:after{content:'';position:absolute;inset:0}.course-help-link{position:relative;z-index:1}.specialty-course-card:focus-within{outline:2px solid #c6a15a;outline-offset:3px}
+
+/* In-page iPhone installation image viewer: framed, scrollable, no new tab. */
+.iphone-guide-backdrop{
+  position:fixed;inset:0;z-index:10000;display:grid;place-items:center;
+  padding:clamp(10px,3vw,28px);background:rgba(3,17,31,.78);
+  -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+}
+.iphone-guide-frame{
+  width:min(100%,850px);max-height:94dvh;min-height:0;
+  display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid rgba(198,161,91,.45);border-radius:20px;
+  background:#f7f9fb;box-shadow:0 26px 75px rgba(0,0,0,.32);
+}
+.iphone-guide-toolbar{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  flex:none;padding:13px 18px;border-bottom:1px solid #d9e1e9;
+  background:#061b33;color:#fff;
+}
+.iphone-guide-toolbar strong{font-size:15px;font-weight:800}
+.iphone-guide-toolbar button{
+  flex:0 0 40px;width:40px;height:40px;border:1px solid rgba(255,255,255,.35);
+  border-radius:11px;background:rgba(255,255,255,.08);color:#fff;
+  font-size:26px;line-height:1;cursor:pointer;
+}
+.iphone-guide-toolbar button:hover{background:rgba(255,255,255,.2)}
+.iphone-guide-scroll{overflow:auto;overscroll-behavior:contain;min-height:0;padding:clamp(8px,2vw,20px)}
+.iphone-guide-scroll img{display:block;width:100%;height:auto;object-fit:contain;border-radius:10px}
+@media(max-width:600px){
+  .iphone-guide-backdrop{padding:8px}
+  .iphone-guide-frame{max-height:96dvh;border-radius:15px}
+  .iphone-guide-toolbar{padding:9px 12px}
+  .iphone-guide-toolbar strong{font-size:13px}
+}
