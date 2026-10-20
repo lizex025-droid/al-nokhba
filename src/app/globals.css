@@ -1402,3 +1402,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 /* Reference-style footer signature: clean bold navy lettering. */
 .footer-bottom .footer-developer-credit{color:#dbe4ee;font-family:Arial,Tahoma,sans-serif;font-weight:800;font-size:14px;letter-spacing:0;text-transform:none}
 .footer-bottom .footer-developer-credit:hover{color:#fff}
+
+/* Keep developer signature proportional to the footer legal text. */
+.footer-bottom .footer-developer-credit{font-size:11px!important;font-weight:600!important;line-height:1.5;letter-spacing:0;color:#a9b9ca}
+.footer-bottom .footer-developer-credit:hover{color:#fff}
