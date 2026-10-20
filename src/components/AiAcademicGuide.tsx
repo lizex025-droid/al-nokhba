@@ -86,14 +86,6 @@ const trfrSteps = [
   }
 ];
 
-const risks = [
-  { title: 'الانتحال العلمي', english: 'Plagiarism', text: 'تقديم نصوص أو أفكار مولّدة أو منقولة باعتبارها عملًا شخصيًا دون تصريح أو توثيق مناسب.' },
-  { title: 'المراجع الوهمية', english: 'Fabricated references', text: 'ذكر دراسات أو مؤلفين أو روابط غير حقيقية. افتح كل مرجع وتأكد من وجوده ومطابقته للادعاء.' },
-  { title: 'المخالفات الأخلاقية', english: 'Ethical violations', text: 'مخالفة تعليمات المساق أو الجامعة، أو مشاركة بيانات شخصية أو معلومات مرضى مع أداة خارجية.' },
-  { title: 'ضعف التفكير النقدي', english: 'Loss of critical thinking', text: 'قبول الإجابة كما هي من دون تحليلها أو مقارنتها بالمحاضرة والمصادر الأكاديمية المعتمدة.' },
-  { title: 'ضعف النزاهة العلمية', english: 'Poor scientific integrity', text: 'إخفاء طريقة إعداد العمل أو استخدام نتائج غير موثوقة بما يضعف شفافية العمل الأكاديمي.' },
-];
-
 export function AiAcademicGuide() {
   const [activeCategory, setActiveCategory] = useState<'all' | ToolCategory>('all');
   const [query, setQuery] = useState('');
@@ -165,39 +157,10 @@ export function AiAcademicGuide() {
       </div>
     </section>
 
-    <section className="academic-integrity-section" id="academic-integrity">
-      <div className="container-wide">
-        <header className="ai-section-heading">
-          <div><span className="ai-section-number">03</span><span className="eyebrow">استخدام مسؤول</span></div>
-          <h2>النزاهة الأكاديمية قبل سرعة الإنجاز</h2>
-          <p>استخدام الذكاء الاصطناعي لا يُعد انتحالًا تلقائيًا، لكنه يصبح مخالفة عندما تُخفى المصادر أو يُقدَّم عمل مولّد باعتباره عملًا شخصيًا خلافًا للتعليمات.</p>
-        </header>
-
-        <div className="integrity-layout">
-          <div className="integrity-principle">
-            <span>قاعدة مختصرة</span>
-            <h3>استخدم الأداة لتفهم وتفكر، ثم تحقّق واكتب بأسلوبك.</h3>
-            <ul>
-              <li>راجع المعلومة مع المحاضرة والمصدر الأكاديمي المعتمد.</li>
-              <li>افتح كل مرجع وتأكد أنه حقيقي ويدعم الفكرة المذكورة.</li>
-              <li>اتبع تعليمات المدرّس والجامعة واذكر استخدام الأداة عند طلب ذلك.</li>
-              <li>لا ترفع بيانات مرضى أو معلومات شخصية أو ملفات حساسة.</li>
-            </ul>
-          </div>
-          <div className="risk-grid">
-            {risks.map((risk, index) => <article className="risk-card" key={risk.title}>
-              <span>0{index + 1}</span><div><small dir="ltr">{risk.english}</small><h3>{risk.title}</h3><p>{risk.text}</p></div>
-            </article>)}
-          </div>
-        </div>
-
-      </div>
-    </section>
-
     <section className="ai-detectors-section" id="ai-content-verification">
       <div className="container-wide">
         <header className="ai-section-heading">
-          <div><span className="ai-section-number">04</span><span className="eyebrow">التحقق من أصالة المحتوى</span></div>
+          <div><span className="ai-section-number">03</span><span className="eyebrow">التحقق من أصالة المحتوى</span></div>
           <h2>أدوات التحقق من المحتوى والذكاء الاصطناعي</h2>
           <p>تستخدم بعض المؤسسات Turnitin وiThenticate لفحص النزاهة الأكاديمية والتشابه النصي. تختلف ميزات كشف الذكاء الاصطناعي عن فحص التشابه، ولا تُعد النتائج دليلًا قاطعًا.</p>
         </header>
