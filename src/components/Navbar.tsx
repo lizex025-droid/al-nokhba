@@ -14,7 +14,7 @@ export function Navbar() {
     return () => document.body.classList.remove('nav-open');
   }, [open]);
   useEffect(() => setOpen(false), [pathname]);
-  return <header className="site-header">
+  return <header className={`site-header${pathname === "/" ? " site-header-home" : ""}`}>
     <div className="nav-wrap container-wide">
       <Link href="/" className="brand" aria-label="النخبة — الرئيسية" onClick={() => { setOpen(false); if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
         <span className="brand-mark" aria-hidden="true"><span>ن</span></span>
