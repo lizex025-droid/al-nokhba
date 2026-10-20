@@ -1398,3 +1398,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 .footer-bottom .footer-developer-credit{display:inline-flex;align-items:center;direction:ltr;white-space:nowrap;color:#dfc391;font-size:12px;font-weight:700;text-decoration:none;transition:color .2s ease}
 .footer-bottom .footer-developer-credit:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:600px){.footer-bottom .footer-developer-credit{justify-content:center;width:100%;margin-top:8px}}
+
+/* Reference-style footer signature: clean bold navy lettering. */
+.footer-bottom .footer-developer-credit{color:#dbe4ee;font-family:Arial,Tahoma,sans-serif;font-weight:800;font-size:14px;letter-spacing:0;text-transform:none}
+.footer-bottom .footer-developer-credit:hover{color:#fff}
