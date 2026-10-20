@@ -944,3 +944,13 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     backdrop-filter:none;
   }
 }
+
+/* Blue active navigation tab instead of gold, on desktop and tablet. */
+@media(min-width:1051px){
+  .site-header .desktop-nav a.active,
+  .site-header .desktop-nav a[aria-current="page"]{
+    color:#0B2D52;
+    background:#E7F0F8;
+    border-color:#A9C9E4;
+  }
+}
