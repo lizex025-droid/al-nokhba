@@ -8,31 +8,13 @@ import { ArrowIcon } from './Icons';
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [withinHomeHero, setWithinHomeHero] = useState(true);
   const pathname = usePathname();
   useEffect(() => {
     document.body.classList.toggle('nav-open', open);
     return () => document.body.classList.remove('nav-open');
   }, [open]);
   useEffect(() => setOpen(false), [pathname]);
-  useEffect(() => {
-    if (pathname !== '/') return;
-    const syncHeroBoundary = () => {
-      const hero = document.querySelector<HTMLElement>('.home-hero');
-      const header = document.querySelector<HTMLElement>('.site-header');
-      if (!hero || !header) return;
-      // Match the header background to the hero until the following section arrives.
-      setWithinHomeHero(hero.getBoundingClientRect().bottom > header.getBoundingClientRect().bottom);
-    };
-    syncHeroBoundary();
-    window.addEventListener('scroll', syncHeroBoundary, { passive: true });
-    window.addEventListener('resize', syncHeroBoundary);
-    return () => {
-      window.removeEventListener('scroll', syncHeroBoundary);
-      window.removeEventListener('resize', syncHeroBoundary);
-    };
-  }, [pathname]);
-  return <header className={`site-header${pathname === "/" ? " site-header-home" : ""}${pathname === "/" && withinHomeHero ? " site-header-home-hero" : ""}`}>
+  return <header className={`site-header${pathname === "/" ? " site-header-home" : ""}`}>
     <div className="nav-wrap container-wide">
       <Link href="/" className="brand" aria-label="النخبة — الرئيسية" onClick={() => { setOpen(false); if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
         <span className="brand-mark" aria-hidden="true"><span>ن</span></span>
