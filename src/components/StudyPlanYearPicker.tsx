@@ -24,6 +24,5 @@ export function StudyPlanYearPicker({ specialtyTitle, specialty }: { specialtyTi
       <div><h2>{specialtyTitle} — خطة {selected}</h2>
       {linkedPdf ? <><p>ملف الخطة متاح للعرض. ملاحظة: اسم الملف يشير إلى العام الدراسي 2020–2021؛ يرجى التأكد من مطابقته لسنة خطتك.</p><a className="plan-year-pdf-link" href={linkedPdf} target="_blank" rel="noopener noreferrer">فتح ملف PDF ↗</a></> : <p>ملف هذه الخطة لم يُضف إلى الموقع بعد. سيتم عرض تفاصيلها هنا عند توفير الملف الرسمي، حتى لا نعرض مواد أو ساعات غير موثّقة.</p>}</div>
     </div>}
-    {linkedPdf && <div className="plan-year-pdf-viewer"><iframe key={selected} src={linkedPdf} title={`الخطة الدراسية لتخصص ${specialtyTitle} — ${selected}`} loading="lazy" /></div>}
   </div>;
 }
