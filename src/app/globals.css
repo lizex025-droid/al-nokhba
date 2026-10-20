@@ -1393,3 +1393,8 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 .plan-year-pdf-viewer{margin-top:20px;padding:10px;border:1px solid #ccdbe7;border-radius:18px;background:#fff;box-shadow:0 16px 32px rgba(6,27,51,.08)}
 .plan-year-pdf-viewer iframe{display:block;width:100%;height:min(77vh,850px);min-height:440px;border:0;border-radius:10px;background:#edf2f6}
 @media(max-width:600px){.plan-year-pdf-viewer{padding:5px}.plan-year-pdf-viewer iframe{height:68svh;min-height:380px}}
+
+/* Subtle creator credit in the global footer. */
+.footer-bottom .footer-developer-credit{display:inline-flex;align-items:center;direction:ltr;white-space:nowrap;color:#dfc391;font-size:12px;font-weight:700;text-decoration:none;transition:color .2s ease}
+.footer-bottom .footer-developer-credit:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:600px){.footer-bottom .footer-developer-credit{justify-content:center;width:100%;margin-top:8px}}
