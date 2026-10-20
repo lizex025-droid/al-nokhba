@@ -1229,3 +1229,39 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 .specialty-materials-section .mobile-filter-selects select{background:#eaf2f9;border-color:#83a6c2;color:#0b2d52}
 .specialty-materials-section .mobile-filter-selects select:focus{border-color:#80bfef;box-shadow:0 0 0 3px rgba(128,191,239,.20)}
 @media(prefers-reduced-motion:reduce){.specialty-materials-section .specialty-course-card{transition:none}}
+
+/* Shared R2 image background for all dynamic course cards. Text remains HTML. */
+.specialty-materials-section .specialty-course-card{
+  background-image:
+    linear-gradient(180deg,rgba(4,18,34,.40) 0%,rgba(4,18,34,.78) 100%),
+    url("https://pub-7353766376b14b8fa88b7a2a55859c04.r2.dev/Premium%20Navy%20Academic%20Course%20Banner.png");
+  background-color:#092849;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  border:1px solid rgba(148,191,223,.30);
+  border-radius:20px;
+  box-shadow:0 16px 34px rgba(6,27,51,.16);
+}
+.specialty-materials-section .specialty-course-card:hover{
+  border-color:rgba(114,184,236,.72);
+  box-shadow:0 24px 42px rgba(6,27,51,.22);
+}
+.specialty-materials-section .specialty-course-card h2,
+.specialty-materials-section .specialty-course-card h2 a{color:#fff}
+.specialty-materials-section .specialty-course-card>p{color:#d6e3ee}
+.specialty-materials-section .course-year{color:#c7d9e7}
+.specialty-materials-section .course-index{color:#b7cddd}
+.specialty-materials-section .course-card-meta span{
+  background:rgba(255,255,255,.12);
+  color:#eef6fc;
+}
+.specialty-materials-section .course-help-link{
+  background:rgba(3,17,31,.42);
+  border-top-color:rgba(214,230,242,.18);
+  color:#fff;
+}
+.specialty-materials-section .course-help-link:hover{background:rgba(34,92,138,.9)}
+@media(max-width:560px){
+  .specialty-materials-section .specialty-course-card{background-position:center;min-height:280px}
+}
