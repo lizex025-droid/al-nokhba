@@ -1306,3 +1306,83 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   font-weight:800;
   letter-spacing:-.015em;
 }
+
+/* Al Nokhba FAQ redesign — premium navy, individual interactive question panels. */
+#main-content .faq-section{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding-block:clamp(70px,8vw,112px);
+  background:linear-gradient(125deg,#03111f 0%,#061b33 52%,#0b3055 100%);
+}
+#main-content .faq-section::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:85px 85px;
+  mask-image:linear-gradient(90deg,transparent,black 55%);
+}
+#main-content .faq-section .faq-layout{
+  grid-template-columns:minmax(275px,.78fr) minmax(0,1.22fr);
+  gap:clamp(36px,5vw,85px);
+  align-items:start;
+}
+#main-content .faq-section .section-heading{position:sticky;top:135px;max-width:500px}
+#main-content .faq-section .section-heading .eyebrow{color:#e6c88e}
+#main-content .faq-section .section-heading h2{
+  color:#fff;font-size:clamp(35px,4vw,60px);line-height:1.35;
+}
+#main-content .faq-section .section-heading p{
+  color:#bed0e1;font-size:clamp(14px,1.3vw,17px);line-height:1.95;
+}
+#main-content .faq-section .faq-list{
+  display:grid;gap:13px;border:0;min-width:0;
+}
+#main-content .faq-section .faq-item{
+  position:relative;overflow:hidden;border:1px solid rgba(167,201,228,.22);
+  border-radius:17px;background:rgba(255,255,255,.075);
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  transition:background .2s,border-color .2s,box-shadow .2s;
+}
+#main-content .faq-section .faq-item.open{
+  background:rgba(255,255,255,.12);
+  border-color:rgba(214,185,127,.62);
+  box-shadow:0 14px 34px rgba(0,0,0,.16);
+}
+#main-content .faq-section .faq-item button{
+  width:100%;min-height:74px;padding:19px 22px;
+  color:#f5f9fd;font-size:clamp(14px,1.18vw,17px);
+  font-weight:800;line-height:1.7;cursor:pointer;
+  gap:18px;
+}
+#main-content .faq-section .faq-item button:hover{background:rgba(255,255,255,.055)}
+#main-content .faq-section .faq-item button:focus-visible{outline:2px solid #dfc391;outline-offset:-4px}
+#main-content .faq-section .faq-plus{
+  flex:none;width:29px;height:29px;padding:5px;border-radius:50%;
+  background:rgba(205,225,240,.13);color:#e9c989;
+}
+#main-content .faq-section .faq-item.open .faq-plus{
+  background:rgba(223,195,145,.2);color:#f4d59b;
+}
+#main-content .faq-section .faq-answer p{
+  color:#d2e0ed;font-size:clamp(13px,1.05vw,15px);
+  line-height:2;padding-inline:22px;
+}
+#main-content .faq-section .faq-item.open .faq-answer p{
+  padding-bottom:23px;
+}
+@media(max-width:900px){
+  #main-content .faq-section .faq-layout{grid-template-columns:1fr;gap:27px}
+  #main-content .faq-section .section-heading{position:static}
+}
+@media(max-width:560px){
+  #main-content .faq-section{padding-block:60px 70px}
+  #main-content .faq-section .faq-list{gap:10px}
+  #main-content .faq-section .faq-item{border-radius:14px}
+  #main-content .faq-section .faq-item button{padding:16px;min-height:66px}
+  #main-content .faq-section .faq-answer p{padding-inline:16px}
+  #main-content .faq-section .faq-item.open .faq-answer p{padding-bottom:17px}
+}
+@media(prefers-reduced-motion:reduce){
+  #main-content .faq-section .faq-item{transition:none}
+}
