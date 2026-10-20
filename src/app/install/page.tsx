@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { IphoneInstallGuide } from '@/components/IphoneInstallGuide';
 
 export const metadata: Metadata = {
@@ -8,6 +7,8 @@ export const metadata: Metadata = {
 };
 
 const guideImage = "https://pub-7353766376b14b8fa88b7a2a55859c04.r2.dev/%D8%B7%D8%B1%D9%8A%D9%82%D8%A9%20%D8%A5%D8%B6%D8%A7%D9%81%D8%A9%20%D9%85%D9%88%D9%82%D8%B9%20rehab%20ju%20%D8%A5%D9%84%D9%89%20%D8%B4%D8%A7%D8%B4%D8%A9%20%D8%A7%D9%84%D8%A2%D9%8A%D9%81%D9%88%D9%86.png";
+
+const desktopGuideImage = "https://pub-7353766376b14b8fa88b7a2a55859c04.r2.dev/%D8%AF%D9%84%D9%8A%D9%84%20%D8%AA%D8%AB%D8%A8%D9%8A%D8%AA%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D9%83%D9%85%D8%A8%D9%8A%D9%88%D8%AA%D8%B1.png";
 
 export default function InstallPage() {
   return (
@@ -29,9 +30,9 @@ export default function InstallPage() {
           <article className="install-choice-card install-choice-desktop">
             <div className="install-choice-icon"><img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/svgs/solid/desktop.svg" width="44" height="44" alt="" loading="lazy" decoding="async" /></div>
             <span className="install-choice-platform" dir="ltr">Desktop · Web</span>
-            <h2>استخدام على الديسكتوب</h2>
+            <h2>تنزيل للكمبيوتر</h2>
             <p>افتح النخبة من متصفح الكمبيوتر مباشرةً، ويمكنك تثبيت اختصار للموقع من خيارات المتصفح إن كانت مدعومة.</p>
-            <Link href="/" className="install-choice-action">فتح في المتصفح <span aria-hidden="true">←</span></Link>
+            <IphoneInstallGuide imageUrl={desktopGuideImage} device="الكمبيوتر" actionLabel="عرض طريقة التثبيت" />
           </article>
           <article className="install-choice-card install-choice-android">
             <div className="install-choice-icon"><img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/svgs/brands/android.svg" width="44" height="44" alt="" loading="lazy" decoding="async" /></div>
