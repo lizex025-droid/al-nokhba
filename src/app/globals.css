@@ -1139,3 +1139,17 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 
 /* About navigation lands at the opening "من نحن؟" panel rather than the scrollytelling wrapper. */
 .vision-panel-1#about{scroll-margin-top:0}
+
+/* Study plans — specialty banners hosted on Cloudflare R2. */
+.study-plans-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.study-plans-grid .service-card-image{min-height:350px;border-radius:20px;padding:24px;box-shadow:0 12px 35px rgba(6,27,51,.07)}
+.study-plans-grid .service-card-cover{display:block;position:relative;flex:none;width:calc(100% + 48px);aspect-ratio:16/7;overflow:hidden;margin:-24px -24px 22px;border-radius:20px 20px 0 0;background:#0b2d52}
+.study-plans-grid .service-card-cover img{object-fit:cover;object-position:center}
+.study-plans-grid .service-card h3{font-size:19px;line-height:1.5}
+.study-plans-grid .service-card p{font-size:13px;line-height:1.9}
+.study-plans-grid .service-card-image .card-top{position:static}
+@media(max-width:650px){
+  .study-plans-grid{grid-template-columns:1fr;gap:16px}
+  .study-plans-grid .service-card-image{min-height:0;padding:20px}
+  .study-plans-grid .service-card-cover{width:calc(100% + 40px);margin:-20px -20px 18px;aspect-ratio:16/8}
+}
