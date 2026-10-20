@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-export function IphoneInstallGuide({ imageUrl }: { imageUrl: string }) {
+export function IphoneInstallGuide({ imageUrl, device = 'الآيفون', actionLabel = 'عرض طريقة الإضافة' }: { imageUrl: string; device?: string; actionLabel?: string }) {
   const [open, setOpen] = useState(false);
   const closeButton = useRef<HTMLButtonElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -25,19 +25,19 @@ export function IphoneInstallGuide({ imageUrl }: { imageUrl: string }) {
 
   return <>
     <button ref={trigger} type="button" className="install-choice-action" onClick={() => setOpen(true)}>
-      عرض طريقة الإضافة <span aria-hidden="true">←</span>
+      {actionLabel} <span aria-hidden="true">←</span>
     </button>
     {open && (
       <div className="iphone-guide-backdrop" onMouseDown={(event) => {
         if (event.target === event.currentTarget) setOpen(false);
       }}>
-        <div className="iphone-guide-frame" role="dialog" aria-modal="true" aria-label="طريقة إضافة rehab ju إلى شاشة الآيفون">
+        <div className="iphone-guide-frame" role="dialog" aria-modal="true" aria-label={`طريقة تثبيت rehab ju على ${device}`}>
           <div className="iphone-guide-toolbar">
-            <strong>طريقة إضافة rehab ju للآيفون</strong>
+            <strong>طريقة تثبيت rehab ju على {device}</strong>
             <button ref={closeButton} type="button" onClick={() => setOpen(false)} aria-label="إغلاق الصورة">×</button>
           </div>
           <div className="iphone-guide-scroll">
-            <img src={imageUrl} alt="خطوات إضافة موقع rehab ju إلى الشاشة الرئيسية على الآيفون" decoding="async" />
+            <img src={imageUrl} alt={`دليل تثبيت rehab ju على ${device}`} decoding="async" />
           </div>
         </div>
       </div>
