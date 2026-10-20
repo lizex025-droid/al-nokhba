@@ -954,3 +954,35 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     border-color:#A9C9E4;
   }
 }
+
+/* Consistent mobile-inspired navy oval across tablet and desktop.
+   Keep the glass outer shell and accessible, blue active tab indicator. */
+@media(min-width:801px){
+  .site-header .nav-wrap{
+    background:linear-gradient(110deg,#0B3055 0%,#092849 48%,#103D69 100%);
+    border:1px solid rgba(184,207,231,.20);
+    box-shadow:0 10px 26px rgba(3,17,31,.22),inset 0 1px 0 rgba(255,255,255,.07);
+  }
+  .site-header .brand-text strong{color:#fff}
+  .site-header .brand-text small{color:#C9D8E9}
+  .site-header .desktop-nav a{
+    color:#E5EDF5;
+  }
+  .site-header .desktop-nav a:hover{
+    background:rgba(153,196,232,.16);
+    border-color:rgba(169,201,228,.35);
+    color:#fff;
+  }
+  .site-header .desktop-nav a.active,
+  .site-header .desktop-nav a[aria-current="page"]{
+    color:#fff;
+    background:rgba(64,135,198,.40);
+    border-color:#7CAED9;
+  }
+  .site-header .nav-cta{
+    background:#03111F;
+    color:#fff;
+    border:1px solid rgba(198,161,91,.45);
+  }
+  .site-header .nav-cta:hover{background:#0B2D52}
+}
