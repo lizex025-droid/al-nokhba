@@ -905,3 +905,42 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   .site-header,.site-header.site-header-home{background:rgba(6,27,51,.90);-webkit-backdrop-filter:none;backdrop-filter:none}
   .site-header .nav-wrap{background:#061b33;-webkit-backdrop-filter:none;backdrop-filter:none}
 }
+
+/* Extend the portfolio-style translucent outer header to tablet and desktop.
+   Desktop/tablet keep their existing white oval and mobile keeps its navy oval. */
+@media(min-width:801px){
+  .site-header,
+  .site-header.site-header-home{
+    position:fixed;
+    top:0;
+    inset-inline:0;
+    width:100%;
+    padding-top:14px;
+    padding-bottom:9px;
+    background:rgba(6,27,51,.045);
+    background-image:none;
+    background-attachment:scroll;
+    -webkit-backdrop-filter:blur(12px) saturate(135%);
+    backdrop-filter:blur(12px) saturate(135%);
+    border:0;
+    border-bottom:1px solid rgba(165,184,203,.22);
+    box-shadow:none;
+  }
+  .site-header .nav-wrap{
+    background:#fff;
+    border:1px solid rgba(217,222,229,.82);
+  }
+  #main-content{padding-top:95px}
+  .site-header-home + #main-content{padding-top:0}
+  .home-hero .hero-layout{padding-top:150px}
+}
+@media(min-width:801px) and (max-width:1050px){
+  .home-hero .hero-layout{padding-top:130px}
+}
+@media(min-width:801px) and (prefers-reduced-transparency:reduce){
+  .site-header,.site-header.site-header-home{
+    background:rgba(6,27,51,.90);
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
+}
