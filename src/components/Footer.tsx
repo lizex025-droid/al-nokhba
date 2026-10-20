@@ -6,7 +6,7 @@ import { ArrowIcon } from './Icons';
 export function Footer() { return <footer className="footer">
   <div className="container-wide footer-top">
     <div className="footer-intro">
-      <Link href="/" className="footer-brand" aria-label="النخبة — الصفحة الرئيسية"><span className="footer-brand-logo" aria-hidden="true"><Image src="/al-nokhba-logo.png" alt="" width={96} height={96} priority /></span><span className="footer-brand-text"><strong>النخبة</strong><small>علوم التأهيل</small></span></Link>
+      <Link href="/" className="footer-brand" aria-label="النخبة — الصفحة الرئيسية"><span className="footer-brand-logo" aria-hidden="true"><Image src="/al-nokhba-logo.png" alt="" width={96} height={96} loading="lazy" decoding="async" /></span><span className="footer-brand-text"><strong>النخبة</strong><small>علوم التأهيل</small></span></Link>
       <p>موقع أكاديمي طلابي يخدم طلبة كلية علوم التأهيل في الجامعة الأردنية من خلال مركز مواد، ملخصات، مراجعات، أدوات ذكاء اصطناعي، إيميلات الدكاترة، وخدمات دراسية تساعد الطالب على الدراسة بوضوح.</p>
       <strong className="footer-motto">من الطالب… وللطالب.</strong>
     </div>
