@@ -1177,3 +1177,55 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(max-width:900px){.plan-year-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:550px){.plan-year-grid{gap:12px}.plan-year-card{padding:18px;min-height:172px}.plan-year-result{align-items:flex-start;flex-direction:column;padding:20px;gap:8px}.plan-year-heading p{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.plan-year-card{transition:none}.plan-year-card:hover{transform:none}}
+
+/* Premium Al Nokhba academic catalog — navy surfaces instead of plain white. */
+#main-content .specialty-materials-section{
+  background:linear-gradient(145deg,#e9eff5 0%,#f2f5f8 53%,#e5edf4 100%);
+}
+.specialty-materials-section .specialty-filters{
+  background:linear-gradient(155deg,#0b3055,#061b33);
+  border:1px solid rgba(141,181,216,.28);
+  box-shadow:0 20px 40px rgba(6,27,51,.17);
+}
+.specialty-materials-section .filter-heading{border-color:rgba(207,224,238,.16)}
+.specialty-materials-section .filter-heading>span,
+.specialty-materials-section .filter-group legend{color:#fff}
+.specialty-materials-section .filter-heading button{color:#dfc391}
+.specialty-materials-section .filter-group+.filter-group{border-color:rgba(207,224,238,.16)}
+.specialty-materials-section .filter-group label{color:#c3d5e5}
+.specialty-materials-section .filter-group label:hover{background:rgba(191,215,234,.12);color:#fff}
+.specialty-materials-section .filter-group label:has(input:checked){background:rgba(80,145,198,.32);color:#fff}
+.specialty-materials-section .filter-group input{accent-color:#72b8ed}
+.specialty-materials-section .filter-group b{background:rgba(255,255,255,.10);color:#d7e7f5}
+.specialty-materials-section .filter-group label:has(input:checked) b{background:#d5eaff;color:#061b33}
+.specialty-materials-section .material-search{
+  background:linear-gradient(130deg,#0c3155,#071e36);
+  border:1px solid rgba(115,163,199,.28);
+  box-shadow:0 13px 34px rgba(6,27,51,.15);
+}
+.specialty-materials-section .material-search input{
+  background:#f1f6fa;color:#102b45;border:1px solid #b9cad9;
+}
+.specialty-materials-section .material-search input:focus{background:#fff;border-color:#5ba1d6;box-shadow:0 0 0 4px rgba(93,163,218,.20)}
+.specialty-materials-section .material-search>button{background:#215a8b;border:1px solid rgba(182,219,246,.26)}
+.specialty-materials-section .material-search>button:hover{background:#3476ad}
+.specialty-materials-section .specialty-course-card{
+  background:linear-gradient(155deg,#10395e 0%,#0b2d52 48%,#071e36 100%);
+  border:1px solid rgba(148,191,223,.25);
+  box-shadow:0 16px 32px rgba(6,27,51,.13);
+}
+.specialty-materials-section .specialty-course-card:hover{border-color:rgba(114,184,236,.72);box-shadow:0 22px 42px rgba(6,27,51,.22)}
+.specialty-materials-section .course-index{color:#a5bfd4}
+.specialty-materials-section .course-nature{background:rgba(214,184,121,.13);color:#f1d29a;border-color:rgba(218,184,125,.44)}
+.specialty-materials-section .course-year{color:#a9c5dd}
+.specialty-materials-section .specialty-course-card h2,
+.specialty-materials-section .specialty-course-card h2 a{color:#fff}
+.specialty-materials-section .specialty-course-card>p{color:#c5d6e5}
+.specialty-materials-section .course-card-meta span{background:rgba(194,219,236,.13);color:#d5e6f3;border:1px solid rgba(194,219,236,.12)}
+.specialty-materials-section .course-help-link{color:#e6f3ff;border-top-color:rgba(183,216,237,.22);background:rgba(3,17,31,.17)}
+.specialty-materials-section .course-help-link:hover{background:#1d5a8d;color:#fff}
+.specialty-materials-section .material-results-bar p{color:#0b2d52}
+.specialty-materials-section .mobile-filter-selects label>span{color:#e2effa}
+.specialty-materials-section .mobile-filter-selects select{background:#eaf2f9;border-color:#83a6c2;color:#0b2d52}
+.specialty-materials-section .mobile-filter-selects select:focus{border-color:#80bfef;box-shadow:0 0 0 3px rgba(128,191,239,.20)}
+@media(prefers-reduced-motion:reduce){.specialty-materials-section .specialty-course-card{transition:none}}
