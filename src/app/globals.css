@@ -1153,3 +1153,27 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   .study-plans-grid .service-card-image{min-height:0;padding:20px}
   .study-plans-grid .service-card-cover{width:calc(100% + 40px);margin:-20px -20px 18px;aspect-ratio:16/8}
 }
+
+/* Academic plan selection by year */
+.plan-year-page{min-height:75svh;padding:clamp(40px,6vw,85px) 0 100px;background:linear-gradient(135deg,#edf2f6,#f9fbfc 60%,#e9eff5)}
+.plan-year-breadcrumb{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:#62758a;font-size:13px;margin-bottom:35px}
+.plan-year-breadcrumb a{color:#0b2d52;font-weight:800;text-decoration:underline;text-underline-offset:5px}
+.plan-year-heading{max-width:850px;margin:0 auto 35px;text-align:center}
+.plan-year-heading .eyebrow{font-size:12px;color:#967137;font-weight:800}
+.plan-year-heading h1{font-size:clamp(29px,3.4vw,46px);line-height:1.5;color:#061b33;margin:15px 0}
+.plan-year-heading p{font-size:15px;line-height:1.9;color:#526679;margin:0}
+.plan-year-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.plan-year-card{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:16px;padding:26px;min-height:215px;text-align:right;border:1px solid #d6e0e9;border-radius:20px;background:#fff;box-shadow:0 12px 28px rgba(6,27,51,.05);cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.plan-year-card:hover,.plan-year-card:focus-visible{transform:translateY(-4px);border-color:#86b2d8;box-shadow:0 17px 32px rgba(6,27,51,.12)}
+.plan-year-card.selected{background:#0b2d52;border-color:#0b2d52;color:#fff}
+.plan-year-label{color:#63768a;font-size:12px;font-weight:700}
+.plan-year-card strong{font:800 clamp(34px,3vw,47px)/1.2 Tahoma,Arial,sans-serif;color:#061b33;letter-spacing:-.04em}
+.plan-year-action{margin-top:auto;color:#0b2d52;font-size:13px;font-weight:800;width:100%;display:flex;justify-content:space-between}
+.plan-year-card.selected .plan-year-label,.plan-year-card.selected .plan-year-action,.plan-year-card.selected strong{color:#fff}
+.plan-year-result{display:flex;align-items:center;gap:22px;margin-top:24px;background:#fff;border:1px solid #cbdce9;border-right:4px solid #c6a15b;border-radius:18px;padding:23px 28px;box-shadow:0 12px 30px rgba(6,27,51,.05)}
+.plan-year-result-number{flex:none;font-weight:800;color:#0b2d52;font-size:31px}
+.plan-year-result h2{font-size:19px;color:#061b33;margin:0 0 9px}
+.plan-year-result p{font-size:13px;color:#516579;line-height:1.9;margin:0}
+@media(max-width:900px){.plan-year-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:550px){.plan-year-grid{gap:12px}.plan-year-card{padding:18px;min-height:172px}.plan-year-result{align-items:flex-start;flex-direction:column;padding:20px;gap:8px}.plan-year-heading p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.plan-year-card{transition:none}.plan-year-card:hover{transform:none}}
