@@ -870,3 +870,12 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     border:0;
   }
 }
+
+/* Home only: restore the original dark navy surrounding the oval mobile navbar. */
+@media(max-width:800px){
+  .site-header.site-header-home{
+    background:radial-gradient(circle at 21% 66%,rgba(20,71,113,.45),transparent 35%),
+      linear-gradient(115deg,var(--navy-dark),var(--navy) 61%,#0a3054);
+    background-attachment:scroll;
+  }
+}
