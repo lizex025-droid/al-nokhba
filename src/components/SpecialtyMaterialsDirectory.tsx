@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FormEvent, useMemo, useState } from 'react';
-import { AcademicYear, MaterialNature, specialtyMaterialSets } from '@/lib/specialtyMaterials';
+import { AcademicYear, MaterialNature, specialtyMaterialSets, courseId, courseDescription } from '@/lib/specialtyMaterials';
 import { ArrowIcon } from '@/components/Icons';
 
 const natures: MaterialNature[] = ['إجباري عام', 'إجباري كلية', 'إجباري تخصص'];
@@ -98,11 +98,11 @@ export function SpecialtyMaterialsDirectory({ specialty }: { specialty: string }
                 <span className="course-index">{String(index + 1).padStart(2, '0')}</span>
                 <span className="course-nature">{material.nature}</span>
               </div>
-              <div className="course-year">السنة {material.year}</div>
-              <h2>{material.title}</h2>
-              <p>{material.description}</p>
-              <div className="course-card-meta"><span dir="ltr">{material.code}</span><span>{material.hours} {material.hours === 1 ? 'ساعة' : 'ساعات'}</span></div>
-              <Link href="/request-help" className="course-help-link">اطلب محتوى المادة <ArrowIcon className="arrow-icon" /></Link>
+              {material.year && <div className="course-year">السنة {material.year}</div>}
+              <h2><Link className="course-title-link" href={`/courses/${encodeURIComponent(courseId(material))}`}>{material.title}</Link></h2>
+              <p>{courseDescription(material)}</p>
+              <div className="course-card-meta"><span dir="ltr">{material.code}</span>{material.hours != null && <span>{material.hours} {material.hours === 1 ? 'ساعة' : 'ساعات'}</span>}</div>
+              <Link href={`/courses/${encodeURIComponent(courseId(material))}`} className="course-help-link">اطلب محتوى المادة <ArrowIcon className="arrow-icon" /></Link>
             </article>)}
           </div> : <div className="material-empty-state">
             <span><SearchIcon /></span>

@@ -1,13 +1,18 @@
 export type MaterialNature = 'إجباري عام' | 'إجباري كلية' | 'إجباري تخصص';
 export type AcademicYear = 'الأولى' | 'الثانية' | 'الثالثة' | 'الرابعة';
 
+import type { CourseResource } from './courseResources';
+
 export type SpecialtyMaterial = {
-  code: string;
+  id?: string;
+  semester?: string;
+  resources?: CourseResource[];
+  code?: string;
   title: string;
-  description: string;
-  nature: MaterialNature;
-  year: AcademicYear;
-  hours: number;
+  description?: string;
+  nature?: MaterialNature;
+  year?: AcademicYear;
+  hours?: number;
 };
 
 export type SpecialtyMaterialSet = {
@@ -84,3 +89,40 @@ export const specialtyMaterialSets: Record<string, SpecialtyMaterialSet> = {
     ],
   },
 };
+
+// Shared requirement lists reuse the original records, never copies of official metadata.
+for (const [slug, title, nature] of [
+  ['faculty-requirements', 'متطلبات الكلية', 'إجباري كلية'],
+  ['university-requirements', 'متطلبات الجامعة', 'إجباري عام'],
+] as const) {
+  const records = Object.values(specialtyMaterialSets).flatMap(set => set.materials);
+  specialtyMaterialSets[slug] = {
+    title, subtitle: 'تصفح المواد المشتركة وابحث بالاسم أو الرمز والسنة الدراسية.',
+    materials: [...new Map(records.filter(item => item.nature === nature).map(item => [item.id || item.code || item.title, item])).values()],
+  };
+}
+
+export function courseId(material: SpecialtyMaterial): string {
+  // Existing codes are stable; explicit IDs support future courses without codes.
+  return (material.id || material.code || material.title).trim().toLowerCase().replace(/\s+/g, '-');
+}
+
+export function allCourses() {
+  const entries = new Map<string, { id: string; material: SpecialtyMaterial; categories: { slug: string; title: string }[] }>();
+  for (const [slug, set] of Object.entries(specialtyMaterialSets)) {
+    for (const material of set.materials) {
+      const id = courseId(material);
+      const existing = entries.get(id);
+      if (existing) {
+        if (existing.material.title !== material.title) throw new Error(`Course ID collision: ${id}. Supply an explicit id.`);
+        existing.categories.push({ slug, title: set.title });
+        existing.material = { ...existing.material, resources: [...(existing.material.resources || []), ...(material.resources || [])] };
+      } else entries.set(id, { id, material, categories: [{ slug, title: set.title }] });
+    }
+  }
+  return [...entries.values()];
+}
+
+export function courseDescription(material: SpecialtyMaterial) {
+  return material.description?.trim() || `مساحة دراسية لمادة «${material.title}»، تجمع المصادر المتاحة وتُنظّمها لتسهيل الفهم والمراجعة والاستعداد للتقييمات.`;
+}
