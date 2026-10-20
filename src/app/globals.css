@@ -801,3 +801,41 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   }
   .site-header .nav-cta{font-size:12px}
 }
+
+/* TRFR concise edition: complete information and example visible without scrolling or expanding. */
+#main-content .ai-academic-guide .trfr-card{
+  height:auto;
+  max-height:none;
+  min-height:310px;
+  overflow:visible;
+}
+#main-content .ai-academic-guide .trfr-card-content{
+  max-height:none;
+  overflow:visible;
+  padding-inline-end:0;
+}
+#main-content .ai-academic-guide .trfr-points{
+  margin:9px 0 13px;
+}
+#main-content .ai-academic-guide .trfr-example{
+  border-top:1px solid rgba(255,255,255,.12);
+  padding-top:11px;
+}
+#main-content .ai-academic-guide .trfr-example strong{
+  display:block;
+  color:#e5c58c;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+#main-content .ai-academic-guide .trfr-example blockquote{
+  margin:0;
+  font-size:12px;
+  line-height:1.85;
+  color:#f1f4f7;
+}
+@media(max-width:800px){
+  #main-content .ai-academic-guide .trfr-card{
+    min-height:0;
+  }
+}
