@@ -2479,3 +2479,140 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(prefers-reduced-motion:reduce), (max-width:900px) and (max-height:620px){
   #main-content .story-layer{padding-block:54px}
 }
+
+/* About 2026 refinements: neutral grid, comfortable text, one centered content
+   position for every chapter, and a restrained moving neon tracer. */
+
+/* The grid remains a quiet blue-grey on all four chapters.
+   Only the bulb and the line it has travelled along change hue. */
+#main-content .story-stage::before{
+  background:radial-gradient(
+    ellipse 78% 75% at 57% 45%,
+    rgba(114,144,170,.045) 0%,
+    transparent 74%
+  );
+}
+#main-content .story-stage::after{
+  background-image:
+    linear-gradient(to right,rgba(133,160,183,.105) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(133,160,183,.105) 1px,transparent 1px),
+    linear-gradient(to right,rgba(133,160,183,.18) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(133,160,183,.18) 1px,transparent 1px);
+  opacity:.67;
+}
+
+/* Equal reference box in the same screen position for every text layer. */
+#main-content .story-layer{
+  align-items:center;
+  padding-block:clamp(42px,6svh,82px);
+}
+#main-content .story-layer-content{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
+  min-height:clamp(370px,54svh,535px);
+}
+#main-content .story-layer h3{
+  flex-shrink:0;
+}
+#main-content .story-layer p{
+  width:100%;
+  max-width:735px;
+}
+#main-content .story-goals{width:min(100%,690px)}
+
+/* The light travels downward along a fixed white line rather than moving
+   the entire section. A short colored trace is left above the moving bulb. */
+#main-content .story-rail-lit{
+  top:0;
+  bottom:auto;
+  height:max(0px,calc(var(--story-lamp-y) - 22px));
+  transform:none;
+  -webkit-mask-image:none;
+  mask-image:none;
+  opacity:.32;
+  box-shadow:0 0 5px rgb(var(--story-neon-rgb) / .24);
+}
+#main-content .story-rail-lamp{
+  width:13px;
+  height:13px;
+  box-shadow:
+    0 0 0 4px rgb(var(--story-neon-rgb) / .11),
+    0 0 10px 2px rgb(var(--story-neon-rgb) / .52),
+    0 0 22px 5px rgb(var(--story-neon-rgb) / .16);
+}
+
+@media(max-width:900px){
+  #main-content .story-layer{
+    padding-block:clamp(35px,5svh,65px);
+  }
+  #main-content .story-layer-content{
+    min-height:clamp(375px,57svh,515px);
+    padding-right:clamp(57px,11vw,90px);
+  }
+  #main-content .story-layer h3{
+    font-size:clamp(45px,7.5vw,64px);
+    margin-bottom:clamp(20px,3svh,29px);
+  }
+  #main-content .story-layer p{
+    font-size:clamp(17px,2.45vw,19px);
+    line-height:1.85;
+  }
+}
+@media(max-width:560px){
+  #main-content .story-stage::after{
+    background-size:34px 34px,34px 34px,136px 136px,136px 136px;
+    opacity:.59;
+  }
+  #main-content .story-layer{
+    padding:clamp(34px,5svh,58px) clamp(17px,4.3vw,25px);
+  }
+  #main-content .story-layer-content{
+    min-height:clamp(360px,56svh,470px);
+    padding-right:clamp(51px,12.7vw,65px);
+  }
+  #main-content .story-layer h3{
+    font-size:clamp(42px,10.8vw,52px);
+    line-height:1.3;
+    margin-bottom:clamp(20px,2.8svh,26px);
+  }
+  #main-content .story-layer p{
+    font-size:clamp(17px,4.65vw,18.5px);
+    line-height:1.82;
+  }
+  #main-content .story-goals{gap:10px}
+  #main-content .story-goals li{
+    font-size:clamp(16px,4.35vw,17.5px);
+    min-height:58px;
+    padding:12px 15px;
+  }
+  #main-content .story-scroll-cue{
+    font-size:12px;
+    margin-top:23px;
+  }
+  #main-content .story-rail-lamp{
+    width:13px;height:13px;
+  }
+}
+@media(max-width:560px) and (max-height:750px){
+  #main-content .story-layer-content{
+    min-height:clamp(335px,53svh,410px);
+  }
+  #main-content .story-layer h3{font-size:clamp(39px,10vw,48px)}
+  #main-content .story-layer p{
+    font-size:clamp(16.5px,4.45vw,18px);
+    line-height:1.74;
+  }
+  #main-content .story-goals li{
+    min-height:54px;
+    padding-block:10px;
+  }
+}
+@media(prefers-reduced-motion:reduce), (max-width:900px) and (max-height:620px){
+  #main-content .story-layer{
+    align-items:flex-start;
+    padding-block:54px;
+  }
+  #main-content .story-layer-content{min-height:0}
+}
