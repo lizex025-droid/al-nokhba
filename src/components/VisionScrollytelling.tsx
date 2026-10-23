@@ -90,6 +90,14 @@ export function VisionScrollytelling() {
           : 0;
         panel.style.setProperty('--vision-rail-progress', String((panelIndex + railProgress) / (panels.length - 1)));
         panel.style.setProperty('--vision-neon-hue', String(190 + ((panelIndex + railProgress) / (panels.length - 1)) * 105));
+        const heading = panel.querySelector<HTMLElement>('.vision-copy h3');
+        const rail = panel.querySelector<HTMLElement>('.vision-progress');
+        if (heading && rail) {
+          const headingBounds = heading.getBoundingClientRect();
+          const railBounds = rail.getBoundingClientRect();
+          const y = Math.max(18, Math.min(railBounds.height - 18, headingBounds.top + headingBounds.height * .48 - railBounds.top));
+          panel.style.setProperty('--vision-lamp-offset', `${y}px`);
+        }
 
         if (content) {
           content.style.opacity = String(1 - exitProgress);
