@@ -79,11 +79,15 @@ export function VisionScrollytelling() {
       );
 
       if (heading && rail && !staticLayout) {
+        // Align the neon with the first heading, then let it travel downward
+        // along the SAME stationary white rail as the four chapters swap.
         const titleRect = heading.getBoundingClientRect();
         const lineRect = rail.getBoundingClientRect();
         const aligned = titleRect.top + titleRect.height * .49 - lineRect.top;
-        const y = Math.max(24, Math.min(lineRect.height - 24, aligned));
-        stage.style.setProperty('--story-lamp-y', y + 'px');
+        const startY = Math.max(34, Math.min(lineRect.height * .34, aligned));
+        const travel = Math.min(lineRect.height * .43, 235);
+        const y = Math.min(lineRect.height - 30, startY + scrollProgress * travel);
+        stage.style.setProperty('--story-lamp-y', y.toFixed(1) + 'px');
       }
 
       layers.forEach((layer, index) => {
