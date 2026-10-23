@@ -2374,34 +2374,34 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   #main-content .story-scroll-cue{display:none}
 }
 
-/* Scroll-linked institutional neon grid. Each chapter's color comes from
-   --story-neon-rgb; clearer lines with restrained edge fading. */
+/* Calm, scroll-linked neon grid: restrained palette from the earlier version.
+   Neon colors remain chapter-specific, while the grid stays secondary to text. */
 #main-content .story-stage{isolation:isolate}
 #main-content .story-stage::before,
 #main-content .story-stage::after{
   content:"";
   position:absolute;
   inset:0;
-  z-index:0;
   pointer-events:none;
+  z-index:0;
 }
 #main-content .story-stage::before{
   background:radial-gradient(
-    ellipse 85% 75% at 59% 44%,
-    rgb(var(--story-neon-rgb) / .085) 0%,
-    transparent 74%
+    ellipse 76% 78% at 62% 48%,
+    rgb(var(--story-neon-rgb) / .055) 0%,
+    transparent 72%
   );
 }
 #main-content .story-stage::after{
   background-image:
-    linear-gradient(to right, rgb(var(--story-neon-rgb) / .20) 1px,transparent 1px),
-    linear-gradient(to bottom, rgb(var(--story-neon-rgb) / .20) 1px,transparent 1px),
-    linear-gradient(to right, rgb(var(--story-neon-rgb) / .34) 1px,transparent 1px),
-    linear-gradient(to bottom, rgb(var(--story-neon-rgb) / .34) 1px,transparent 1px);
+    linear-gradient(to right, rgb(var(--story-neon-rgb) / .085) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--story-neon-rgb) / .085) 1px, transparent 1px),
+    linear-gradient(to right, rgb(var(--story-neon-rgb) / .16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--story-neon-rgb) / .16) 1px, transparent 1px);
   background-size:40px 40px,40px 40px,160px 160px,160px 160px;
-  opacity:.90;
-  -webkit-mask-image:radial-gradient(ellipse 110% 110% at 52% 46%,black 0%,black 35%,rgba(0,0,0,.80) 73%,rgba(0,0,0,.45) 100%);
-  mask-image:radial-gradient(ellipse 110% 110% at 52% 46%,black 0%,black 35%,rgba(0,0,0,.80) 73%,rgba(0,0,0,.45) 100%);
+  opacity:.68;
+  -webkit-mask-image:radial-gradient(ellipse 86% 85% at 52% 45%,black 7%,rgba(0,0,0,.74) 58%,transparent 100%);
+  mask-image:radial-gradient(ellipse 86% 85% at 52% 45%,black 7%,rgba(0,0,0,.74) 58%,transparent 100%);
 }
 #main-content .story-layers{z-index:2}
 #main-content .story-rail{z-index:4}
@@ -2434,14 +2434,14 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 }
 @media(max-width:560px){
   #main-content .story-stage::after{
-    background-size:36px 36px,36px 36px,144px 144px,144px 144px;
-    opacity:.87;
+    background-size:34px 34px,34px 34px,136px 136px,136px 136px;
+    opacity:.54;
   }
   #main-content .story-stage::before{
     background:radial-gradient(
-      ellipse 90% 78% at 50% 43%,
-      rgb(var(--story-neon-rgb) / .075),
-      transparent 76%
+      ellipse 90% 70% at 52% 45%,
+      rgb(var(--story-neon-rgb) / .035),
+      transparent 75%
     );
   }
   #main-content .story-layer{
