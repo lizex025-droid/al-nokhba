@@ -1481,7 +1481,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 #main-content .vision-panel-top{font-size:clamp(14px,1.1vw,17px)}
 #main-content .vision-goals li{font-size:clamp(16px,1.24vw,19px)}
 #main-content .vision-progress{
-  --vision-rail-progress:0%;
+  --vision-rail-progress:0;
   z-index:8;
   gap:24px;
   isolation:isolate;
@@ -1500,7 +1500,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 }
 #main-content .vision-progress .vision-progress-fill{
   bottom:auto;
-  height:calc((100% - 38px) * var(--vision-rail-progress) / 100);
+  height:calc((100% - 38px) * var(--vision-rail-progress));
   background:linear-gradient(180deg,#77deff,#08b8ff 65%,#56e6ff);
   box-shadow:0 0 9px #15c5ff,0 0 21px rgba(0,174,255,.8);
   transition:height .08s linear;
@@ -1526,7 +1526,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     transform:translateX(-50%);
   }
   #main-content .vision-progress .vision-progress-fill{
-    bottom:auto;height:calc((100% - 38px) * var(--vision-rail-progress) / 100);
+    bottom:auto;height:calc((100% - 38px) * var(--vision-rail-progress));
   }
   #main-content .vision-panel-inner{padding-inline:60px 22px}
   #main-content .vision-panel h3{font-size:clamp(36px,5.8vw,54px)}
@@ -1539,7 +1539,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   }
   #main-content .vision-progress .vision-progress-rail,
   #main-content .vision-progress .vision-progress-fill{top:15px;bottom:15px;width:2px}
-  #main-content .vision-progress .vision-progress-fill{bottom:auto;height:calc((100% - 30px) * var(--vision-rail-progress) / 100)}
+  #main-content .vision-progress .vision-progress-fill{bottom:auto;height:calc((100% - 30px) * var(--vision-rail-progress))}
   #main-content .vision-panel-inner{
     padding-inline:44px 13px;
     gap:11px;
