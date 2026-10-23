@@ -88,10 +88,14 @@ export function VisionScrollytelling() {
 
       // One active chapter at a time. The active class fires a short, one-shot
       // neon pulse when the illuminated title becomes the focus of the story.
-      let activeChapter = 0;
-      bounds.forEach(({ panel }, index) => {
-        if (panel.top <= viewportHeight * .48) activeChapter = index;
-      });
+      let activeChapter =
+        sectionBounds.top > viewportHeight * .85 || sectionBounds.bottom < viewportHeight * .15
+          ? -1 : 0;
+      if (activeChapter !== -1) {
+        bounds.forEach(({ panel }, index) => {
+          if (panel.top <= viewportHeight * .48) activeChapter = index;
+        });
+      }
 
       chapters.forEach(({panel, content, heading, items}, index) => {
         const current = bounds[index];
