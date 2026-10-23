@@ -6,7 +6,7 @@ const visionPanels = [
   {
     number: '01',
     eyebrow: 'من نحن؟',
-    title: 'فريق طلابي،\nبرؤية أكاديمية واضحة.',
+    title: 'من نحن؟',
     text: 'النخبة فريق طلابي من كلية علوم التأهيل في الجامعة الأردنية، تأسس ليكون عونًا للطلبة في رحلتهم الأكاديمية. نعمل على توفير محتوى دراسي منظم، مراجعات، ملخصات، أدوات ذكية، وخدمات تساعد الطالب على الوصول إلى المعلومة بسهولة والاستعداد لمواده بثقة.',
     metric: 'من الطالب… وللطالب',
   },
@@ -129,7 +129,7 @@ export function VisionScrollytelling() {
         <div className="vision-progress" aria-hidden="true"><span className="vision-progress-rail" /><span className="vision-progress-fill" /></div>
         <div className="container-wide vision-panel-inner">
           <div className="vision-copy">
-            <div className="vision-panel-top" data-vision-reveal><span>{panel.eyebrow}</span></div>
+            {index !== 0 && <div className="vision-panel-top" data-vision-reveal><span>{panel.eyebrow}</span></div>}
             <h3 data-vision-reveal>{panel.title}</h3>
             {panel.text && <p data-vision-reveal>{panel.text}</p>}
             {panel.goals && <ul className="vision-goals" data-vision-reveal>{panel.goals.map((goal, goalIndex) => <li key={goal}><span>0{goalIndex + 1}</span>{goal}</li>)}</ul>}
