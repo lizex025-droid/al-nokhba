@@ -2373,3 +2373,49 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   #main-content .story-rail{display:none}
   #main-content .story-scroll-cue{display:none}
 }
+
+/* About / mission / vision: scroll-linked neon drafting grid.
+   The existing --story-neon-rgb follows the four chapter colors. */
+#main-content .story-stage{
+  isolation:isolate;
+}
+#main-content .story-stage::before,
+#main-content .story-stage::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+/* Very soft depth behind the grid; never compete with the Arabic copy. */
+#main-content .story-stage::before{
+  background:radial-gradient(
+    ellipse 76% 78% at 62% 48%,
+    rgb(var(--story-neon-rgb) / .055) 0%,
+    transparent 72%
+  );
+}
+/* Fine engineering-paper grid, with one quiet major line every four cells. */
+#main-content .story-stage::after{
+  background-image:
+    linear-gradient(to right, rgb(var(--story-neon-rgb) / .085) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--story-neon-rgb) / .085) 1px, transparent 1px),
+    linear-gradient(to right, rgb(var(--story-neon-rgb) / .16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--story-neon-rgb) / .16) 1px, transparent 1px);
+  background-size:40px 40px,40px 40px,160px 160px,160px 160px;
+  opacity:.68;
+  -webkit-mask-image:radial-gradient(ellipse 86% 85% at 52% 45%,black 7%,rgba(0,0,0,.74) 58%,transparent 100%);
+  mask-image:radial-gradient(ellipse 86% 85% at 52% 45%,black 7%,rgba(0,0,0,.74) 58%,transparent 100%);
+}
+/* Keep text and the fixed right-hand lamp above the graphic overlay. */
+#main-content .story-layers{z-index:2}
+#main-content .story-rail{z-index:4}
+@media(max-width:560px){
+  #main-content .story-stage::after{
+    background-size:34px 34px,34px 34px,136px 136px,136px 136px;
+    opacity:.54;
+  }
+  #main-content .story-stage::before{
+    background:radial-gradient(ellipse 90% 70% at 52% 45%,rgb(var(--story-neon-rgb) / .035),transparent 75%);
+  }
+}
