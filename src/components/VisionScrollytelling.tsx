@@ -87,7 +87,7 @@ export function VisionScrollytelling() {
 
         if (content) {
           content.style.opacity = String(1 - exitProgress);
-          content.style.transform = `translateY(${-exitProgress * (compactLayout ? 48 : 30)}px) scale(${1 - exitProgress * .025})`;
+          content.style.transform = `translate3d(${(panelIndex % 2 === 0 ? -1 : 1) * exitProgress * (compactLayout ? 14 : 36)}px, ${-exitProgress * (compactLayout ? 24 : 30)}px, 0) scale(${1 - exitProgress * .025})`;
           content.style.filter = `blur(${exitProgress * 2}px)`;
         }
 
@@ -95,7 +95,7 @@ export function VisionScrollytelling() {
           const delay = itemIndex * .1;
           const reveal = clamp((enterProgress - delay) / Math.max(.01, 1 - delay));
           item.style.opacity = String(reveal);
-          item.style.transform = `translateY(${(1 - reveal) * 64}px)`;
+          item.style.transform = `translate3d(${(panelIndex % 2 === 0 ? 1 : -1) * (1 - reveal) * (compactLayout ? 14 : 30)}px, ${(1 - reveal) * (compactLayout ? 25 : 40)}px, 0)`;
         });
       });
     };
