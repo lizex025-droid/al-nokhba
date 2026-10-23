@@ -133,10 +133,6 @@ export function VisionScrollytelling() {
             {panel.text && <p data-vision-reveal>{panel.text}</p>}
             {panel.goals && <ul className="vision-goals" data-vision-reveal>{panel.goals.map((goal, goalIndex) => <li key={goal}><span>0{goalIndex + 1}</span>{goal}</li>)}</ul>}
           </div>
-          <div className="vision-visual" aria-hidden="true" data-vision-reveal>
-            <span className="vision-number-ring"><span className="vision-big-number">{index + 1}</span><i /></span>
-            <span className="vision-metric">{panel.metric}</span>
-          </div>
         </div>
       </article>)}
     </div>
