@@ -65,18 +65,17 @@ export function VisionScrollytelling() {
       const compact = window.innerWidth <= 900;
       const staticLayout = prefersReducedMotion.matches || shortScreen.matches;
       const viewportHeight = window.innerHeight;
-      const top = compact ? 0 : (document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 78);
+      // Keep the fixed navigation above the story on every screen.
+      // Subtract its real rendered height from the pinned canvas instead of
+      // hiding the header while people read the About section.
+      const header = document.querySelector<HTMLElement>('.site-header');
+      const top = Math.ceil(header?.getBoundingClientRect().height ?? 78) + 8;
       root.style.setProperty('--story-sticky-top', top + 'px');
 
       const rect = root.getBoundingClientRect();
       const distance = Math.max(1, root.offsetHeight - stage.offsetHeight);
       const scrollProgress = clamp((top - rect.top) / distance);
       const position = scrollProgress * (chapters.length - 1);
-
-      document.body.classList.toggle(
-        'vision-mobile-active',
-        compact && !staticLayout && rect.top <= 0 && rect.bottom > viewportHeight * .35
-      );
 
       if (heading && rail && !staticLayout) {
         // Align the neon with the first heading, then let it travel downward
@@ -144,7 +143,6 @@ export function VisionScrollytelling() {
       window.removeEventListener('resize', requestRender);
       prefersReducedMotion.removeEventListener('change', requestRender);
       shortScreen.removeEventListener('change', requestRender);
-      document.body.classList.remove('vision-mobile-active');
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
