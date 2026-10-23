@@ -2713,3 +2713,34 @@ body.about-story-active .site-header .nav-wrap{
     padding-top:max(70px,calc(var(--story-sticky-top,104px) + 18px));
   }
 }
+
+/* About neon: champagne -> signature gold -> warm amber.
+   Preserve the quiet blue-grey background grid and moving lamp. */
+#main-content .story-stage{
+  --story-gold-light:#FFE8AD;
+  --story-gold-primary:#EAC16D;
+  --story-gold-deep:#C58F3B;
+}
+#main-content .story-rail-lit{
+  background:linear-gradient(
+    to bottom,
+    var(--story-gold-light) 0%,
+    var(--story-gold-primary) 52%,
+    var(--story-gold-deep) 100%
+  );
+  opacity:.55;
+  box-shadow:0 0 6px rgba(234,193,109,.23);
+}
+#main-content .story-rail-lamp{
+  background:radial-gradient(
+    circle at 32% 25%,
+    #FFF5D9 0%,
+    var(--story-gold-light) 28%,
+    var(--story-gold-primary) 62%,
+    var(--story-gold-deep) 100%
+  );
+  box-shadow:
+    0 0 0 4px rgba(234,193,109,.12),
+    0 0 11px 3px rgba(234,193,109,.50),
+    0 0 23px 6px rgba(197,143,59,.15);
+}
