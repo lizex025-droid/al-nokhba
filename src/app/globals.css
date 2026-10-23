@@ -1500,10 +1500,10 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 }
 #main-content .vision-progress .vision-progress-fill{
   bottom:auto;
-  height:calc((100% - 38px) * var(--vision-rail-progress));
+  height:calc(100% - 38px);transform:translateX(-50%) scaleY(var(--vision-rail-progress));transform-origin:top center;
   background:linear-gradient(180deg,#77deff,#08b8ff 65%,#56e6ff);
   box-shadow:0 0 9px #15c5ff,0 0 21px rgba(0,174,255,.8);
-  transition:height .08s linear;
+  transition:transform .08s linear;
 }
 #main-content .vision-progress span:not(.vision-progress-rail):not(.vision-progress-fill){
   z-index:1;width:38px;height:38px;flex:none;
@@ -1526,7 +1526,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     transform:translateX(-50%);
   }
   #main-content .vision-progress .vision-progress-fill{
-    bottom:auto;height:calc((100% - 38px) * var(--vision-rail-progress));
+    bottom:auto;height:calc(100% - 38px);transform:translateX(-50%) scaleY(var(--vision-rail-progress));transform-origin:top center;
   }
   #main-content .vision-panel-inner{padding-inline:60px 22px}
   #main-content .vision-panel h3{font-size:clamp(36px,5.8vw,54px)}
@@ -1539,7 +1539,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   }
   #main-content .vision-progress .vision-progress-rail,
   #main-content .vision-progress .vision-progress-fill{top:15px;bottom:15px;width:2px}
-  #main-content .vision-progress .vision-progress-fill{bottom:auto;height:calc((100% - 30px) * var(--vision-rail-progress))}
+  #main-content .vision-progress .vision-progress-fill{bottom:auto;height:calc(100% - 30px);transform:translateX(-50%) scaleY(var(--vision-rail-progress));transform-origin:top center;}
   #main-content .vision-panel-inner{
     padding-inline:44px 13px;
     gap:11px;
