@@ -89,6 +89,7 @@ export function VisionScrollytelling() {
           ? clamp((viewportHeight * .95 - nextRect.top) / (viewportHeight * .85))
           : 0;
         panel.style.setProperty('--vision-rail-progress', String((panelIndex + railProgress) / (panels.length - 1)));
+        panel.style.setProperty('--vision-neon-hue', String(190 + ((panelIndex + railProgress) / (panels.length - 1)) * 105));
 
         if (content) {
           content.style.opacity = String(1 - exitProgress);
