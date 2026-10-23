@@ -42,90 +42,106 @@ export function VisionScrollytelling() {
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-    const panels = Array.from(root.querySelectorAll<HTMLElement>('.vision-panel'));
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const mobileView = () => window.matchMedia('(max-width: 900px)').matches;
-    const syncHeader = () => {
-      const rect = root.getBoundingClientRect();
-      document.body.classList.toggle('vision-mobile-active', mobileView() && rect.top <= 0 && rect.bottom > window.innerHeight * .35);
-    };
-    syncHeader();
-    window.addEventListener('scroll', syncHeader, { passive: true });
-    window.addEventListener('resize', syncHeader);
 
-    if (reducedMotion) {
-      panels.forEach((panel) => panel.querySelectorAll<HTMLElement>('[data-vision-reveal]').forEach((item) => {
-        item.style.opacity = '1';
-        item.style.transform = 'none';
-      }));
-      return () => {
-        document.body.classList.remove('vision-mobile-active');
-        window.removeEventListener('scroll', syncHeader);
-        window.removeEventListener('resize', syncHeader);
-      };
-    }
-
+    const chapters = Array.from(root.querySelectorAll<HTMLElement>('.vision-panel')).map(panel => ({
+      panel,
+      content: panel.querySelector<HTMLElement>('.vision-panel-inner'),
+      heading: panel.querySelector<HTMLElement>('.vision-copy h3'),
+      rail: panel.querySelector<HTMLElement>('.vision-progress'),
+      items: Array.from(panel.querySelectorAll<HTMLElement>('[data-vision-reveal]')),
+    }));
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const chapterColors = [
+      [38, 215, 255],  // About — electric cyan
+      [37, 215, 165],  // Vision — mint
+      [185, 148, 247], // Mission — violet
+      [234, 193, 109], // Goals — warm gold
+    ];
     let frame = 0;
-    const update = () => {
-      frame = 0;
-      const viewportHeight = window.innerHeight;
-      const compactLayout = window.innerWidth <= 900;
-      const headerHeight = document.querySelector<HTMLElement>('.site-header')?.getBoundingClientRect().height;
-      const stickyTop = compactLayout ? 0 : (headerHeight ?? (viewportHeight < 700 ? 72 : 82));
-      root.style.setProperty('--vision-sticky-top', `${stickyTop}px`);
 
-      panels.forEach((panel, panelIndex) => {
-        const rect = panel.getBoundingClientRect();
-        const nextRect = panels[panelIndex + 1]?.getBoundingClientRect();
-        const enterProgress = clamp((viewportHeight * .94 - rect.top) / (viewportHeight * .48));
-        // On phones keep the current panel fully readable until the next panel
-        // has visibly entered and begun covering it; only then fade/blur.
-        const exitStart = compactLayout ? .40 : .58;
-        const exitDistance = compactLayout ? .25 : .58;
-        const exitProgress = nextRect ? clamp((stickyTop + viewportHeight * exitStart - nextRect.top) / (viewportHeight * exitDistance)) : 0;
-        const content = panel.querySelector<HTMLElement>('.vision-panel-inner');
-        // Advance the connected neon rail toward the next chapter as it approaches.
-        const railProgress = nextRect
-          ? clamp((viewportHeight * .95 - nextRect.top) / (viewportHeight * .85))
-          : 0;
-        panel.style.setProperty('--vision-rail-progress', String((panelIndex + railProgress) / (panels.length - 1)));
-        panel.style.setProperty('--vision-neon-hue', String(190 + ((panelIndex + railProgress) / (panels.length - 1)) * 105));
-        const heading = panel.querySelector<HTMLElement>('.vision-copy h3');
-        const rail = panel.querySelector<HTMLElement>('.vision-progress');
-        if (heading && rail) {
-          const headingBounds = heading.getBoundingClientRect();
-          const railBounds = rail.getBoundingClientRect();
-          const y = Math.max(18, Math.min(railBounds.height - 18, headingBounds.top + headingBounds.height * .48 - railBounds.top));
-          panel.style.setProperty('--vision-lamp-offset', `${y}px`);
+    const render = () => {
+      frame = 0;
+      const reducedMotion = motionPreference.matches;
+      const compact = window.innerWidth <= 900;
+      const viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+      const headerHeight = document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 82;
+      const stickyTop = compact ? 0 : headerHeight;
+      root.style.setProperty('--vision-sticky-top', String(stickyTop) + 'px');
+
+      const sectionBounds = root.getBoundingClientRect();
+      document.body.classList.toggle(
+        'vision-mobile-active',
+        compact && sectionBounds.top <= 0 && sectionBounds.bottom > viewportHeight * .35
+      );
+
+      // Measure all geometry before updating inline styles to avoid repeated layouts.
+      const bounds = chapters.map(({panel, heading, rail}) => ({
+        panel: panel.getBoundingClientRect(),
+        heading: heading?.getBoundingClientRect(),
+        rail: rail?.getBoundingClientRect(),
+      }));
+
+      chapters.forEach(({panel, content, items}, index) => {
+        const current = bounds[index];
+        const upcoming = bounds[index + 1]?.panel;
+        const enter = reducedMotion ? 1 : clamp((viewportHeight * .96 - current.panel.top) / (viewportHeight * .50));
+
+        // Keep each chapter readable while the following card comes over it.
+        // This prevents the premature blank panel effect on mobile Safari.
+        const exitStart = compact ? .43 : .55;
+        const exitDistance = compact ? .35 : .46;
+        const exit = reducedMotion || !upcoming ? 0 :
+          clamp((stickyTop + viewportHeight * exitStart - upcoming.top) / (viewportHeight * exitDistance));
+
+        const nextApproach = !upcoming ? 1 :
+          clamp((viewportHeight * .91 - upcoming.top) / (viewportHeight * .83));
+        const from = chapterColors[index];
+        const to = chapterColors[Math.min(index + 1, chapterColors.length - 1)];
+        const neon = from.map((channel, colorIndex) =>
+          Math.round(channel + (to[colorIndex] - channel) * nextApproach)
+        ).join(' ');
+
+        panel.style.setProperty('--vision-neon-color', neon);
+        panel.style.setProperty('--vision-rail-progress', reducedMotion ? '1' : String(nextApproach));
+        panel.style.setProperty('--vision-glow-opacity', reducedMotion ? '.72' : String(.22 + .78 * enter));
+
+        const headingRect = current.heading;
+        const railRect = current.rail;
+        if (headingRect && railRect) {
+          const offset = clamp((headingRect.top + headingRect.height * .49 - railRect.top) / Math.max(1, railRect.height));
+          const lampY = Math.max(18, Math.min(railRect.height - 18, offset * railRect.height));
+          panel.style.setProperty('--vision-lamp-offset', String(lampY) + 'px');
         }
 
         if (content) {
-          content.style.opacity = String(1 - exitProgress);
-          content.style.transform = `translate3d(${(panelIndex % 2 === 0 ? -1 : 1) * exitProgress * (compactLayout ? 14 : 36)}px, ${-exitProgress * (compactLayout ? 24 : 30)}px, 0) scale(${1 - exitProgress * .025})`;
-          content.style.filter = `blur(${exitProgress * 2}px)`;
+          content.style.opacity = reducedMotion ? '1' : String(1 - exit);
+          content.style.transform = reducedMotion ? 'none' :
+            'translate3d(' + ((index % 2 === 0 ? -1 : 1) * exit * (compact ? 9 : 19)) +
+            'px,' + (-exit * (compact ? 12 : 23)) + 'px,0)';
         }
 
-        panel.querySelectorAll<HTMLElement>('[data-vision-reveal]').forEach((item, itemIndex) => {
-          const delay = itemIndex * .1;
-          const reveal = clamp((enterProgress - delay) / Math.max(.01, 1 - delay));
-          item.style.opacity = String(reveal);
-          item.style.transform = `translate3d(${(panelIndex % 2 === 0 ? 1 : -1) * (1 - reveal) * (compactLayout ? 14 : 30)}px, ${(1 - reveal) * (compactLayout ? 25 : 40)}px, 0)`;
+        items.forEach((item, itemIndex) => {
+          const delay = itemIndex * .12;
+          const visible = reducedMotion ? 1 : clamp((enter - delay) / Math.max(.3, .8 - delay));
+          item.style.opacity = String(visible);
+          item.style.transform = reducedMotion ? 'none' :
+            'translate3d(0,' + ((1 - visible) * (compact ? 15 : 24)) + 'px,0)';
         });
       });
     };
 
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
+    const requestRender = () => {
+      if (!frame) frame = window.requestAnimationFrame(render);
     };
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', requestRender);
+    motionPreference.addEventListener('change', requestRender);
 
-    update();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
     return () => {
-      window.removeEventListener('scroll', requestUpdate);
-      window.removeEventListener('resize', requestUpdate);
-      window.removeEventListener('scroll', syncHeader);
-      window.removeEventListener('resize', syncHeader);
+      window.removeEventListener('scroll', requestRender);
+      window.removeEventListener('resize', requestRender);
+      motionPreference.removeEventListener('change', requestRender);
       document.body.classList.remove('vision-mobile-active');
       if (frame) window.cancelAnimationFrame(frame);
     };
@@ -140,7 +156,8 @@ export function VisionScrollytelling() {
             
             <h3 data-vision-reveal>{panel.title}</h3>
             {panel.text && <p data-vision-reveal>{panel.text}</p>}
-            {panel.goals && <ul className="vision-goals" data-vision-reveal>{panel.goals.map((goal, goalIndex) => <li key={goal}><span>0{goalIndex + 1}</span>{goal}</li>)}</ul>}
+            {panel.goals && <ul className="vision-goals" data-vision-reveal>{panel.goals.map(goal => <li key={goal}><span className="vision-goal-mark" aria-hidden="true" />{goal}</li>)}</ul>}
+            {index < visionPanels.length - 1 && <div className="vision-next-cue" data-vision-reveal aria-hidden="true"><span>مرّر للمتابعة</span><span className="vision-next-cue-arrow">↓</span></div>}
           </div>
         </div>
       </article>)}
