@@ -1712,3 +1712,47 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(prefers-reduced-motion:reduce){
   #main-content .vision-panel .vision-progress:after{box-shadow:none}
 }
+
+/* Large About headlines, with scroll-responsive neon lamp directly beside each title. */
+#main-content .vision-panel h3{
+  position:relative;
+  width:fit-content;
+  max-width:100%;
+  font-size:clamp(53px,6.3vw,94px);
+  line-height:1.3;
+  padding-inline-start:0;
+  margin-bottom:clamp(24px,3vw,38px);
+}
+#main-content .vision-panel h3::before{
+  content:"";
+  position:absolute;
+  right:-clamp(26px,3.6vw,46px);
+  top:.52em;
+  width:clamp(12px,1.15vw,17px);
+  height:clamp(12px,1.15vw,17px);
+  border-radius:50%;
+  background:hsl(var(--vision-neon-hue,190) 100% 68%);
+  box-shadow:0 0 0 5px hsl(var(--vision-neon-hue,190) 100% 55% / .15),
+    0 0 16px 5px hsl(var(--vision-neon-hue,190) 100% 55% / .7),
+    0 0 30px hsl(var(--vision-neon-hue,190) 100% 55% / .35);
+}
+#main-content .vision-panel .vision-progress:after{display:none}
+#main-content .vision-panel .vision-progress .vision-progress-fill{
+  background:hsl(var(--vision-neon-hue,190) 100% 61%);
+  box-shadow:0 0 8px hsl(var(--vision-neon-hue,190) 100% 55%),
+    0 0 19px hsl(var(--vision-neon-hue,190) 100% 50% / .55);
+}
+@media(max-width:900px){
+  #main-content .vision-panel h3{font-size:clamp(44px,7.3vw,66px)}
+  #main-content .vision-panel h3::before{right:-31px;width:13px;height:13px}
+}
+@media(max-width:560px){
+  #main-content .vision-panel h3{
+    font-size:clamp(38px,9.2vw,53px);
+    line-height:1.32;
+  }
+  #main-content .vision-panel h3::before{right:-27px;top:.56em;width:12px;height:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  #main-content .vision-panel h3::before{box-shadow:0 0 0 4px rgba(52,191,255,.13)}
+}
