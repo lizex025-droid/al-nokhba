@@ -84,6 +84,11 @@ export function VisionScrollytelling() {
         const exitDistance = compactLayout ? .25 : .58;
         const exitProgress = nextRect ? clamp((stickyTop + viewportHeight * exitStart - nextRect.top) / (viewportHeight * exitDistance)) : 0;
         const content = panel.querySelector<HTMLElement>('.vision-panel-inner');
+        // Advance the connected neon rail toward the next chapter as it approaches.
+        const railProgress = nextRect
+          ? clamp((viewportHeight * .95 - nextRect.top) / (viewportHeight * .85))
+          : 0;
+        panel.style.setProperty('--vision-rail-progress', `${((panelIndex + railProgress) / (panels.length - 1)) * 100}%`);
 
         if (content) {
           content.style.opacity = String(1 - exitProgress);
@@ -120,7 +125,7 @@ export function VisionScrollytelling() {
   return <section className="vision-scrolly" ref={rootRef} aria-label="من نحن ورؤية النخبة ورسالتها وأهدافها">
     <div className="vision-stack">
       {visionPanels.map((panel, index) => <article id={index === 0 ? "about" : undefined} className={`vision-panel vision-panel-${index + 1}`} key={panel.number} style={{ zIndex: index + 1 }}>
-        <div className="vision-progress" aria-hidden="true">{visionPanels.map((_, progressIndex) => <span className={progressIndex === index ? 'active' : ''} key={progressIndex}>0{progressIndex + 1}</span>)}</div>
+        <div className="vision-progress" aria-hidden="true"><span className="vision-progress-rail" /><span className="vision-progress-fill" />{visionPanels.map((_, progressIndex) => <span className={progressIndex === index ? 'active' : ''} key={progressIndex}>0{progressIndex + 1}</span>)}</div>
         <div className="container-wide vision-panel-inner">
           <div className="vision-copy">
             <div className="vision-panel-top" data-vision-reveal><span>{panel.eyebrow}</span></div>
