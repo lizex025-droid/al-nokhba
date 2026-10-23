@@ -2144,14 +2144,13 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   background:#081929;
 }
 #main-content .story-stage{
-  --story-sticky-top:78px;
   --story-progress:0;
   --story-neon-rgb:38 215 255;
   --story-lamp-y:144px;
   position:sticky;
   z-index:1;
-  top:var(--story-sticky-top);
-  height:calc(100svh - var(--story-sticky-top));
+  top:var(--story-sticky-top,78px);
+  height:calc(100svh - var(--story-sticky-top,78px));
   min-height:0;
   overflow:hidden;
   border-top:1px solid rgba(223,195,145,.12);
