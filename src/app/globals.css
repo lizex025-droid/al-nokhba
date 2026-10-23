@@ -1787,3 +1787,76 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(max-width:560px){
   #main-content .vision-panel .vision-progress::after{width:12px;height:12px}
 }
+
+/* Mobile refinement: place the Prenuvo-style white neon rail on the physical LEFT.
+   Previous inset-inline-start followed RTL and put it on the right edge. */
+@media (max-width:900px){
+  #main-content .vision-panel .vision-progress{
+    inset-inline-start:auto;
+    inset-inline-end:auto;
+    left:clamp(27px,4vw,48px);
+    right:auto;
+    top:50%;
+    height:clamp(290px,62svh,530px);
+    transform:translateY(-50%);
+  }
+  #main-content .vision-panel .vision-panel-inner{
+    padding-left:clamp(54px,8vw,84px);
+    padding-right:clamp(24px,4vw,38px);
+  }
+  #main-content .vision-panel .vision-copy{
+    padding-left:0;
+    padding-right:0;
+    max-width:730px;
+  }
+}
+@media (max-width:560px){
+  #main-content .vision-panel .vision-progress{
+    inset-inline-start:auto;
+    inset-inline-end:auto;
+    left:clamp(26px,7vw,34px);
+    right:auto;
+    width:2px;
+    height:clamp(300px,63svh,510px);
+  }
+  #main-content .vision-panel .vision-panel-inner{
+    padding-left:clamp(55px,14vw,72px);
+    padding-right:clamp(20px,5vw,28px);
+  }
+  #main-content .vision-panel .vision-copy{
+    padding-left:0;
+    padding-right:0;
+  }
+  #main-content .vision-panel h3{
+    font-size:clamp(38px,9.2vw,52px);
+    line-height:1.32;
+    text-wrap:balance;
+  }
+  #main-content .vision-panel .vision-copy>p{
+    font-size:clamp(15px,3.9vw,17px);
+    line-height:1.95;
+  }
+}
+/* Sharper visible white rail with a deliberate neon break, even on dark phones. */
+#main-content .vision-panel .vision-progress .vision-progress-rail{
+  width:2px;
+  background:linear-gradient(to bottom,
+    rgba(232,245,255,.13) 0%,
+    rgba(245,250,255,.92) 11%,
+    rgba(245,250,255,.92) calc(var(--vision-lamp-offset,50%) - 20px),
+    transparent calc(var(--vision-lamp-offset,50%) - 20px),
+    transparent calc(var(--vision-lamp-offset,50%) + 20px),
+    rgba(245,250,255,.92) calc(var(--vision-lamp-offset,50%) + 20px),
+    rgba(245,250,255,.92) 89%,
+    rgba(232,245,255,.13) 100%);
+  box-shadow:0 0 6px rgba(185,229,255,.17);
+}
+#main-content .vision-panel .vision-progress::after{
+  width:15px;height:15px;
+  box-shadow:0 0 0 5px hsl(var(--vision-neon-hue,190) 100% 54% / .14),
+    0 0 13px 4px hsl(var(--vision-neon-hue,190) 100% 59% / .9),
+    0 0 28px 8px hsl(var(--vision-neon-hue,190) 100% 58% / .32);
+}
+@media (max-width:560px){
+  #main-content .vision-panel .vision-progress::after{width:14px;height:14px}
+}
