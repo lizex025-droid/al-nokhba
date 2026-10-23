@@ -2744,3 +2744,88 @@ body.about-story-active .site-header .nav-wrap{
     0 0 11px 3px rgba(234,193,109,.50),
     0 0 23px 6px rgba(197,143,59,.15);
 }
+
+/* About interaction refinements — fixed editorial canvas, four gold-lamp
+   waypoints, accessible keyboard focus, and safer iPhone spacing. */
+#main-content .story-assistive-note{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+#main-content .story-track:focus-visible{
+  outline:none;
+}
+#main-content .story-track:focus-visible .story-stage{
+  outline:2px solid rgba(234,193,109,.85);
+  outline-offset:-3px;
+}
+/* Fixed content coordinates across all four chapters: only alpha changes. */
+#main-content .story-layer{
+  backface-visibility:hidden;
+}
+#main-content .story-layer-content{
+  transform:none!important;
+}
+#main-content .story-layer h3{
+  clip-path:none!important;
+  will-change:auto;
+}
+#main-content .story-rail-lamp{
+  will-change:transform;
+}
+/* Readable spacing under the visible floating navigation. */
+@media(max-width:900px){
+  #main-content .story-stage{
+    top:var(--story-sticky-top,104px);
+    height:calc(100svh - var(--story-sticky-top,104px));
+  }
+  #main-content .story-layer{
+    align-items:center;
+    padding-top:max(24px,env(safe-area-inset-top));
+    padding-bottom:clamp(25px,4svh,52px);
+  }
+  #main-content .story-layer-content{
+    min-height:clamp(320px,48svh,460px);
+  }
+}
+@media(max-width:560px){
+  #main-content .story-layer{
+    padding-top:clamp(19px,3.2svh,39px);
+    padding-bottom:clamp(20px,3.4svh,42px);
+  }
+  #main-content .story-layer-content{
+    min-height:clamp(308px,45svh,425px);
+  }
+  #main-content .story-layer p{
+    font-size:clamp(16.5px,4.45vw,18px);
+    line-height:1.79;
+  }
+  #main-content .story-scroll-cue{margin-top:clamp(18px,2.5svh,27px)}
+}
+@media(max-width:560px) and (max-height:750px){
+  #main-content .story-layer-content{
+    min-height:clamp(290px,43svh,392px);
+  }
+}
+@media(prefers-reduced-motion:reduce), (max-width:900px) and (max-height:620px){
+  #main-content .story-stage{
+    position:relative;
+    top:auto;
+    height:auto;
+  }
+  #main-content .story-layer{
+    align-items:flex-start;
+    padding-block:54px;
+  }
+  #main-content .story-layer-content{
+    min-height:0;
+  }
+  #main-content .story-rail-lamp{will-change:auto}
+}
