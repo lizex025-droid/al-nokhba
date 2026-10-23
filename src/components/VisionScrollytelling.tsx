@@ -35,6 +35,10 @@ const visionPanels = [
 ];
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
+const ease = (value: number) => {
+  const t = clamp(value);
+  return t * t * (3 - 2 * t);
+};
 
 export function VisionScrollytelling() {
   const rootRef = useRef<HTMLElement>(null);
@@ -82,20 +86,36 @@ export function VisionScrollytelling() {
         rail: rail?.getBoundingClientRect(),
       }));
 
-      chapters.forEach(({panel, content, items}, index) => {
+      // One active chapter at a time. The active class fires a short, one-shot
+      // neon pulse when the illuminated title becomes the focus of the story.
+      let activeChapter = 0;
+      bounds.forEach(({ panel }, index) => {
+        if (panel.top <= viewportHeight * .48) activeChapter = index;
+      });
+
+      chapters.forEach(({panel, content, heading, items}, index) => {
         const current = bounds[index];
         const upcoming = bounds[index + 1]?.panel;
-        const enter = staticLayout ? 1 : clamp((viewportHeight * .96 - current.panel.top) / (viewportHeight * .50));
 
-        // Keep each chapter readable while the following card comes over it.
-        // This prevents the premature blank panel effect on mobile Safari.
-        const exitStart = compact ? .43 : .55;
-        const exitDistance = compact ? .35 : .46;
+        // The arriving chapter softly fades over the previous sticky card.
+        // Do not fade the background at all in reduced-motion or short layouts.
+        const arrival = staticLayout || index === 0 ? 1 :
+          ease((viewportHeight * .96 - current.panel.top) / (viewportHeight * .38));
+        panel.style.opacity = String(arrival);
+
+        // Reveal the gold headline first; introduce body/cue slightly later.
+        const enter = staticLayout ? 1 :
+          ease((viewportHeight * .94 - current.panel.top) / (viewportHeight * (compact ? .44 : .50)));
+
+        // The outgoing text remains readable until the incoming chapter has
+        // covered most of the old card, avoiding the empty-screen effect.
         const exit = staticLayout || !upcoming ? 0 :
-          clamp((stickyTop + viewportHeight * exitStart - upcoming.top) / (viewportHeight * exitDistance));
+          ease((stickyTop + viewportHeight * (compact ? .23 : .29) - upcoming.top) /
+          (viewportHeight * (compact ? .26 : .30)));
 
         const nextApproach = !upcoming ? 1 :
-          clamp((viewportHeight * .91 - upcoming.top) / (viewportHeight * .83));
+          ease((viewportHeight * .91 - upcoming.top) / (viewportHeight * .83));
+        panel.classList.toggle('vision-is-active', index === activeChapter && !staticLayout);
         const from = chapterColors[index];
         const to = chapterColors[Math.min(index + 1, chapterColors.length - 1)];
         const neon = from.map((channel, colorIndex) =>
@@ -117,16 +137,21 @@ export function VisionScrollytelling() {
         if (content) {
           content.style.opacity = staticLayout ? '1' : String(1 - exit);
           content.style.transform = staticLayout ? 'none' :
-            'translate3d(' + ((index % 2 === 0 ? -1 : 1) * exit * (compact ? 9 : 19)) +
-            'px,' + (-exit * (compact ? 12 : 23)) + 'px,0)';
+            'translate3d(0,' + (-exit * (compact ? 10 : 16)) + 'px,0)';
         }
 
         items.forEach((item, itemIndex) => {
-          const delay = itemIndex * .12;
-          const visible = staticLayout ? 1 : clamp((enter - delay) / Math.max(.3, .8 - delay));
+          // Stagger title > paragraph > goals > scroll cue. Headline reveals
+          // upward from a clipped baseline, never character-by-character.
+          const delay = index === 0 && itemIndex === 0 ? 0 : itemIndex * .11;
+          const visible = staticLayout ? 1 : ease((enter - delay) / Math.max(.24, .78 - delay));
           item.style.opacity = String(visible);
           item.style.transform = staticLayout ? 'none' :
-            'translate3d(0,' + ((1 - visible) * (compact ? 15 : 24)) + 'px,0)';
+            'translate3d(0,' + ((1 - visible) * (compact ? 16 : 23)) + 'px,0)';
+          if (item === heading) {
+            item.style.clipPath = staticLayout ? 'none' :
+              'inset(' + ((1 - visible) * 96) + '% 0 0 0)';
+          }
         });
       });
     };
@@ -154,7 +179,6 @@ export function VisionScrollytelling() {
         <div className="vision-progress" aria-hidden="true"><span className="vision-progress-rail" /><span className="vision-progress-fill" /></div>
         <div className="container-wide vision-panel-inner">
           <div className="vision-copy">
-            
             <h3 data-vision-reveal>{panel.title}</h3>
             {panel.text && <p data-vision-reveal>{panel.text}</p>}
             {panel.goals && <ul className="vision-goals" data-vision-reveal>{panel.goals.map(goal => <li key={goal}><span className="vision-goal-mark" aria-hidden="true" />{goal}</li>)}</ul>}
