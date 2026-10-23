@@ -1555,3 +1555,49 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media(prefers-reduced-motion:reduce){
   #main-content .vision-progress .vision-progress-fill{transition:none}
 }
+
+/* About story: single neon scroll indicator on the RIGHT, no numbered dots. */
+#main-content .vision-panel .vision-progress{
+  position:absolute;z-index:8;
+  left:auto;right:clamp(19px,5vw,76px);
+  top:50%;bottom:auto;
+  width:4px;height:clamp(220px,54vh,490px);
+  display:block;gap:0;
+  transform:translateY(-50%);
+  pointer-events:none;
+}
+#main-content .vision-panel .vision-progress .vision-progress-rail,
+#main-content .vision-panel .vision-progress .vision-progress-fill{
+  display:block;position:absolute;
+  left:0;right:auto;top:0;bottom:auto;
+  width:100%;height:100%;
+  border-radius:999px;
+  transform:none;
+}
+#main-content .vision-panel .vision-progress .vision-progress-rail{
+  background:rgba(127,202,252,.17);
+  box-shadow:0 0 7px rgba(12,144,231,.13);
+}
+#main-content .vision-panel .vision-progress .vision-progress-fill{
+  background:linear-gradient(180deg,#77e9ff,#08baff 50%,#148dff);
+  transform:scaleY(var(--vision-rail-progress,0));
+  transform-origin:top center;
+  box-shadow:0 0 8px #18c7ff,0 0 19px rgba(0,162,255,.65);
+}
+#main-content .vision-panel .vision-progress:before{display:none}
+@media(max-width:900px){
+  #main-content .vision-panel .vision-progress{
+    left:auto;right:12px;top:50%;
+    height:clamp(170px,46svh,390px);
+    width:3px;transform:translateY(-50%);
+  }
+  #main-content .vision-panel-inner{padding-inline:26px 28px}
+}
+@media(max-width:560px){
+  #main-content .vision-panel .vision-progress{
+    left:auto;right:9px;top:50%;
+    width:2px;height:44svh;
+    transform:translateY(-50%);
+  }
+  #main-content .vision-panel-inner{padding-inline:15px 26px}
+}
