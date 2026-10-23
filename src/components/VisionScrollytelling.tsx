@@ -64,6 +64,7 @@ export function VisionScrollytelling() {
       const reducedMotion = motionPreference.matches;
       const compact = window.innerWidth <= 900;
       const viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+      const staticLayout = reducedMotion || (compact && viewportHeight <= 580);
       const headerHeight = document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 82;
       const stickyTop = compact ? 0 : headerHeight;
       root.style.setProperty('--vision-sticky-top', String(stickyTop) + 'px');
@@ -84,13 +85,13 @@ export function VisionScrollytelling() {
       chapters.forEach(({panel, content, items}, index) => {
         const current = bounds[index];
         const upcoming = bounds[index + 1]?.panel;
-        const enter = reducedMotion ? 1 : clamp((viewportHeight * .96 - current.panel.top) / (viewportHeight * .50));
+        const enter = staticLayout ? 1 : clamp((viewportHeight * .96 - current.panel.top) / (viewportHeight * .50));
 
         // Keep each chapter readable while the following card comes over it.
         // This prevents the premature blank panel effect on mobile Safari.
         const exitStart = compact ? .43 : .55;
         const exitDistance = compact ? .35 : .46;
-        const exit = reducedMotion || !upcoming ? 0 :
+        const exit = staticLayout || !upcoming ? 0 :
           clamp((stickyTop + viewportHeight * exitStart - upcoming.top) / (viewportHeight * exitDistance));
 
         const nextApproach = !upcoming ? 1 :
@@ -102,8 +103,8 @@ export function VisionScrollytelling() {
         ).join(' ');
 
         panel.style.setProperty('--vision-neon-color', neon);
-        panel.style.setProperty('--vision-rail-progress', reducedMotion ? '1' : String(nextApproach));
-        panel.style.setProperty('--vision-glow-opacity', reducedMotion ? '.72' : String(.22 + .78 * enter));
+        panel.style.setProperty('--vision-rail-progress', staticLayout ? '1' : String(nextApproach));
+        panel.style.setProperty('--vision-glow-opacity', staticLayout ? '.72' : String(.22 + .78 * enter));
 
         const headingRect = current.heading;
         const railRect = current.rail;
@@ -114,17 +115,17 @@ export function VisionScrollytelling() {
         }
 
         if (content) {
-          content.style.opacity = reducedMotion ? '1' : String(1 - exit);
-          content.style.transform = reducedMotion ? 'none' :
+          content.style.opacity = staticLayout ? '1' : String(1 - exit);
+          content.style.transform = staticLayout ? 'none' :
             'translate3d(' + ((index % 2 === 0 ? -1 : 1) * exit * (compact ? 9 : 19)) +
             'px,' + (-exit * (compact ? 12 : 23)) + 'px,0)';
         }
 
         items.forEach((item, itemIndex) => {
           const delay = itemIndex * .12;
-          const visible = reducedMotion ? 1 : clamp((enter - delay) / Math.max(.3, .8 - delay));
+          const visible = staticLayout ? 1 : clamp((enter - delay) / Math.max(.3, .8 - delay));
           item.style.opacity = String(visible);
-          item.style.transform = reducedMotion ? 'none' :
+          item.style.transform = staticLayout ? 'none' :
             'translate3d(0,' + ((1 - visible) * (compact ? 15 : 24)) + 'px,0)';
         });
       });
