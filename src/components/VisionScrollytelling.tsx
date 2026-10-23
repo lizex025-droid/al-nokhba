@@ -88,7 +88,7 @@ export function VisionScrollytelling() {
         const railProgress = nextRect
           ? clamp((viewportHeight * .95 - nextRect.top) / (viewportHeight * .85))
           : 0;
-        panel.style.setProperty('--vision-rail-progress', `${((panelIndex + railProgress) / (panels.length - 1)) * 100}%`);
+        panel.style.setProperty('--vision-rail-progress', String((panelIndex + railProgress) / (panels.length - 1)));
 
         if (content) {
           content.style.opacity = String(1 - exitProgress);
