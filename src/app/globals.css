@@ -1406,3 +1406,71 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 /* Keep developer signature proportional to the footer legal text. */
 .footer-bottom .footer-developer-credit{font-size:11px!important;font-weight:600!important;line-height:1.5;letter-spacing:0;color:#a9b9ca}
 .footer-bottom .footer-developer-credit:hover{color:#fff}
+
+/* About scrollytelling: alternate visual and copy by chapter.
+   Chapter 01: number at right and copy at left; chapter 02 reverses. */
+#main-content .vision-panel-inner{
+  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(24px,5vw,86px);
+  direction:ltr;
+}
+#main-content .vision-panel .vision-copy{
+  grid-row:1;grid-column:1;
+  direction:rtl;
+  justify-self:stretch;
+}
+#main-content .vision-panel .vision-visual{
+  grid-row:1;grid-column:2;
+  width:min(25vw,320px);
+}
+#main-content .vision-panel:nth-child(even) .vision-copy{grid-column:2}
+#main-content .vision-panel:nth-child(even) .vision-visual{grid-column:1}
+#main-content .vision-panel .vision-number-ring{width:77%}
+#main-content .vision-panel .vision-big-number{font-size:clamp(105px,12vw,190px)}
+#main-content .vision-panel .vision-number-ring:before{inset:-15%}
+#main-content .vision-panel .vision-metric{font-size:11px}
+@media(max-width:900px){
+  #main-content .vision-panel-inner{
+    grid-template-columns:minmax(0,1.15fr) minmax(125px,.85fr);
+    gap:clamp(15px,4vw,30px);
+    align-content:center;
+    padding-block:clamp(65px,11vh,100px);
+  }
+  #main-content .vision-panel .vision-copy{
+    grid-row:1;
+    grid-column:1;
+    align-self:center;
+    min-width:0;
+  }
+  #main-content .vision-panel .vision-visual{
+    grid-row:1;
+    grid-column:2;
+    width:min(29vw,190px);
+  }
+  #main-content .vision-panel:nth-child(even) .vision-copy{grid-column:2}
+  #main-content .vision-panel:nth-child(even) .vision-visual{grid-column:1}
+  #main-content .vision-panel h3{font-size:clamp(30px,5.6vw,48px)}
+  #main-content .vision-panel .vision-copy>p{font-size:clamp(13px,1.75vw,16px)}
+  #main-content .vision-panel .vision-big-number{font-size:clamp(82px,18vw,145px)}
+}
+@media(max-width:560px){
+  #main-content .vision-panel-inner{
+    grid-template-columns:minmax(0,1fr) minmax(100px,.67fr);
+    gap:14px;
+    padding-inline:18px;
+  }
+  #main-content .vision-panel .vision-visual{width:min(31vw,140px)}
+  #main-content .vision-panel .vision-big-number{font-size:clamp(75px,22vw,112px);-webkit-text-stroke-width:1.5px}
+  #main-content .vision-panel .vision-number-ring{width:84%;box-shadow:0 0 0 15px rgba(255,255,255,.015)}
+  #main-content .vision-panel .vision-number-ring:before{inset:-13%}
+  #main-content .vision-panel .vision-metric{
+    font-size:9px;padding:5px 8px;bottom:-16%;
+  }
+  #main-content .vision-panel h3{font-size:clamp(25px,6.2vw,34px);margin:12px 0}
+  #main-content .vision-panel .vision-copy>p{font-size:12px;line-height:1.85}
+  #main-content .vision-panel-top{font-size:11px}
+  #main-content .vision-goals{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  #main-content .vision-panel-inner,#main-content .vision-panel [data-vision-reveal]{transition:none!important}
+}
