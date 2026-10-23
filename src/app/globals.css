@@ -1863,40 +1863,31 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 /* Unified premium-gold headlines for all About chapters. */
 #main-content .vision-panel h3{color:#dfc391}
 
-/* 2026 About refresh: cinematic chapters, quiet neon, editorial typography.
-   This final scoped layer supersedes historic vision prototypes. */
+/* About — restrained institutional palette; no synthetic multicolor glow.
+   Material: matte ink navy, subtle depth, warm gold typography. */
 #main-content .vision-panel{
-  --vision-stage-glow:38 215 255;
-  background:linear-gradient(124deg,#041425 2%,#061f3a 57%,#0b3354 100%);
-  box-shadow:0 -16px 44px rgba(3,17,31,.21);
+  background:#081929;
+  background-image:linear-gradient(113deg,#081929 0%,#0c1c2b 100%);
+  box-shadow:0 -10px 28px rgba(2,12,22,.18);
+  border-top:1px solid rgba(224,210,181,.10);
+  border-radius:22px 22px 0 0;
+  clip-path:inset(0 round 22px 22px 0 0);
 }
 #main-content .vision-panel-2{
-  --vision-stage-glow:37 215 165;
-  background:linear-gradient(129deg,#051d2d 0%,#0a3045 54%,#0a403e 100%);
+  background:#0c2030;
+  background-image:linear-gradient(113deg,#0c2030 0%,#102435 100%);
 }
 #main-content .vision-panel-3{
-  --vision-stage-glow:185 148 247;
-  background:linear-gradient(125deg,#080f24 0%,#121f41 50%,#152d4c 100%);
+  background:#091b2a;
+  background-image:linear-gradient(113deg,#091b2a 0%,#0c2030 100%);
 }
 #main-content .vision-panel-4{
-  --vision-stage-glow:234 193 109;
-  background:linear-gradient(125deg,#0b1d30 0%,#122c45 55%,#2b3549 100%);
+  background:#101f2e;
+  background-image:linear-gradient(113deg,#101f2e 0%,#142636 100%);
 }
-#main-content .vision-panel::after{
-  content:"";
-  position:absolute;inset:0;
-  width:auto;height:auto;top:0;right:0;
-  border:0;border-radius:inherit;box-shadow:none;
-  background:
-    radial-gradient(ellipse 62% 67% at 13% 38%,rgb(var(--vision-stage-glow) / .19),transparent 74%),
-    radial-gradient(ellipse 48% 64% at 95% 94%,rgb(var(--vision-stage-glow) / .07),transparent 80%);
-  opacity:var(--vision-glow-opacity,.65);
-  pointer-events:none;z-index:0;
-}
-#main-content .vision-panel::before{
-  opacity:.54;
-  background-size:94px 94px;
-}
+/* Retire the old decorative grids, orbital circles and oversized radial halos. */
+#main-content .vision-panel::before,
+#main-content .vision-panel::after{content:none;display:none}
 #main-content .vision-panel .vision-panel-inner{
   position:relative;z-index:2;
   width:min(100%,1120px);
@@ -1924,7 +1915,7 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 #main-content .vision-panel .vision-copy>p{
   font-size:clamp(17px,1.48vw,21px);
   line-height:1.98;
-  color:#e3ecf5;
+  color:#e4e7e9;
   max-width:710px;
   text-wrap:pretty;
 }
@@ -1962,10 +1953,10 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   line-height:1.6;
   min-height:58px;
   padding:15px 20px;
-  border-radius:16px;
-  border:1px solid rgba(234,193,109,.2);
-  background:rgba(255,255,255,.06);
-  color:#f1f5fa;
+  border-radius:10px;
+  border:1px solid rgba(235,232,224,.12);
+  background:rgba(255,255,255,.035);
+  color:#eaedef;
 }
 #main-content .vision-panel .vision-goal-mark{
   width:8px;height:8px;min-width:8px;
@@ -1997,8 +1988,8 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     position:sticky;
     top:0;
     min-height:100svh;
-    border-radius:30px 30px 0 0;
-    clip-path:inset(0 round 30px 30px 0 0);
+    border-radius:16px 16px 0 0;
+    clip-path:inset(0 round 16px 16px 0 0);
   }
   #main-content .vision-panel+.vision-panel{margin-top:-46px}
   #main-content .vision-panel .vision-panel-inner{
@@ -2016,8 +2007,8 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 }
 @media(max-width:560px){
   #main-content .vision-panel{
-    border-radius:22px 22px 0 0;
-    clip-path:inset(0 round 22px 22px 0 0);
+    border-radius:12px 12px 0 0;
+    clip-path:inset(0 round 12px 12px 0 0);
   }
   #main-content .vision-panel+.vision-panel{margin-top:-28px}
   #main-content .vision-panel .vision-panel-inner{
