@@ -402,10 +402,8 @@ a:hover .arrow-icon,button:hover .arrow-icon{transform:translateX(-4px)}
   }
 }
 
-/* Hide navigation only while reading the mobile vision storytelling panels. Keep original overlapping scroll animation. */
+/* Keep navigation visible during About scrollytelling; do not hide on mobile. */
 @media(max-width:900px){
-  body.vision-mobile-active .site-header{opacity:0;visibility:hidden;pointer-events:none}
-  .site-header{transition:opacity .2s ease,visibility .2s ease}
   .vision-scrolly{scroll-margin-top:0}
   .vision-panel{top:var(--vision-sticky-top,0px)}
 }
@@ -2613,6 +2611,57 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   #main-content .story-layer{
     align-items:flex-start;
     padding-block:54px;
+  }
+  #main-content .story-layer-content{min-height:0}
+}
+
+/* Navbar remains on top of the single pinned About scene at every breakpoint.
+   Offset and available stage height match the actual measured header height. */
+.site-header,
+.site-header.site-header-home{
+  z-index:1000;
+}
+#main-content .story-track{
+  scroll-margin-top:var(--story-sticky-top,100px);
+}
+#main-content .story-stage{
+  top:var(--story-sticky-top,100px);
+  height:calc(100svh - var(--story-sticky-top,100px));
+}
+@media(max-width:900px){
+  #main-content .story-stage{
+    top:var(--story-sticky-top,100px);
+    height:calc(100svh - var(--story-sticky-top,100px));
+  }
+  #main-content .story-layer{
+    padding-top:clamp(25px,4svh,52px);
+    padding-bottom:clamp(25px,4svh,52px);
+  }
+  #main-content .story-layer-content{
+    min-height:clamp(345px,49svh,460px);
+  }
+}
+@media(max-width:560px){
+  #main-content .story-layer{
+    padding-top:clamp(19px,3svh,40px);
+    padding-bottom:clamp(19px,3svh,40px);
+  }
+  #main-content .story-layer-content{
+    min-height:clamp(320px,46svh,430px);
+  }
+  #main-content .story-layer h3{
+    margin-bottom:clamp(17px,2.5svh,25px);
+  }
+}
+@media(prefers-reduced-motion:reduce), (max-width:900px) and (max-height:620px){
+  #main-content .story-stage{
+    position:relative;
+    top:auto;
+    height:auto;
+  }
+  #main-content .story-layer{padding-block:54px}
+  #main-content .story-layer:first-child{
+    padding-top:max(70px,calc(var(--story-sticky-top,100px) + 24px));
   }
   #main-content .story-layer-content{min-height:0}
 }
