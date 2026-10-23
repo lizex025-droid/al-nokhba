@@ -2065,3 +2065,71 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
     transform:scaleY(1);
   }
 }
+
+/* About motion polish: masked gold typography, overlapping chapter dissolve
+   and one restrained neon pulse on entering each chapter. */
+#main-content .vision-panel{
+  /* Every chapter has its own opacity so the incoming matte-navy surface
+     blends over the previous sticky chapter instead of cutting abruptly. */
+  opacity:1;
+  transform:translateZ(0);
+}
+#main-content .vision-panel .vision-panel-inner{
+  transform-origin:center center;
+  transition:none;
+}
+#main-content .vision-panel h3[data-vision-reveal]{
+  position:relative;
+  will-change:opacity,transform,clip-path;
+  clip-path:inset(0);
+  backface-visibility:hidden;
+}
+#main-content .vision-panel [data-vision-reveal]{
+  transition:none;
+}
+#main-content .vision-panel .vision-progress::after{
+  transform:translate(-50%,-50%) scale(1);
+  filter:brightness(1);
+}
+#main-content .vision-panel.vision-is-active .vision-progress::after{
+  animation:vision-neon-arrival 680ms cubic-bezier(.2,.75,.3,1) both;
+}
+@keyframes vision-neon-arrival{
+  0%{transform:translate(-50%,-50%) scale(.90);filter:brightness(.92)}
+  38%{transform:translate(-50%,-50%) scale(1.25);filter:brightness(1.35)}
+  75%{transform:translate(-50%,-50%) scale(1.05);filter:brightness(1.12)}
+  100%{transform:translate(-50%,-50%) scale(1);filter:brightness(1)}
+}
+/* The neon is the only saturated accent. Keep supporting elements restrained. */
+#main-content .vision-panel .vision-next-cue-arrow{
+  background:rgba(255,255,255,.025);
+  transition:border-color .22s ease,color .22s ease;
+}
+#main-content .vision-panel .vision-goals li{
+  transition:border-color .22s ease,background-color .22s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  #main-content .vision-panel .vision-goals li:hover{
+    border-color:rgba(223,195,145,.30);
+    background:rgba(255,255,255,.055);
+  }
+}
+@media(max-width:900px){
+  #main-content .vision-panel .vision-panel-inner{
+    transform-origin:center center;
+  }
+  #main-content .vision-panel .vision-progress::after{
+    will-change:transform;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #main-content .vision-panel{opacity:1!important;transform:none!important}
+  #main-content .vision-panel h3[data-vision-reveal]{
+    clip-path:none!important;
+    will-change:auto;
+  }
+  #main-content .vision-panel.vision-is-active .vision-progress::after{
+    animation:none!important;transform:translate(-50%,-50%)!important;
+    filter:none!important;
+  }
+}
