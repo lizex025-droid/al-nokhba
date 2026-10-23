@@ -21,12 +21,8 @@ const chapters = [
   },
 ] as const;
 
-const neonColors = [
-  [38, 215, 255],
-  [37, 215, 165],
-  [185, 148, 247],
-  [234, 193, 109],
-] as const;
+// The lamp keeps the Goals chapter's warm gold throughout the story.
+const GOLD_NEON_RGB = '234 193 109';
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const smoothstep = (value: number) => {
@@ -65,14 +61,18 @@ export function VisionScrollytelling() {
       const compact = window.innerWidth <= 900;
       const staticLayout = prefersReducedMotion.matches || shortScreen.matches;
       const viewportHeight = window.innerHeight;
-      // Keep the fixed navigation above the story on every screen.
-      // Subtract its real rendered height from the pinned canvas instead of
-      // hiding the header while people read the About section.
+      // Keep the real fixed navbar above the pinned story, with an extra
+      // 12px breathing room so titles never enter its backdrop on phones.
       const header = document.querySelector<HTMLElement>('.site-header');
-      const top = Math.ceil(header?.getBoundingClientRect().height ?? 78) + 8;
+      const headerHeight = Math.ceil(header?.getBoundingClientRect().height ?? 78);
+      const top = headerHeight + 12;
       root.style.setProperty('--story-sticky-top', top + 'px');
 
       const rect = root.getBoundingClientRect();
+      document.body.classList.toggle(
+        'about-story-active',
+        rect.top <= headerHeight + 10 && rect.bottom > headerHeight + 80
+      );
       const distance = Math.max(1, root.offsetHeight - stage.offsetHeight);
       const scrollProgress = clamp((top - rect.top) / distance);
       const position = scrollProgress * (chapters.length - 1);
@@ -103,12 +103,7 @@ export function VisionScrollytelling() {
 
       if (rail) {
         stage.style.setProperty('--story-progress', String(staticLayout ? 1 : scrollProgress));
-        const base = Math.min(chapters.length - 2, Math.floor(position));
-        const mix = smoothstep(position - base);
-        const color = neonColors[base].map((channel, i) =>
-          Math.round(channel + (neonColors[base + 1][i] - channel) * mix)
-        );
-        stage.style.setProperty('--story-neon-rgb', color.join(' '));
+        stage.style.setProperty('--story-neon-rgb', GOLD_NEON_RGB);
       }
 
       const active = staticLayout ? -1 : Math.min(chapters.length - 1, Math.round(position));
@@ -143,6 +138,7 @@ export function VisionScrollytelling() {
       window.removeEventListener('resize', requestRender);
       prefersReducedMotion.removeEventListener('change', requestRender);
       shortScreen.removeEventListener('change', requestRender);
+      document.body.classList.remove('about-story-active');
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
