@@ -1788,21 +1788,20 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   #main-content .vision-panel .vision-progress::after{width:12px;height:12px}
 }
 
-/* Mobile refinement: place the Prenuvo-style white neon rail on the physical LEFT.
-   Previous inset-inline-start followed RTL and put it on the right edge. */
+/* About timeline: physical RIGHT edge on tablets and mobiles, clear of RTL text. */
 @media (max-width:900px){
   #main-content .vision-panel .vision-progress{
     inset-inline-start:auto;
     inset-inline-end:auto;
-    left:clamp(27px,4vw,48px);
-    right:auto;
+    left:auto;
+    right:clamp(27px,4vw,48px);
     top:50%;
     height:clamp(290px,62svh,530px);
     transform:translateY(-50%);
   }
   #main-content .vision-panel .vision-panel-inner{
-    padding-left:clamp(54px,8vw,84px);
-    padding-right:clamp(24px,4vw,38px);
+    padding-left:clamp(24px,4vw,38px);
+    padding-right:clamp(54px,8vw,84px);
   }
   #main-content .vision-panel .vision-copy{
     padding-left:0;
@@ -1814,14 +1813,14 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
   #main-content .vision-panel .vision-progress{
     inset-inline-start:auto;
     inset-inline-end:auto;
-    left:clamp(26px,7vw,34px);
-    right:auto;
+    left:auto;
+    right:clamp(26px,7vw,34px);
     width:2px;
     height:clamp(300px,63svh,510px);
   }
   #main-content .vision-panel .vision-panel-inner{
-    padding-left:clamp(55px,14vw,72px);
-    padding-right:clamp(20px,5vw,28px);
+    padding-left:clamp(20px,5vw,28px);
+    padding-right:clamp(55px,14vw,72px);
   }
   #main-content .vision-panel .vision-copy{
     padding-left:0;
@@ -1860,3 +1859,6 @@ body,button,input,textarea,select,option{font-family:var(--nokhba-body-font)}
 @media (max-width:560px){
   #main-content .vision-panel .vision-progress::after{width:14px;height:14px}
 }
+
+/* Unified premium-gold headlines for all About chapters. */
+#main-content .vision-panel h3{color:#dfc391}
