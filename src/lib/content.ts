@@ -9,7 +9,6 @@ export const nav = [
   { label: 'إيميلات الدكاترة', href: '/professors-emails' },
   { label: 'الخطط الدراسية', href: '/study-plans' },
   { label: 'من نحن', href: '/#about' },
-  { label: 'اطلب مساعدة', href: '/request-help' },
 ];
 
 export const seoTitles: Record<string, string> = {
