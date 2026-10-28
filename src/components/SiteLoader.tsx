@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 import { HeroArt } from './HeroArt';
 
 // Static pages already render in the initial HTML. Only cover a navigation
-// when fetching its route payload is noticeably slow.
-const SHOW_AFTER_MS = 700;
+// when fetching its route payload is unusually slow or appears stuck.
+const SHOW_AFTER_MS = 4000;
 const SLOW_NAVIGATION_MS = 14000;
 
 export function SiteLoader() {
