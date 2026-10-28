@@ -22,7 +22,7 @@ export function CourseResourceItem({ resource }: { resource: ReturnType<typeof a
   const isVideo = resource.tab === 'lectures';
   const isTest = resource.tab === 'tests' && resource.interactive;
   const isFile = /\.(pdf|pptx?|docx?|xlsx?|zip|png|jpe?g)(?:[?#]|$)/i.test(resource.url) || /pdf|powerpoint|presentation/i.test(resource.type || '');
-  return <li className="course-resource-item">
+  return <li className="course-resource-item" data-card-reveal>
     <span className="course-file-icon"><ResourceIcon tab={resource.tab}/></span>
     <div className="course-resource-copy"><h3>{resource.title}</h3><p>{resource.type || (isVideo ? 'محاضرة مرئية' : isTest ? 'اختبار تفاعلي' : 'مادة دراسية')}</p></div>
     <div className="course-resource-actions">
