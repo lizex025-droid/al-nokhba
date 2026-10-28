@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { ArrowIcon } from './Icons';
+import { worldCountryDialCodes } from '@/lib/countryDialCodes';
 
 const specialties = ['العلاج الطبيعي', 'العلاج الوظيفي', 'الأطراف الاصطناعية والأجهزة المساعدة', 'السمع والنطق', 'متطلبات الكلية', 'متطلبات الجامعة', 'غير ذلك'];
 const years = ['السنة الأولى', 'السنة الثانية', 'السنة الثالثة', 'السنة الرابعة', 'لا أعرف'];
@@ -11,32 +12,30 @@ export function FormTextarea({ label, name, required = false, placeholder, hint 
 export function SelectField({ label, name, options, required = false }: { label: string; name: string; options: string[]; required?: boolean }) { return <label className="form-field"><span>{label}{required && <em> *</em>}</span><select name={name} required={required} defaultValue=""><option value="" disabled>اختر من القائمة</option>{options.map(x => <option key={x}>{x}</option>)}</select></label>; }
 
 
-const countryCodes = [
-  { code: '+962', label: '🇯🇴 +962' },
-  { code: '+970', label: '🇵🇸 +970' },
-  { code: '+966', label: '🇸🇦 +966' },
-  { code: '+971', label: '🇦🇪 +971' },
-  { code: '+965', label: '🇰🇼 +965' },
-  { code: '+974', label: '🇶🇦 +974' },
-  { code: '+973', label: '🇧🇭 +973' },
-  { code: '+968', label: '🇴🇲 +968' },
-  { code: '+20', label: '🇪🇬 +20' },
-  { code: '+92', label: '🇵🇰 +92' },
-  { code: '+90', label: '🇹🇷 +90' },
-  { code: '+1', label: '🇺🇸 +1' },
-  { code: '+44', label: '🇬🇧 +44' },
-];
+/** Localized names and flags with Jordan always at the top of the list. */
+const arabicRegionNames = new Intl.DisplayNames(['ar'], { type: 'region' });
+const arabicNameSorter = new Intl.Collator('ar', { sensitivity: 'base' });
+const countryFlag = (iso: string) =>
+  String.fromCodePoint(...Array.from(iso.toUpperCase()).map(letter => letter.charCodeAt(0) + 127397));
+const countryCodes = worldCountryDialCodes.map(([iso, code]) => ({
+  iso,
+  code,
+  name: arabicRegionNames.of(iso) || iso,
+  flag: countryFlag(iso),
+})).sort((a, b) =>
+  a.iso === 'JO' ? -1 : b.iso === 'JO' ? 1 : arabicNameSorter.compare(a.name, b.name)
+);
 
 function WhatsAppField() {
   return <div className="form-field form-whatsapp-field">
     <label htmlFor="nokhba-whatsapp" className="form-whatsapp-label">رقم واتساب <em>*</em></label>
     <div className="form-whatsapp-inputs" dir="ltr">
       <select className="form-country-code" name="countryCode" aria-label="رمز الدولة" defaultValue="+962" required>
-        {countryCodes.map(country => <option key={country.code} value={country.code}>{country.label}</option>)}
+        {countryCodes.map(country => <option key={country.iso} value={country.code}>{country.flag} {country.name} ({country.code})</option>)}
       </select>
       <input id="nokhba-whatsapp" type="tel" name="phone" inputMode="tel" autoComplete="tel-national" placeholder="07XXXXXXXX" maxLength={20} dir="ltr" required />
     </div>
-    <small>اختر رمز الدولة وأدخل رقم الواتساب بدون رمز الدولة.</small>
+    <small>الأردن محدد تلقائيًا. اختر أي دولة وأدخل رقم الواتساب المحلي.</small>
   </div>;
 }
 
