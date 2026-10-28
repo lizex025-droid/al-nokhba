@@ -12,7 +12,7 @@ export function StudyPlanYearPicker({ specialtyTitle, specialty }: { specialtyTi
   return <div className="plan-year-picker">
     <div className="plan-year-grid">
       {years.map(year => <button key={year} type="button" aria-pressed={selected === year}
-        className={`plan-year-card${selected === year ? ' selected' : ''}`}
+        className={`plan-year-card${selected === year ? ' selected' : ''}`} data-card-reveal
         onClick={() => setSelected(year)}>
         <span className="plan-year-label">الخطة الدراسية</span>
         <strong dir="ltr">{year}</strong>
