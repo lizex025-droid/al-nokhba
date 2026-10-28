@@ -16,6 +16,7 @@ const FORM_ENDPOINT = process.env.NEXT_PUBLIC_NOKHBA_FORM_ENDPOINT || 'https://u
 
 function FormShell({ children, title, button, kind }: { children: ReactNode; title: string; button: string; kind: 'help' | 'join' | 'contact' }) {
   const [sent, setSent] = useState(false);
+  const [queued, setQueued] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const startedAt = useRef(Date.now());
@@ -49,6 +50,7 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
       });
       const result = await response.json();
       if (!response.ok || !result.ok) throw new Error('delivery failed');
+      setQueued(result.queued === true);
       setSent(true);
     } catch {
       setError('تعذر إرسال الطلب، ولم يصل تأكيد باستلامه. حاول مرة أخرى لاحقًا.');
@@ -59,8 +61,8 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
 
   return <div className="form-shell" data-reveal>{sent ? <div className="form-confirmation" role="status">
     <span className="success-symbol">✓</span>
-    <h2>تم إرسال الطلب بنجاح</h2>
-    <p>تم استلام طلبك في نظام النخبة.</p>
+    <h2>{queued ? 'تم حفظ طلبك بنجاح' : 'تم إرسال الطلب بنجاح'}</h2>
+    <p>{queued ? 'وصل طلبك إلى نظام النخبة وتم حفظه بأمان. إشعار فريق النخبة عبر Telegram قيد الانتظار.' : 'تم استلام طلبك في نظام النخبة وإرسال إشعار للفريق عبر Telegram.'}</p>
     <button className="button button-navy" type="button" onClick={() => { setSent(false); startedAt.current = Date.now(); }}>إرسال طلب جديد</button>
   </div> : <>
     <div className="form-heading"><span className="eyebrow">النخبة معك</span><h2>{title}</h2><p>الحقول المطلوبة مميزة بعلامة النجمة.</p></div>
