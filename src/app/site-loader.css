@@ -1,4 +1,4 @@
-/* Slow-navigation fallback only; fast pages render without an overlay. */
+/* First-load-only screen while initial fonts and images settle. */
 .site-loader-screen{
   position:fixed;
   inset:0;
