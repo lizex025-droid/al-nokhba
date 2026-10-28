@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 import { HeroArt } from '@/components/HeroArt';
 
-/** Avoid flashing a full-screen fallback for a quickly resolved route. */
+/** Show a fallback only if a route has been waiting for several seconds. */
 export default function Loading() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setShow(true), 700);
+    const timer = window.setTimeout(() => setShow(true), 4000);
     return () => window.clearTimeout(timer);
   }, []);
 
