@@ -97,7 +97,7 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
   </div> : <>
     <div className="form-heading"><span className="eyebrow">النخبة معك</span><h2>{title}</h2><p>الحقول المطلوبة مميزة بعلامة النجمة.</p></div>
     <form className="form-grid" onSubmit={handleSubmit}>
-      <label className="form-honeypot" aria-hidden="true">اترك الحقل فارغًا<input tabIndex={-1} type="text" autoComplete="off" name="website" /></label>
+      <label className="form-honeypot" aria-hidden="true" hidden>اترك الحقل فارغًا<input tabIndex={-1} type="text" autoComplete="off" name="website" /></label>
       {children}
       <div className="form-actions">
         <p>بياناتك تُرسل بأمان إلى فريق النخبة.</p>
