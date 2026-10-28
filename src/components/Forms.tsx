@@ -3,6 +3,8 @@
 import { useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { ArrowIcon } from './Icons';
 import { worldCountryDialCodes } from '@/lib/countryDialCodes';
+import { LEGAL_VERSION } from '@/lib/legalPolicies';
+import Link from 'next/link';
 
 const specialties = ['العلاج الطبيعي', 'العلاج الوظيفي', 'الأطراف الاصطناعية والأجهزة المساعدة', 'السمع والنطق', 'متطلبات الكلية', 'متطلبات الجامعة', 'غير ذلك'];
 const years = ['السنة الأولى', 'السنة الثانية', 'السنة الثالثة', 'السنة الرابعة', 'لا أعرف'];
@@ -96,9 +98,13 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
       return;
     }
     const data = new FormData(event.currentTarget);
+    if ((kind === 'help' || kind === 'join') && data.get('legalConsent') !== 'accepted') {
+      setError('يجب الاطلاع على السياسات والموافقة عليها قبل إرسال الطلب.');
+      return;
+    }
     const fields: Record<string, string | string[]> = {};
     for (const key of new Set(Array.from(data.keys()))) {
-      if (key === 'website') continue;
+      if (key === 'website' || key === 'legalConsent') continue;
       const all = data.getAll(key).map(value => String(value));
       fields[key] = all.length > 1 ? all : all[0] ?? '';
     }
@@ -113,6 +119,11 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
           fields,
           website: String(data.get('website') || ''),
           startedAt: startedAt.current,
+          consent: kind === 'help' || kind === 'join' ? {
+            accepted: true,
+            version: LEGAL_VERSION,
+            form: kind,
+          } : undefined,
         }),
       });
       const result = await response.json();
@@ -136,6 +147,16 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
     <form className="form-grid" onSubmit={handleSubmit}>
       <label className="form-honeypot" aria-hidden="true" hidden>اترك الحقل فارغًا<input tabIndex={-1} type="text" autoComplete="off" name="website" /></label>
       {children}
+      {(kind === 'help' || kind === 'join') && <div className="form-legal-consent">
+        <label>
+          <input type="checkbox" name="legalConsent" value="accepted" required />
+          <span>{kind === 'join' ? <>
+            قرأت وأوافق على <Link href="/terms" target="_blank" rel="noopener noreferrer">شروط الاستخدام والمساهمة</Link> و<Link href="/privacy" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</Link>، بما فيها إقرار حقوق المواد التعليمية التي قد أقدمها للنخبة، وأوافق على معالجة بياناتي لمراجعة طلب انضمامي والتواصل معي للأغراض والمدة الموضحتين في السياسة.
+          </> : <>
+            قرأت <Link href="/terms" target="_blank" rel="noopener noreferrer">شروط الاستخدام</Link> واطلعت على <Link href="/privacy" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</Link>، وأوافق على معالجة بياناتي لمعالجة طلبي والتواصل معي للأغراض والمدة الموضحتين في السياسة.
+          </>}</span>
+        </label>
+      </div>}
       <div className="form-actions">
         <p>بياناتك تُرسل بأمان إلى فريق النخبة.</p>
         {error && <p className="form-error" role="alert">{error}</p>}

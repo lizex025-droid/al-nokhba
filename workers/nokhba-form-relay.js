@@ -31,6 +31,7 @@ const REQUIRED = {
   help: ['name', 'contact', 'specialty', 'year', 'course', 'difficulty'],
   join: ['name', 'specialty', 'year', 'field', 'role', 'phone', 'reason'],
 };
+const LEGAL_POLICY_VERSION = '2026-10-29';
 
 function reply(data, status, origin) {
   return new Response(JSON.stringify(data), {
@@ -75,6 +76,13 @@ export default {
     const form = data?.form;
     if (!Object.prototype.hasOwnProperty.call(REQUIRED,form))
       return reply({ok:false,error:'invalid_form'},400,origin);
+    const consent = data?.consent;
+    const consentAccepted = consent?.accepted === true &&
+      consent?.version === LEGAL_POLICY_VERSION && consent?.form === form;
+    if (consent !== undefined && !consentAccepted)
+      return reply({ok:false,error:'invalid_consent'},400,origin);
+    if (env.REQUIRE_LEGAL_CONSENT === 'true' && !consentAccepted)
+      return reply({ok:false,error:'consent_required'},400,origin);
     if (text(data.website || '',100)) return reply({ok:true},200,origin); // honeypot
     const startedAt = Number(data.startedAt);
     if (!Number.isFinite(startedAt) || Date.now() - startedAt < 2500 ||
@@ -97,6 +105,7 @@ export default {
         : text(raw, key === 'difficulty' || key === 'notes' || key === 'reason' ? 1500 : 180);
       if (value) lines.push(label + ': ' + value);
     }
+    if (consentAccepted) lines.push('موافقة السياسات: ' + LEGAL_POLICY_VERSION + ' — ' + new Date().toISOString());
     lines.push('─────────────────');
     lines.push('المصدر: موقع النخبة');
     if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID)

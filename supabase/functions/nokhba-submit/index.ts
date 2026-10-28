@@ -30,6 +30,9 @@ const required: Record<string, string[]> = {
   join: ["name", "specialty", "year", "field", "role", "phone", "countryCode"],
 };
 
+// Keep this version aligned with src/lib/legalPolicies.ts at publication time.
+const legalPolicyVersion = '2026-10-29';
+
 function clean(value: unknown, maxLength = 180): string {
   return typeof value === "string"
     ? value.trim().replace(/[\u0000-\u001f\u007f]/g, " ").slice(0, maxLength)
@@ -185,6 +188,21 @@ Deno.serve(async (request: Request) => {
   const form = clean(data.form, 15);
   if (!Object.hasOwn(required, form)) return respond({ ok: false, error: "invalid_form" }, 400, origin);
 
+  // Deploy in compatibility mode first, while the Cloudflare and Vercel sites
+  // are updated. Set REQUIRE_LEGAL_CONSENT=true only after both sites are live.
+  const consent = data.consent;
+  const consentRecord = consent && typeof consent === 'object' && !Array.isArray(consent)
+    ? consent as Record<string, unknown> : null;
+  const consentAccepted = consentRecord?.accepted === true
+    && consentRecord?.version === legalPolicyVersion
+    && consentRecord?.form === form;
+  if (consent !== undefined && !consentAccepted) {
+    return respond({ ok: false, error: "invalid_consent" }, 400, origin);
+  }
+  if (Deno.env.get('REQUIRE_LEGAL_CONSENT') === 'true' && !consentAccepted) {
+    return respond({ ok: false, error: "consent_required" }, 400, origin);
+  }
+
   // A filled honeypot is not accepted; never send a success confirmation.
   if (clean(data.website, 120)) return respond({ ok: false, error: "rejected" }, 400, origin);
 
@@ -256,6 +274,12 @@ Deno.serve(async (request: Request) => {
       if (value) normalizedFields[key] = value;
     }
   }
+  if (consentAccepted) {
+    // Server timestamp and policy version become part of the private request
+    // record; do not trust a date supplied by the browser.
+    normalizedFields.legalConsentVersion = legalPolicyVersion;
+    normalizedFields.legalConsentAcceptedAt = new Date().toISOString();
+  }
   let requestId: string | null = null;
   try { requestId = await persistRequest(admin, form, normalizedFields); }
   catch { requestId = null; }
@@ -276,6 +300,7 @@ Deno.serve(async (request: Request) => {
       : clean(raw, ["difficulty", "notes", "reason"].includes(key) ? 1500 : 180);
     if (value) lines.push(label + ": " + value);
   }
+  if (consentAccepted) lines.push('موافقة السياسات: ' + legalPolicyVersion);
   lines.push("────────────────────", "المصدر: موقع النخبة");
 
   try {

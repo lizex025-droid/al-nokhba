@@ -1,0 +1,25 @@
+.legal-page { background: #f8f9fb; color: #152039; }
+.legal-hero { padding: clamp(4.5rem, 9vw, 7.5rem) 0 3.5rem; background: linear-gradient(160deg, #0d1a32, #24354e); color: #fff; }
+.legal-hero .eyebrow { color: #e9c98b; letter-spacing: 0; }
+.legal-hero h1 { margin: 1rem 0; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.35; }
+.legal-hero p { margin: 0; font-size: 1.08rem; line-height: 1.9; color: #e5eaf4; max-width: 52rem; }
+.legal-meta { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.65rem; font-size: .85rem; color: #d1d9e8; }
+.legal-article { padding-top: 3rem; padding-bottom: 5rem; }
+.legal-intro-notice { padding: 1.25rem 1.5rem; border-radius: 1rem; background: #fff7e9; border-right: 4px solid #c39a57; line-height: 1.95; margin-bottom: 2.75rem; }
+.legal-section { background: #fff; border: 1px solid #e7eaf0; border-radius: 1.1rem; padding: clamp(1.2rem, 3vw, 2rem); margin-bottom: 1.25rem; box-shadow: 0 5px 26px rgba(18, 37, 66, .035); }
+.legal-section h2 { font-size: clamp(1.15rem, 2.5vw, 1.45rem); line-height: 1.5; color: #102344; margin: 0 0 1.1rem; }
+.legal-section p { line-height: 2.05; margin: 0 0 1rem; color: #344052; }
+.legal-section p:last-child { margin-bottom: 0; }
+.legal-section ul { padding-right: 1.4rem; margin: .5rem 0 0; list-style: disc; }
+.legal-section li { line-height: 1.95; color: #344052; margin-bottom: .55rem; }
+.legal-contact-box { margin-top: 2rem; padding: 2rem; background: #102344; border-radius: 1.1rem; color: #fff; }
+.legal-contact-box h2 { font-size: 1.5rem; margin: 0 0 .75rem; }
+.legal-contact-box p { line-height: 1.85; color: #dce5f5; }
+.legal-contact-box a { display: inline-block; direction: ltr; color: #f2d29d; text-decoration: underline; font-weight: 700; overflow-wrap: anywhere; }
+.legal-end-links { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 2rem; }
+.legal-end-links a { color: #18385e; font-weight: 700; text-decoration: underline; }
+@media (max-width: 600px) { .legal-hero { padding-top: 4rem; } .legal-article { padding-top: 2rem; } .legal-contact-box { padding: 1.4rem; } }
+.form-legal-consent { grid-column: 1 / -1; padding: 1.1rem 1.2rem; margin: .3rem 0 .15rem; border-radius: 1rem; background: #f8f6f0; border: 1px solid #ded8ca; }
+.form-legal-consent label { display: flex; align-items: flex-start; gap: .8rem; font-size: .92rem; line-height: 1.95; color: #29364d; cursor: pointer; }
+.form-legal-consent input { flex: 0 0 auto; inline-size: 1.2rem; block-size: 1.2rem; margin-top: .35rem; accent-color: #112544; cursor: pointer; }
+.form-legal-consent a { color: #173d6d; text-decoration: underline; font-weight: 700; text-underline-offset: 3px; }
