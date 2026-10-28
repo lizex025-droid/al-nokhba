@@ -11,7 +11,7 @@ export function Footer() { return <footer className="footer">
       <strong className="footer-motto">من الطالب… وللطالب.</strong>
     </div>
     <div className="footer-links"><span className="footer-label">استكشف</span>{nav.slice(0, 6).map(item => <Link key={item.href} href={item.href}>{item.label}</Link>)}</div>
-    <div className="footer-links"><span className="footer-label">النخبة</span><Link href="/about">من نحن</Link><Link href="/request-help">اطلب مساعدة</Link><Link href="/join-us">انضم إلى الفريق</Link><Link href="/contact">تواصل معنا</Link><Link className="footer-cta-link" href="/materials">ابدأ الدراسة <ArrowIcon className="arrow-icon" /></Link></div>
+    <div className="footer-links"><span className="footer-label">النخبة</span><Link href="/about">من نحن</Link><Link href="/request-help">اطلب مساعدة</Link><Link className="footer-cta-link" href="/materials">ابدأ الدراسة <ArrowIcon className="arrow-icon" /></Link></div>
   </div>
   <div className="container-wide footer-bottom"><p>النخبة مبادرة طلابية أكاديمية وليست بديلًا عن المصادر الرسمية للجامعة الأردنية.</p><span>جميع الحقوق محفوظة © النخبة — علوم التأهيل 2026</span><span className="footer-developer-credit" dir="ltr">Made by AHED BSEISO — ©</span></div>
 </footer>; }
