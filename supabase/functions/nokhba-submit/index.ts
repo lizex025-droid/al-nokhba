@@ -85,6 +85,68 @@ async function loadCredentials(): Promise<{ botToken: string; chatId: string } |
   }
 }
 
+type AdminContext = { url: string; key: string };
+
+function getAdminContext(): AdminContext | null {
+  const url = Deno.env.get("SUPABASE_URL");
+  let key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  if (!key) {
+    try { key = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") || "{}").default || ""; }
+    catch { /* Legacy service-role key may be used instead. */ }
+  }
+  return url && key ? { url, key } : null;
+}
+function adminHeaders(admin: AdminContext, prefer?: string): HeadersInit {
+  return {
+    "Content-Type": "application/json",
+    apikey: admin.key,
+    Authorization: "Bearer " + admin.key,
+    ...(prefer ? { Prefer: prefer } : {}),
+  };
+}
+async function checkRateLimit(admin: AdminContext, request: Request): Promise<boolean | null> {
+  const ip = request.headers.get("cf-connecting-ip")
+    || request.headers.get("x-real-ip")
+    || request.headers.get("x-forwarded-for")?.split(",")[0]
+    || "unavailable";
+  // Hashed identifier — never persist raw IPs alongside student requests.
+  const fingerprint = ip.trim() + "|" + admin.key.slice(-24);
+  const bytes = new TextEncoder().encode(fingerprint);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  const keyHash = Array.from(new Uint8Array(digest)).map(n => n.toString(16).padStart(2, "0")).join("");
+  const response = await fetch(admin.url + "/rest/v1/rpc/nokhba_check_request_limit", {
+    method: "POST",
+    headers: adminHeaders(admin),
+    body: JSON.stringify({ p_key_hash: keyHash }),
+    signal: AbortSignal.timeout(6000),
+  });
+  return response.ok ? (await response.json()) === true : null;
+}
+async function persistRequest(admin: AdminContext, form: string, fields: Record<string, unknown>): Promise<string | null> {
+  const response = await fetch(admin.url + "/rest/v1/nokhba_requests", {
+    method: "POST",
+    headers: adminHeaders(admin, "return=representation"),
+    body: JSON.stringify({ form_type: form, fields, status: "pending" }),
+    signal: AbortSignal.timeout(6000),
+  });
+  if (!response.ok) return null;
+  const inserted = await response.json();
+  return inserted?.[0]?.id || null;
+}
+async function markDelivered(admin: AdminContext, id: string, messageId: number | undefined): Promise<void> {
+  await fetch(admin.url + "/rest/v1/nokhba_requests?id=eq." + encodeURIComponent(id), {
+    method: "PATCH",
+    headers: adminHeaders(admin),
+    body: JSON.stringify({
+      status: "delivered",
+      delivered_at: new Date().toISOString(),
+      attempts: 1,
+      telegram_message_id: messageId ?? null,
+    }),
+    signal: AbortSignal.timeout(5000),
+  });
+}
+
 Deno.serve(async (request: Request) => {
   const origin = request.headers.get("origin") ?? "";
   if (!allowedOrigins.has(origin)) return respond({ ok: false }, 403, origin);
@@ -162,8 +224,32 @@ Deno.serve(async (request: Request) => {
     }
   }
 
+  const admin = getAdminContext();
+  if (!admin) return respond({ ok: false, error: "storage_unavailable" }, 503, origin);
+  let allowed: boolean | null = null;
+  try { allowed = await checkRateLimit(admin, request); }
+  catch { allowed = null; }
+  if (allowed === false) return respond({ ok: false, error: "rate_limited" }, 429, origin);
+  if (allowed === null) return respond({ ok: false, error: "storage_unavailable" }, 503, origin);
+
+  const normalizedFields: Record<string, string | string[]> = {};
+  for (const key of Object.keys(labels)) {
+    const raw = fields[key];
+    if (Array.isArray(raw)) {
+      const values = raw.slice(0, 8).map(v => clean(v, 140)).filter(Boolean);
+      if (values.length) normalizedFields[key] = values;
+    } else {
+      const value = clean(raw, ["difficulty", "notes", "reason"].includes(key) ? 1500 : 180);
+      if (value) normalizedFields[key] = value;
+    }
+  }
+  let requestId: string | null = null;
+  try { requestId = await persistRequest(admin, form, normalizedFields); }
+  catch { requestId = null; }
+  if (!requestId) return respond({ ok: false, error: "storage_unavailable" }, 503, origin);
+
   const credentials = await loadCredentials();
-  if (!credentials) return respond({ ok: false, error: "not_configured" }, 503, origin);
+  if (!credentials) return respond({ ok: true, queued: true }, 202, origin);
   const { botToken, chatId } = credentials;
 
   const lines = [
@@ -192,10 +278,13 @@ Deno.serve(async (request: Request) => {
     });
     const telegram = await result.json();
     if (!result.ok || !telegram.ok) {
-      return respond({ ok: false, error: "telegram_delivery_failed" }, 502, origin);
+      // The request is already saved; the Telegram notification is pending.
+      return respond({ ok: true, queued: true }, 202, origin);
     }
-    return respond({ ok: true }, 200, origin);
+    try { await markDelivered(admin, requestId, telegram.result?.message_id); }
+    catch { /* Delivery confirmed; the database update can be reconciled later. */ }
+    return respond({ ok: true, delivered: true }, 200, origin);
   } catch {
-    return respond({ ok: false, error: "telegram_unavailable" }, 502, origin);
+    return respond({ ok: true, queued: true }, 202, origin);
   }
 });
