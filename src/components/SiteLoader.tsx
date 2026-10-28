@@ -1,94 +1,106 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { HeroArt } from './HeroArt';
 
-// Static pages already render in the initial HTML. Only cover a navigation
-// when fetching its route payload is unusually slow or appears stuck.
-const SHOW_AFTER_MS = 4000;
-const SLOW_NAVIGATION_MS = 14000;
-
+/**
+ * The brand screen is part of the initial HTML, but only for a full page load.
+ * Once the first page's fonts and visible images are ready, it disappears for
+ * the rest of this client-side session (including all route transitions).
+ */
 export function SiteLoader() {
-  const pathname = usePathname();
-  const currentPathRef = useRef(pathname);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [delayed, setDelayed] = useState(false);
-  const showTimerRef = useRef<number | null>(null);
-  const slowTimerRef = useRef<number | null>(null);
-
-  const clearTimers = () => {
-    if (showTimerRef.current !== null) window.clearTimeout(showTimerRef.current);
-    if (slowTimerRef.current !== null) window.clearTimeout(slowTimerRef.current);
-    showTimerRef.current = null;
-    slowTimerRef.current = null;
-  };
 
   useEffect(() => {
-    const startNavigation = () => {
-      clearTimers();
+    if (!visible) return;
+    let active = true;
+    let frame = 0;
+
+    const logo = new window.Image();
+    logo.src = '/al-nokhba-logo.png?v=20261019';
+
+    const visibleImagesReady = () => {
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const images = document.querySelectorAll<HTMLImageElement>('#main-content img, .site-header img');
+      for (const image of images) {
+        if (image.complete) continue; // A failed image must not block the site.
+        const rect = image.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0 &&
+            rect.top < viewportHeight + 40 && rect.bottom > -40) return false;
+      }
+      return true;
+    };
+
+    const inspect = () => {
+      frame = 0;
+      if (!active || document.readyState !== 'complete' ||
+          !document.getElementById('main-content') || !logo.complete ||
+          (document.fonts && document.fonts.status !== 'loaded') ||
+          !visibleImagesReady()) return;
+
+      cleanup();
       setVisible(false);
       setDelayed(false);
-      showTimerRef.current = window.setTimeout(() => {
-        showTimerRef.current = null;
-        setVisible(true);
-        slowTimerRef.current = window.setTimeout(() => setDelayed(true), SLOW_NAVIGATION_MS);
-      }, SHOW_AFTER_MS);
     };
 
-    const onLinkClick = (event: MouseEvent) => {
-      if (event.defaultPrevented || event.button !== 0 ||
-          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-
-      const target = event.target;
-      if (!(target instanceof Element)) return;
-      const anchor = target.closest('a[href]');
-      if (!(anchor instanceof HTMLAnchorElement) ||
-          (anchor.target && anchor.target !== '_self') || anchor.hasAttribute('download')) return;
-
-      let destination: URL;
-      try { destination = new URL(anchor.href); }
-      catch { return; }
-      const current = new URL(window.location.href);
-      if (destination.origin !== current.origin || destination.pathname === current.pathname) return;
-
-      startNavigation();
+    const queueInspect = () => {
+      if (active && frame === 0) frame = window.requestAnimationFrame(inspect);
     };
 
-    // Observe link clicks before Next.js handles them so we can detect slow
-    // transitions even if the destination has not mounted yet.
-    const onHistoryNavigation = () => {
-      // Back/forward can move only between hash or query entries on one page.
-      if (window.location.pathname !== currentPathRef.current) startNavigation();
+    const onImageEvent = (event: Event) => {
+      if (event.target instanceof HTMLImageElement) queueInspect();
     };
 
-    document.addEventListener('click', onLinkClick, true);
-    window.addEventListener('popstate', onHistoryNavigation);
-    return () => {
-      document.removeEventListener('click', onLinkClick, true);
-      window.removeEventListener('popstate', onHistoryNavigation);
-      clearTimers();
-    };
-  }, []);
+    const observer = new MutationObserver(queueInspect);
+    observer.observe(document.getElementById('main-content') ?? document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['src', 'srcset'],
+    });
 
-  // As soon as the new route is available, cancel the pending indicator.
-  // Do not wait for lazy images, external fonts, or window.load.
-  useEffect(() => {
-    currentPathRef.current = pathname;
-    clearTimers();
-    setVisible(false);
-    setDelayed(false);
-  }, [pathname]);
+    logo.addEventListener('load', queueInspect);
+    logo.addEventListener('error', queueInspect);
+    document.addEventListener('load', onImageEvent, true);
+    document.addEventListener('error', onImageEvent, true);
+    document.addEventListener('readystatechange', queueInspect);
+    window.addEventListener('load', queueInspect);
+    document.fonts?.ready.then(queueInspect).catch(queueInspect);
+
+    const warningTimer = window.setTimeout(() => {
+      if (active) setDelayed(true);
+    }, 12000);
+
+    function cleanup() {
+      active = false;
+      if (frame) window.cancelAnimationFrame(frame);
+      window.clearTimeout(warningTimer);
+      observer.disconnect();
+      logo.removeEventListener('load', queueInspect);
+      logo.removeEventListener('error', queueInspect);
+      document.removeEventListener('load', onImageEvent, true);
+      document.removeEventListener('error', onImageEvent, true);
+      document.removeEventListener('readystatechange', queueInspect);
+      window.removeEventListener('load', queueInspect);
+    }
+
+    // Give the initial page one paint so its visible images can be discovered.
+    frame = window.requestAnimationFrame(() => {
+      frame = 0;
+      queueInspect();
+    });
+    return cleanup;
+  }, [visible]);
 
   if (!visible) return null;
 
-  return <div className="site-loader-screen" role="status" aria-live="polite" aria-label="جارٍ تحميل صفحة النخبة">
+  return <div className="site-loader-screen" role="status" aria-live="polite" aria-label="جارٍ تجهيز موقع النخبة">
     <div className="site-loader-art" aria-hidden="true"><HeroArt /></div>
-    <span className="site-loader-status">جارٍ تحميل الصفحة…</span>
+    <span className="site-loader-status">جارٍ تجهيز الموقع…</span>
     {delayed && <div className="site-loader-slow" role="alert">
-      <p>بعض المحتوى يستغرق وقتًا أطول من المعتاد.</p>
+      <p>بعض الصور أو الخطوط تستغرق وقتًا أطول من المعتاد.</p>
       <button type="button" onClick={() => {
-        clearTimers();
         setVisible(false);
         setDelayed(false);
       }}>عرض الصفحة الآن</button>
