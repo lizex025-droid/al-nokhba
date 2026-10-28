@@ -1,0 +1,78 @@
+/* The exact homepage orbital scene, reused on initial load and route transitions. */
+.site-loader-screen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:#031523;
+  isolation:isolate;
+  pointer-events:auto;
+  animation:site-loader-appear .18s ease-out both;
+}
+.site-loader-screen::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(15,63,104,.16),transparent 58%),
+    linear-gradient(90deg,rgba(104,185,218,.035) 1px,transparent 1px),
+    linear-gradient(0deg,rgba(104,185,218,.035) 1px,transparent 1px);
+  background-size:auto,95px 95px,95px 95px;
+}
+.site-loader-art{
+  width:min(92vw,84svh,780px);
+  height:min(92vw,84svh,780px);
+  min-width:0;
+  min-height:0;
+  aspect-ratio:1;
+  position:relative;
+  overflow:hidden;
+}
+.site-loader-art .hero-art.orbital-scene{
+  position:relative;
+  width:100%;
+  height:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+  transform:none;
+  transform-origin:50% 50%;
+}
+.site-loader-art .orbital-book-title{
+  font-size:clamp(7px,1.2vw,12px);
+}
+.site-loader-art .academic-icon{
+  width:clamp(38px,7.4%,62px);
+  height:clamp(38px,7.4%,62px);
+  border-radius:clamp(12px,1.9vw,18px);
+}
+.site-loader-art .academic-icon svg{
+  width:54%;
+  height:54%;
+}
+@keyframes site-loader-appear{from{opacity:0}to{opacity:1}}
+@media(max-width:560px){
+  .site-loader-art{
+    width:min(97vw,78svh);
+    height:min(97vw,78svh);
+  }
+  .site-loader-art .hero-art.orbital-scene{
+    transform:none;
+  }
+  .site-loader-art .orbital-book-title{
+    font-size:7px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .site-loader-screen,
+  .site-loader-art .hero-art,
+  .site-loader-art .orbital-ring,
+  .site-loader-art .orbital-book,
+  .site-loader-art .academic-icon,
+  .site-loader-art .orbital-spark{
+    animation:none!important;
+  }
+}
