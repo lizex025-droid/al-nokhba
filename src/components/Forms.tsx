@@ -127,7 +127,7 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
     }
   };
 
-  return <div className="form-shell" data-reveal>{sent ? <div className="form-confirmation" ref={confirmationRef} role="status" aria-live="polite">
+  return <div className="form-shell">{sent ? <div className="form-confirmation" ref={confirmationRef} role="status" aria-live="polite">
     <span className="success-symbol">✓</span>
     <h2 tabIndex={-1}>{queued ? 'تم حفظ طلبك بنجاح' : 'تم إرسال الطلب بنجاح'}</h2>
     <p>{queued ? 'وصل طلبك إلى نظام النخبة وتم حفظه بأمان، وسيتم إشعار الفريق تلقائيًا.' : 'وصل طلبك إلى فريق النخبة بنجاح.'}</p>
