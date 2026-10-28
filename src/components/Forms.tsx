@@ -12,7 +12,7 @@ export function SelectField({ label, name, options, required = false }: { label:
 
 
 // Public endpoint only. Keep Telegram credentials in Supabase Function Secrets.
-const FORM_ENDPOINT = process.env.NEXT_PUBLIC_NOKHBA_FORM_ENDPOINT || '';
+const FORM_ENDPOINT = process.env.NEXT_PUBLIC_NOKHBA_FORM_ENDPOINT || 'https://ueednyqvafymexoejdvp.supabase.co/functions/v1/nokhba-submit';
 
 function FormShell({ children, title, button, kind }: { children: ReactNode; title: string; button: string; kind: 'help' | 'join' | 'contact' }) {
   const [sent, setSent] = useState(false);
