@@ -18,3 +18,27 @@ function FormShell({ children, title, button, message }: { children: ReactNode; 
 export function HelpForm() { return <FormShell title="أخبرنا كيف يمكننا مساعدتك" button="إرسال طلب المساعدة" message="تم تجهيز طلبك بنجاح"><FormInput label="الاسم" name="name" required placeholder="اسمك الكامل" /><SelectField label="التخصص" name="specialty" options={specialties} required /><SelectField label="السنة الدراسية" name="year" options={years} required /><FormInput label="اسم المادة" name="course" required placeholder="مثال: التشريح" /><FormInput label="اسم الدكتور" name="professor" hint="اختياري، لكن يساعدنا على فهم طبيعة المادة أو طريقة الأسئلة." /><FormInput label="متى موعد الكويز أو الامتحان؟" name="examDate" type="date" /><FormTextarea label="ما الجزء الذي تواجه فيه صعوبة؟" name="difficulty" required placeholder="اكتب الموضوع، الوحدة، السلايدات، أو نوع الأسئلة التي لا تفهمها." /><fieldset className="checkbox-field"><legend>ماذا تحتاج؟</legend><div>{['ملخص', 'شرح', 'مراجعة', 'أسئلة تدريبية', 'مصدر للمادة', 'لا أعرف، أحتاج توجيه'].map(x => <label key={x}><input type="checkbox" name="needs" value={x} /><span>{x}</span></label>)}</div></fieldset><FormTextarea label="ملاحظات إضافية" name="notes" placeholder="أي تفاصيل تساعدنا على فهم طلبك" /></FormShell>; }
 export function JoinForm() { return <FormShell title="طلب الانضمام للفريق" button="تقديم طلب الانضمام" message="تم تجهيز طلب الانضمام"><FormInput label="الاسم" name="name" required /><SelectField label="التخصص" name="specialty" options={specialties} required /><SelectField label="السنة الدراسية" name="year" options={years} required /><FormInput label="المادة أو المجال الذي تستطيع المساعدة فيه" name="field" required /><SelectField label="كيف تفضل أن تساهم؟" name="role" options={['الشرح', 'التلخيص', 'التنظيم', 'التصميم', 'لا أعرف']} required /><FormInput label="رقم التواصل" name="phone" type="tel" required /><FormTextarea label="لماذا تريد الانضمام؟" name="reason" required /></FormShell>; }
 export function ContactForm() { return <FormShell title="أرسل رسالتك" button="إرسال الرسالة" message="تم تجهيز رسالتك"><FormInput label="الاسم" name="name" required /><FormInput label="البريد الإلكتروني أو رقم التواصل" name="contact" required /><SelectField label="نوع الرسالة" name="type" options={['طلب مساعدة', 'اقتراح مادة', 'ملاحظة على محتوى', 'انضمام للفريق', 'أخرى']} required /><FormTextarea label="نص الرسالة" name="message" required placeholder="اكتب رسالتك هنا..." /></FormShell>; }
+
+/** Shared entry point for academic-help and volunteer-join requests. */
+export function HelpHub() {
+  const [selected, setSelected] = useState<'help' | 'join' | null>(null);
+  if (selected === 'help') return <div className="help-hub"><button type="button" className="form-back-link" onClick={() => setSelected(null)}>العودة إلى الخيارات</button><HelpForm /></div>;
+  if (selected === 'join') return <div className="help-hub"><button type="button" className="form-back-link" onClick={() => setSelected(null)}>العودة إلى الخيارات</button><JoinForm /></div>;
+  return <div className="help-options">
+    <div className="help-options-intro"><span className="eyebrow">النخبة معك</span><h2>كيف نقدر نساعدك؟</h2><p>اختر نوع الطلب المناسب.</p></div>
+    <div className="help-options-grid">
+      <button type="button" className="help-option-card" onClick={() => setSelected('help')}>
+        <span className="help-option-index">01</span>
+        <strong>اطلب مساعدة دراسية</strong>
+        <span>ملخصات، شرح، مراجعات، أو أسئلة تدريبية للمادة التي تحتاجها.</span>
+        <span className="help-option-open">إرسال طلب المساعدة <ArrowIcon className="arrow-icon" /></span>
+      </button>
+      <button type="button" className="help-option-card" onClick={() => setSelected('join')}>
+        <span className="help-option-index">02</span>
+        <strong>انضم إلى النخبة</strong>
+        <span>ساعدنا في الشرح والتلخيص وتنظيم المواد وخدمة الطلبة.</span>
+        <span className="help-option-open">تقديم طلب الانضمام <ArrowIcon className="arrow-icon" /></span>
+      </button>
+    </div>
+  </div>;
+}
