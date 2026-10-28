@@ -23,6 +23,10 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (sending) return;
+    if (!FORM_ENDPOINT) {
+      setError('خدمة استقبال الطلبات قيد التفعيل حاليًا. لا يمكن إرسال الطلب بعد.');
+      return;
+    }
     const data = new FormData(event.currentTarget);
     const fields: Record<string, string | string[]> = {};
     for (const key of new Set(Array.from(data.keys()))) {
