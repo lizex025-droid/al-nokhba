@@ -123,7 +123,7 @@ export function AiAcademicGuide() {
         </div>
 
         {displayedTools.length > 0 ? <div className="ai-tool-grid">
-          {displayedTools.map((tool) => <article className="ai-tool-card" key={tool.name}>
+          {displayedTools.map((tool) => <article className="ai-tool-card" data-card-reveal key={tool.name}>
             <div className="ai-tool-card-top">
               <span className="ai-tool-mark"><img src={tool.logo} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
               <span className="ai-tool-use">{tool.bestFor}</span>
@@ -152,7 +152,7 @@ export function AiAcademicGuide() {
           {[
             { name: 'Turnitin', domain: 'turnitin.com', url: 'https://www.turnitin.com/', bestFor: 'النزاهة الأكاديمية', number: '01', detail: 'فحص التشابه ومراجعة النصوص', description: 'تستخدمه مؤسسات تعليمية لفحص التشابه النصي، مع ميزة كشف الكتابة بالذكاء الاصطناعي في خدمات وخطط مؤهلة.' },
             { name: 'iThenticate', domain: 'ithenticate.com', url: 'https://www.ithenticate.com/', bestFor: 'الأبحاث العلمية', number: '02', detail: 'مراجعة المخطوطات والمراجع', description: 'يركّز على فحص تشابه الأبحاث والمخطوطات العلمية. ميزات كشف الذكاء الاصطناعي ليست متاحة بالضرورة وتعتمد على الخدمة.' },
-          ].map((tool) => <article className="ai-verification-card" key={tool.name}>
+          ].map((tool) => <article className="ai-verification-card" data-card-reveal key={tool.name}>
             <div className="ai-verification-card-top">
               <span className="ai-verification-logo"><img src={officialLogo(tool.domain)} alt={`شعار ${tool.name}`} width="48" height="48" loading="lazy" decoding="async" referrerPolicy="no-referrer" /></span>
               <span className="ai-verification-number" dir="ltr">{tool.number} / 02</span>
@@ -180,7 +180,7 @@ export function AiAcademicGuide() {
           <p>الأمر هو السؤال أو التعليمات التي تعطيها للأداة. كلما كان واضحًا ومنظمًا، أصبحت النتيجة أقرب إلى ما تحتاجه.</p>
         </header>
         <div className="trfr-grid">
-          {trfrSteps.map((step, index) => <article className="trfr-card" key={`${step.letter}-${index}`}>
+          {trfrSteps.map((step, index) => <article className="trfr-card" data-card-reveal key={`${step.letter}-${index}`}>
             <span className="trfr-letter">{step.letter}</span>
             <div className="trfr-card-content"><span className="trfr-index">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><ul className="trfr-points">{step.points.map((point) => <li key={point}>{point}</li>)}</ul><div className="trfr-example"><strong>مثال تطبيقي</strong><blockquote>{step.example}</blockquote></div></div>
           </article>)}
