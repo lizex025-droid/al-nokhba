@@ -203,11 +203,15 @@ Deno.serve(async (request: Request) => {
   }
   const supportedCodes = new Set(["+962", "+970", "+966", "+971", "+965", "+974", "+973", "+968", "+20", "+92", "+90", "+1", "+44"]);
   const dialCode = clean(fields.countryCode, 5);
-  const localPhone = clean(fields.phone, 25).replace(/[\\s\\-()]/g, "");
-  if (!supportedCodes.has(dialCode) || !/^\\d{6,15}$/.test(localPhone)) {
+  const localPhone = clean(fields.phone, 25).replace(/[^0-9]/g, "");
+  if (!supportedCodes.has(dialCode) || !/^[0-9]{6,15}$/.test(localPhone)) {
     return respond({ ok: false, error: "invalid_whatsapp" }, 400, origin);
   }
-  fields.phone = dialCode + " " + localPhone;
+  const withoutTrunkPrefix = localPhone.replace(/^0+/, "");
+  if (withoutTrunkPrefix.length < 6) {
+    return respond({ ok: false, error: "invalid_whatsapp" }, 400, origin);
+  }
+  fields.phone = dialCode + " " + withoutTrunkPrefix;
 
   // Optional protection: enable by setting TURNSTILE_SECRET_KEY and supplying
   // the token as 'turnstileToken' from a Cloudflare Turnstile widget.
