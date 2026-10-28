@@ -37,7 +37,7 @@ export function SiteLoader() {
       catch { return; }
       const here = new URL(window.location.href);
       if (targetUrl.origin !== here.origin ||
-          (targetUrl.pathname === here.pathname && targetUrl.search === here.search)) return;
+          targetUrl.pathname === here.pathname) return;
 
       navigatingRef.current = true;
       setDelayed(false);
@@ -83,7 +83,7 @@ export function SiteLoader() {
     // The central logo is a CSS background in HeroArt. Ensure it has loaded
     // (or failed definitively) before removing the overlay.
     const logo = new window.Image();
-    logo.src = '/al-nokhba-logo.webp';
+    logo.src = '/al-nokhba-logo.png?v=20261019';
 
     const aboveFoldImagesReady = () => {
       const viewport = window.visualViewport?.height ?? window.innerHeight;
