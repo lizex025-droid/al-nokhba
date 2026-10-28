@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { ArrowIcon } from './Icons';
 
 const specialties = ['العلاج الطبيعي', 'العلاج الوظيفي', 'الأطراف الاصطناعية والأجهزة المساعدة', 'السمع والنطق', 'متطلبات الكلية', 'متطلبات الجامعة', 'غير ذلك'];
@@ -50,6 +50,44 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const startedAt = useRef(Date.now());
+  const confirmationRef = useRef<HTMLDivElement>(null);
+
+  // The original form can be much taller than the success card. On iOS Safari
+  // this height change otherwise clamps the old scroll position near the footer.
+  // After React mounts the success card, bring it directly below the navbar.
+  useLayoutEffect(() => {
+    if (!sent) return;
+    const confirmation = confirmationRef.current;
+    if (!confirmation) return;
+
+    confirmation.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
+
+    const showConfirmation = () => {
+      const card = confirmationRef.current;
+      if (!card) return;
+      const headerBottom = Math.max(0,
+        document.querySelector<HTMLElement>('.site-header')?.getBoundingClientRect().bottom ?? 0
+      );
+      const desiredTop = headerBottom + 18;
+      const actualTop = card.getBoundingClientRect().top;
+      if (Math.abs(actualTop - desiredTop) > 10) {
+        window.scrollTo({
+          top: Math.max(0, window.scrollY + actualTop - desiredTop),
+          left: 0,
+          behavior: 'instant',
+        });
+      }
+    };
+
+    showConfirmation();
+    const frame = window.requestAnimationFrame(showConfirmation);
+    // Safari can resize the visual viewport again after hiding the keyboard.
+    const settle = window.setTimeout(showConfirmation, 220);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
+    };
+  }, [sent]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -89,9 +127,9 @@ function FormShell({ children, title, button, kind }: { children: ReactNode; tit
     }
   };
 
-  return <div className="form-shell" data-reveal>{sent ? <div className="form-confirmation" role="status">
+  return <div className="form-shell" data-reveal>{sent ? <div className="form-confirmation" ref={confirmationRef} role="status" aria-live="polite">
     <span className="success-symbol">✓</span>
-    <h2>{queued ? 'تم حفظ طلبك بنجاح' : 'تم إرسال الطلب بنجاح'}</h2>
+    <h2 tabIndex={-1}>{queued ? 'تم حفظ طلبك بنجاح' : 'تم إرسال الطلب بنجاح'}</h2>
     <p>{queued ? 'وصل طلبك إلى نظام النخبة وتم حفظه بأمان، وسيتم إشعار الفريق تلقائيًا.' : 'وصل طلبك إلى فريق النخبة بنجاح.'}</p>
     <button className="button button-navy" type="button" onClick={() => { setSent(false); startedAt.current = Date.now(); }}>إرسال طلب جديد</button>
   </div> : <>
