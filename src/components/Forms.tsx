@@ -31,7 +31,7 @@ function WhatsAppField() {
     <label htmlFor="nokhba-whatsapp" className="form-whatsapp-label">رقم واتساب <em>*</em></label>
     <div className="form-whatsapp-inputs" dir="ltr">
       <select className="form-country-code" name="countryCode" aria-label="رمز الدولة" defaultValue="+962" required>
-        {countryCodes.map(country => <option key={country.iso} value={country.code}>{country.flag} {country.code} — {country.name}</option>)}
+        {countryCodes.map(country => <option key={country.iso} value={country.code}>{country.flag} {country.code} {country.name}</option>)}
       </select>
       <input id="nokhba-whatsapp" type="tel" name="phone" inputMode="tel" autoComplete="tel-national" placeholder="07XXXXXXXX" maxLength={20} dir="ltr" required />
     </div>
