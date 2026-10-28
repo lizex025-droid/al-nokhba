@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import { pages, seoTitles } from '@/lib/content';
 import { SectionHeader, ServiceCard } from '@/components/Blocks';
 import { GpaCalculator } from '@/components/GpaCalculator';
-import { HelpForm, JoinForm, ContactForm } from '@/components/Forms';
+import { HelpHub, JoinForm, ContactForm } from '@/components/Forms';
 import { EmailDirectory } from '@/components/EmailDirectory';
 import { SpecialtyMaterialsDirectory } from '@/components/SpecialtyMaterialsDirectory';
 import { AiAcademicGuide } from '@/components/AiAcademicGuide';
@@ -28,7 +28,7 @@ export default async function InnerPage({ params }: { params: Promise<{ slug: st
     {slug === 'professors-emails' && <section className="content-section"><div className="container-wide"><EmailDirectory /></div></section>}
     {slug === 'study-plans' && <section className="content-section section-tint"><div className="container-wide"><div className="notice-card"><strong>تنويه مهم</strong><p>الخطط التفصيلية لم تُضف بعد. راجع المصادر الرسمية للجامعة عند التسجيل أو اتخاذ أي قرار أكاديمي.</p></div></div></section>}
     {slug === 'ai' && <AiAcademicGuide />}
-    {slug === 'request-help' && <section className="content-section"><div className="container-narrow"><HelpForm /></div></section>}
+    {slug === 'request-help' && <section className="content-section"><div className="container-narrow"><HelpHub /></div></section>}
     {slug === 'join-us' && <section className="content-section"><div className="container-narrow"><JoinForm /></div></section>}
     {slug === 'contact' && <section className="content-section"><div className="container-narrow"><ContactForm /></div></section>}
     {slug === 'about' && <div className="about-closing container-wide">النخبة ليست مجرد اسم. النخبة مسؤولية، عمل، وأثر نثبته معكم.</div>}
