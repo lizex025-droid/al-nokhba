@@ -22,6 +22,13 @@ export function SiteLoader() {
     let maxWait: number | undefined;
     let firstFrame = 0;
     let secondFrame = 0;
+    let scanFrame = 0;
+    let observerCutoff: number | undefined;
+
+    // The header and the original hero illustration use a CSS background image.
+    // Checking its preload handles that visible image as well as <img> elements.
+    const logo = new window.Image();
+    logo.src = '/al-nokhba-logo.png?v=20261019';
 
     // A slow image must not trap a visitor on the loader indefinitely.
     const finish = () => {
@@ -33,6 +40,7 @@ export function SiteLoader() {
     };
 
     const imagesStillLoading = () => {
+      if (!logo.complete) return true;
       const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
       const images = document.querySelectorAll<HTMLImageElement>('#main-content img, .site-header img');
       for (const img of images) {
@@ -69,14 +77,26 @@ export function SiteLoader() {
     };
     document.addEventListener('load', onImageFinish, true);
     document.addEventListener('error', onImageFinish, true);
+    logo.addEventListener('load', inspect);
+    logo.addEventListener('error', inspect);
 
     // Dynamically rendered images can appear after a Next.js route transition.
     // Observe only the page content, never the loader illustration itself.
     const main = document.getElementById('main-content');
+    const scheduleInspect = () => {
+      if (scanFrame) return;
+      scanFrame = window.requestAnimationFrame(() => {
+        scanFrame = 0;
+        inspect();
+      });
+    };
     const observer = main && typeof MutationObserver !== 'undefined'
-      ? new MutationObserver(inspect)
+      ? new MutationObserver(scheduleInspect)
       : null;
     observer?.observe(main!, { subtree: true, childList: true, attributes: true, attributeFilter: ['src', 'srcset'] });
+    // Only examine newly-mounted page images around initial navigation.
+    // Do not keep observing the entire site throughout the user's session.
+    observerCutoff = window.setTimeout(() => observer?.disconnect(), 1800);
 
     // Give the route a paint before measuring above-the-fold images.
     firstFrame = window.requestAnimationFrame(() => {
@@ -89,6 +109,10 @@ export function SiteLoader() {
       if (maxWait !== undefined) window.clearTimeout(maxWait);
       window.cancelAnimationFrame(firstFrame);
       window.cancelAnimationFrame(secondFrame);
+      window.cancelAnimationFrame(scanFrame);
+      if (observerCutoff !== undefined) window.clearTimeout(observerCutoff);
+      logo.removeEventListener('load', inspect);
+      logo.removeEventListener('error', inspect);
       document.removeEventListener('load', onImageFinish, true);
       document.removeEventListener('error', onImageFinish, true);
       observer?.disconnect();
