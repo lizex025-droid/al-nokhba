@@ -1,5 +1,4 @@
-/* Al Nokhba orbital preload: the logo and its scene grow from screen center.
-   The overlay is also rendered in the initial HTML before client hydration. */
+/* Slow-navigation fallback only; fast pages render without an overlay. */
 .site-loader-screen{
   position:fixed;
   inset:0;
