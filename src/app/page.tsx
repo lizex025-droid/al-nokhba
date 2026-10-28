@@ -3,23 +3,11 @@ import Link from 'next/link';
 import { categories } from '@/lib/content';
 import { SectionHeader, MaterialCard } from '@/components/Blocks';
 import { FAQAccordion } from '@/components/FAQAccordion';
-import { ArrowIcon, BookIcon } from '@/components/Icons';
+import { ArrowIcon } from '@/components/Icons';
+import { HeroArt } from '@/components/HeroArt';
 import { VisionScrollytelling } from '@/components/VisionScrollytelling';
 
 export const metadata: Metadata = { title: { absolute: 'النخبة علوم التأهيل | مواد وملخصات كلية علوم التأهيل الجامعة الأردنية' }, description: 'موقع النخبة الأكاديمي لطلبة كلية علوم التأهيل في الجامعة الأردنية. تصفح المواد، الملخصات، المراجعات، أدوات الذكاء الاصطناعي، إيميلات الدكاترة، والخطط الدراسية بسهولة.' };
-
-function HeroArt() { return <div className="hero-art orbital-scene" aria-label="لوحة النخبة التعليمية المدارية المتحركة مع كتاب أكاديمي وأيقونات تعليمية" role="img">
-  <span className="orbital-grid" aria-hidden="true" />
-  <span className="orbital-glow" aria-hidden="true" />
-  <span className="orbital-ring orbital-ring-outer" aria-hidden="true"><i /></span>
-  <span className="orbital-ring orbital-ring-middle" aria-hidden="true"><i /></span>
-  <span className="orbital-ring orbital-ring-inner" aria-hidden="true" />
-  <span className="academic-icon academic-icon-cap" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m7 18 17-9 17 9-17 9L7 18Z"/><path d="M14 22v10c6 5 14 5 20 0V22M41 19v12"/></svg></span>
-  <span className="academic-icon academic-icon-book" aria-hidden="true"><BookIcon /></span>
-  <span className="academic-icon academic-icon-laptop" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 11h24v20H12zM7 36h34l-3 3H10l-3-3Z"/></svg></span>
-  <span className="orbital-spark orbital-spark-a" aria-hidden="true" /><span className="orbital-spark orbital-spark-b" aria-hidden="true" /><span className="orbital-spark orbital-spark-c" aria-hidden="true" /><span className="orbital-spark orbital-spark-d" aria-hidden="true" />
-  <div className="orbital-book" aria-hidden="true"><span className="orbital-book-title">AL NOKHBA</span><span className="orbital-book-logo" /></div>
-</div>; }
 
 export default function HomePage() { return <>
   <section className="home-hero"><div className="container-wide hero-layout"><div className="hero-copy"><span className="eyebrow hero-eyebrow"><span className="eyebrow-line" />من الطالب… وللطالب</span><h1>النخبة كلية علوم التأهيل في الجامعة الأردنية</h1><p className="hero-lead">ادرس موادك بوضوح… <em>وابدأ من المكان الصحيح.</em></p><p className="hero-body">النخبة موقع أكاديمي طلابي يخدم طلبة كلية علوم التأهيل في الجامعة الأردنية، من خلال توفير المواد الدراسية، الملخصات، المراجعات، أدوات الذكاء الاصطناعي، إيميلات الدكاترة، والخطط الدراسية في مكان واحد منظم وسهل الوصول.</p><div className="hero-buttons"><Link href="/materials" className="button button-gold">تصفح مركز المواد <ArrowIcon className="arrow-icon" /></Link><Link href="/request-help" className="button button-outline-light">اطلب مساعدة دراسية</Link></div><div className="hero-foot"><span className="hero-foot-line" /><span>ادرس بوضوح. راجع بثقة. اسأل بدون تردد.</span></div></div><HeroArt /></div><Link href="#materials" className="scroll-hint" aria-label="انتقل إلى أقسام المواد"><span>اكتشف أكثر</span><span className="scroll-track"><span /></span></Link></section>
