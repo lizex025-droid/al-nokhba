@@ -1,80 +1,105 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { HeroArt } from './HeroArt';
 
 /**
- * Full-screen site loader using the original homepage illustration.
- * It appears briefly while the initial page hydrates, and during internal
- * page navigation. Never delays real navigation or external destinations.
+ * Image-aware loading overlay.
+ *
+ * Never show a loader merely because someone entered the site or clicked a
+ * route. Only show the original homepage illustration when a visible,
+ * above-the-fold image is still downloading beyond a short threshold.
+ * Below-the-fold images stay lazy and do not hold up page interaction.
  */
 export function SiteLoader() {
   const pathname = usePathname();
-  const [visible, setVisible] = useState(true);
-  const initialRoute = useRef(true);
-  const fallbackTimer = useRef<number | null>(null);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // The initial loader is rendered with the HTML so it covers slow hydration.
-    // On a fast connection, let the original scene appear briefly.
-    const initialTimer = window.setTimeout(() => setVisible(false), 320);
-    return () => window.clearTimeout(initialTimer);
-  }, []);
+    let active = true;
+    let pendingShow: number | undefined;
+    let maxWait: number | undefined;
+    let firstFrame = 0;
+    let secondFrame = 0;
 
-  useEffect(() => {
-    if (initialRoute.current) {
-      initialRoute.current = false;
-      return;
-    }
-    if (fallbackTimer.current !== null) {
-      window.clearTimeout(fallbackTimer.current);
-      fallbackTimer.current = null;
-    }
-    const frame = window.requestAnimationFrame(() => setVisible(false));
-    return () => window.cancelAnimationFrame(frame);
+    // A slow image must not trap a visitor on the loader indefinitely.
+    const finish = () => {
+      if (pendingShow !== undefined) window.clearTimeout(pendingShow);
+      pendingShow = undefined;
+      if (maxWait !== undefined) window.clearTimeout(maxWait);
+      maxWait = undefined;
+      if (active) setShow(false);
+    };
+
+    const imagesStillLoading = () => {
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const images = document.querySelectorAll<HTMLImageElement>('#main-content img, .site-header img');
+      for (const img of images) {
+        if (img.complete) continue;
+        const rect = img.getBoundingClientRect();
+        // Images outside the viewport must remain lazy and never block the page.
+        if (rect.width < 1 || rect.height < 1) continue;
+        if (rect.bottom > 0 && rect.top < viewportHeight + 30) return true;
+      }
+      return false;
+    };
+
+    const inspect = () => {
+      if (!active) return;
+      if (!imagesStillLoading()) {
+        finish();
+        return;
+      }
+
+      // Fast or cached images never cause the loading screen to flash.
+      if (pendingShow === undefined && maxWait === undefined) {
+        pendingShow = window.setTimeout(() => {
+          pendingShow = undefined;
+          if (!active || !imagesStillLoading()) return;
+          setShow(true);
+          maxWait = window.setTimeout(finish, 4500);
+        }, 180);
+      }
+    };
+
+    // Image 'load' and 'error' do not bubble, so listen during capture.
+    const onImageFinish = (event: Event) => {
+      if (event.target instanceof HTMLImageElement) inspect();
+    };
+    document.addEventListener('load', onImageFinish, true);
+    document.addEventListener('error', onImageFinish, true);
+
+    // Dynamically rendered images can appear after a Next.js route transition.
+    // Observe only the page content, never the loader illustration itself.
+    const main = document.getElementById('main-content');
+    const observer = main && typeof MutationObserver !== 'undefined'
+      ? new MutationObserver(inspect)
+      : null;
+    observer?.observe(main!, { subtree: true, childList: true, attributes: true, attributeFilter: ['src', 'srcset'] });
+
+    // Give the route a paint before measuring above-the-fold images.
+    firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(inspect);
+    });
+
+    return () => {
+      active = false;
+      if (pendingShow !== undefined) window.clearTimeout(pendingShow);
+      if (maxWait !== undefined) window.clearTimeout(maxWait);
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+      document.removeEventListener('load', onImageFinish, true);
+      document.removeEventListener('error', onImageFinish, true);
+      observer?.disconnect();
+    };
   }, [pathname]);
 
-  useEffect(() => {
-    const startLoading = () => {
-      if (fallbackTimer.current !== null) window.clearTimeout(fallbackTimer.current);
-      setVisible(true);
-      // A failed navigation must never leave the site blocked by the loader.
-      fallbackTimer.current = window.setTimeout(() => {
-        fallbackTimer.current = null;
-        setVisible(false);
-      }, 4500);
-    };
+  // Render nothing on the server and on fast or image-free routes.
+  if (!show) return null;
 
-    const onClick = (event: MouseEvent) => {
-      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.defaultPrevented) return;
-      const target = event.target;
-      if (!(target instanceof Element)) return;
-      const anchor = target.closest<HTMLAnchorElement>('a[href]');
-      if (!anchor || anchor.hasAttribute('download') || (anchor.target && anchor.target !== '_self')) return;
-      const href = anchor.getAttribute('href');
-      if (!href || href.startsWith('javascript:')) return;
-      const url = new URL(anchor.href, window.location.href);
-      if (url.origin !== window.location.origin) return;
-      if (url.pathname === window.location.pathname && url.search === window.location.search) return;
-      startLoading();
-    };
-
-    document.addEventListener('click', onClick, true);
-    return () => {
-      document.removeEventListener('click', onClick, true);
-      if (fallbackTimer.current !== null) window.clearTimeout(fallbackTimer.current);
-    };
-  }, []);
-
-  if (!visible) return null;
-
-  return (
-    <div className="site-loader-screen" role="status" aria-live="polite" aria-label="جارٍ تحميل موقع النخبة">
-      <div className="site-loader-art" aria-hidden="true">
-        <HeroArt />
-      </div>
-      <span className="sr-only">جارٍ تحميل موقع النخبة</span>
-    </div>
-  );
+  return <div className="site-loader-screen" role="status" aria-live="polite" aria-label="جارٍ تحميل صور النخبة">
+    <div className="site-loader-art" aria-hidden="true"><HeroArt /></div>
+    <span className="sr-only">جارٍ تحميل صور الصفحة</span>
+  </div>;
 }
