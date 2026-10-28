@@ -11,7 +11,8 @@ export function FormTextarea({ label, name, required = false, placeholder, hint 
 export function SelectField({ label, name, options, required = false }: { label: string; name: string; options: string[]; required?: boolean }) { return <label className="form-field"><span>{label}{required && <em> *</em>}</span><select name={name} required={required} defaultValue=""><option value="" disabled>اختر من القائمة</option>{options.map(x => <option key={x}>{x}</option>)}</select></label>; }
 
 
-const FORM_ENDPOINT = 'https://al-nokhba-forms.lizex025.workers.dev/submit';
+// Public endpoint only. Keep Telegram credentials in Supabase Function Secrets.
+const FORM_ENDPOINT = process.env.NEXT_PUBLIC_NOKHBA_FORM_ENDPOINT || '';
 
 function FormShell({ children, title, button, kind }: { children: ReactNode; title: string; button: string; kind: 'help' | 'join' | 'contact' }) {
   const [sent, setSent] = useState(false);
