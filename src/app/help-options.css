@@ -1,16 +1,387 @@
-.help-options{padding:1.6rem 0 2.5rem}
-.help-options-intro{text-align:center;margin-bottom:2.2rem}
-.help-options-intro h2{font-size:clamp(1.9rem,4.8vw,2.8rem);color:#061b33;margin:.7rem 0}
-.help-options-intro p{color:#556780;line-height:1.8}
-.help-options-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
-.help-option-card{display:flex;flex-direction:column;gap:1rem;align-items:flex-start;text-align:right;min-height:238px;padding:clamp(1.3rem,3vw,2rem);border:1px solid rgba(223,195,145,.25);border-radius:17px;background:linear-gradient(125deg,#061b33,#102b47);color:#e6edf4;cursor:pointer;transition:transform .2s ease,border-color .2s ease}
-.help-option-card:hover{transform:translateY(-2px);border-color:#dfc391}
-.help-option-card:focus-visible{outline:3px solid #dfc391;outline-offset:3px}
-.help-option-card strong{font-size:clamp(1.35rem,2.5vw,1.85rem);color:#e5c995}
-.help-option-card>span{line-height:1.9}
-.help-option-index,.help-option-open{color:#dfc391;font-weight:700}
-.help-option-open{margin-top:auto}
-.form-back-link{border:0;background:none;color:#0b3356;font-weight:700;padding:1rem 0;cursor:pointer}
-.form-error{color:#a92233!important;background:#fff0f2;border-radius:9px;padding:.8rem}
-@media(max-width:700px){.help-options-grid{grid-template-columns:1fr}.help-option-card{min-height:210px}}
-@media(prefers-reduced-motion:reduce){.help-option-card{transition:none}.help-option-card:hover{transform:none}}
+/* Al Nokhba — request help: navy, champagne gold and calm academic layout */
+#main-content .nokhba-help-section{
+  position:relative;
+  padding-block:clamp(44px,5.5vw,84px) clamp(72px,7vw,104px);
+  background:
+    radial-gradient(ellipse at 85% 6%,rgba(198,161,91,.095),transparent 43%),
+    linear-gradient(180deg,#f4f7fa 0%,#fff 61%,#f4f7fa 100%);
+  content-visibility:visible;
+}
+#main-content .nokhba-help-section .container-narrow{
+  width:min(calc(100% - 40px),1050px);
+}
+#main-content .help-options{
+  width:100%;
+  margin-inline:auto;
+}
+#main-content .help-options-intro{
+  position:relative;
+  text-align:center;
+  margin:0 auto clamp(28px,4vw,44px);
+  max-width:690px;
+}
+#main-content .help-options-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:9px 18px;
+  border:1px solid rgba(189,151,79,.31);
+  border-radius:999px;
+  background:#fffaf0;
+  color:#a78043;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.015em;
+}
+#main-content .help-options-star{font-size:18px;line-height:1}
+#main-content .help-options-intro h2{
+  margin:21px 0 12px;
+  color:#071e38;
+  font-size:clamp(32px,4.35vw,54px);
+  font-weight:800;
+  line-height:1.4;
+  letter-spacing:-.045em;
+}
+#main-content .help-options-intro h2 span{
+  color:#ae8447;
+}
+#main-content .help-options-intro p{
+  margin:0;
+  color:#63748b;
+  line-height:1.9;
+  font-size:clamp(15px,1.5vw,18px);
+}
+#main-content .help-options-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(16px,2.6vw,24px);
+}
+#main-content .help-option-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:0;
+  min-width:0;
+  min-height:338px;
+  border:1px solid rgba(205,168,97,.32);
+  border-radius:24px;
+  padding:clamp(23px,3vw,36px);
+  background:
+    radial-gradient(circle at 0 0,rgba(217,182,118,.13),transparent 48%),
+    linear-gradient(145deg,#0d3358 0%,#071c33 77%);
+  color:#e7edf5;
+  text-align:right;
+  overflow:hidden;
+  box-shadow:0 16px 45px rgba(7,30,56,.13);
+  cursor:pointer;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+#main-content .help-option-card:before{
+  content:'';
+  position:absolute;
+  inset:0 0 auto;
+  height:3px;
+  background:linear-gradient(90deg,transparent,#caa55f,#f1dba5,#caa55f,transparent);
+  opacity:.9;
+}
+#main-content .help-option-card:hover{
+  transform:translateY(-4px);
+  border-color:#dfc390;
+  box-shadow:0 22px 48px rgba(7,30,56,.21);
+}
+#main-content .help-option-card:focus-visible{
+  outline:3px solid #cba566;
+  outline-offset:4px;
+}
+#main-content .help-option-card-top{
+  width:100%;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:nowrap;
+  margin-bottom:24px;
+}
+#main-content .help-option-icon{
+  display:grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  border:1px solid rgba(231,191,121,.32);
+  border-radius:17px;
+  color:#e8cd93;
+  background:rgba(255,255,255,.055);
+  flex:none;
+}
+#main-content .help-option-icon svg{
+  width:30px;
+  height:30px;
+}
+#main-content .help-option-number{
+  font-size:16px;
+  letter-spacing:.1em;
+  color:rgba(234,193,109,.85);
+  direction:ltr;
+  font-family:inherit;
+  font-weight:700;
+}
+#main-content .help-option-card strong{
+  display:block;
+  color:#fff;
+  font-size:clamp(23px,2.5vw,30px);
+  line-height:1.5;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin-bottom:10px;
+}
+#main-content .help-option-description{
+  display:block;
+  line-height:1.95;
+  color:#c6d4e4;
+  font-size:clamp(14px,1.5vw,16px);
+  max-width:345px;
+}
+#main-content .help-option-open{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  color:#f2d69e;
+  font-size:14px;
+  font-weight:750;
+  margin-top:auto;
+  padding-top:20px;
+  border-top:1px solid rgba(224,195,150,.17);
+}
+#main-content .help-option-open svg{
+  width:19px;
+  height:19px;
+  color:#e8c887;
+}
+#main-content .help-options-footnote{
+  margin:25px 0 0;
+  text-align:center;
+  color:#8290a3;
+  font-size:13px;
+}
+/* Form shell: readable on phone, consistent typography and tactile controls. */
+#main-content .help-hub-form{
+  width:min(100%,830px);
+  margin-inline:auto;
+}
+#main-content .form-back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  color:#123b60;
+  background:transparent;
+  border:0;
+  border-radius:10px;
+  margin:0 0 15px;
+  padding:10px 8px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:750;
+}
+#main-content .form-back-link:hover{color:#a47b3d}
+#main-content .form-back-link .arrow-icon{
+  transform:scaleX(-1);
+}
+#main-content .form-back-link:focus-visible{
+  outline:2px solid #c6a15b;
+  outline-offset:2px;
+}
+#main-content .help-hub-form .form-shell{
+  width:100%;
+  border:1px solid #e0e6ed;
+  border-top:3px solid #d9b77a;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 16px 48px rgba(5,28,49,.075);
+  padding:clamp(22px,4vw,43px);
+}
+#main-content .help-hub-form .form-heading{
+  margin-bottom:27px;
+  padding-bottom:22px;
+  border-bottom:1px solid #edf0f4;
+}
+#main-content .help-hub-form .form-heading h2{
+  margin:9px 0;
+  font-size:clamp(26px,3.1vw,35px);
+  line-height:1.45;
+  color:#0c2844;
+  font-weight:800;
+}
+#main-content .help-hub-form .form-heading p{
+  font-size:13px;
+  color:#78879b;
+  line-height:1.8;
+}
+#main-content .help-hub-form .form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(17px,2.6vw,23px);
+}
+#main-content .help-hub-form .form-field{
+  display:block;
+  min-width:0;
+}
+#main-content .help-hub-form .form-field>span,
+#main-content .help-hub-form .form-whatsapp-label,
+#main-content .help-hub-form .checkbox-field legend{
+  display:block;
+  font-size:14px;
+  line-height:1.7;
+  font-weight:750;
+  color:#122b46;
+  margin-bottom:9px;
+}
+#main-content .help-hub-form .form-field em{color:#ba8c47;font-style:normal}
+#main-content .help-hub-form .form-field input,
+#main-content .help-hub-form .form-field select,
+#main-content .help-hub-form .form-field textarea,
+#main-content .help-hub-form .form-whatsapp-inputs input,
+#main-content .help-hub-form .form-whatsapp-inputs select{
+  box-sizing:border-box;
+  display:block;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  height:54px;
+  min-height:54px;
+  border:1px solid #d6dfe8;
+  border-radius:11px;
+  background:#f9fbfd;
+  color:#142c44;
+  padding:12px 15px;
+  font-size:15px;
+  line-height:1.5;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+#main-content .help-hub-form .form-field input:focus,
+#main-content .help-hub-form .form-field select:focus,
+#main-content .help-hub-form .form-whatsapp-inputs input:focus,
+#main-content .help-hub-form .form-whatsapp-inputs select:focus{
+  outline:none;
+  border-color:#bc9858;
+  box-shadow:0 0 0 3px rgba(198,161,91,.14);
+}
+#main-content .help-hub-form .form-field input::placeholder{color:#9aabba}
+#main-content .help-hub-form .form-whatsapp-inputs{
+  display:grid;
+  grid-template-columns:minmax(110px,125px) minmax(0,1fr);
+  gap:10px;
+  align-items:stretch;
+  width:100%;
+}
+#main-content .help-hub-form .form-whatsapp-inputs select{
+  padding:10px 8px;
+  direction:ltr;
+  text-align:center;
+  font-size:13px;
+}
+#main-content .help-hub-form .form-whatsapp-inputs input{
+  text-align:left;
+}
+#main-content .help-hub-form .form-whatsapp-field small{
+  margin-top:7px;
+  font-size:11px;
+  line-height:1.75;
+}
+#main-content .help-hub-form .checkbox-field{
+  grid-column:1/-1;
+  margin:4px 0 0;
+  padding:0;
+  border:0;
+}
+#main-content .help-hub-form .checkbox-field>div{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+#main-content .help-hub-form .checkbox-field label span{
+  border-radius:999px;
+  padding:11px 16px;
+  border:1px solid #e2e6ed;
+  background:#f6f8fa;
+  color:#50657e;
+  font-size:13px;
+  line-height:1.5;
+}
+#main-content .help-hub-form .checkbox-field label input:checked+span{
+  border-color:#b9985b;
+  background:#fff8ea;
+  color:#775629;
+}
+#main-content .help-hub-form .form-actions{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  align-items:stretch;
+  padding-top:24px;
+  margin-top:4px;
+}
+#main-content .help-hub-form .form-actions p{
+  color:#8390a0;
+  font-size:12px;
+  line-height:1.8;
+  max-width:none;
+}
+#main-content .help-hub-form .form-actions button{
+  width:100%;
+  border-radius:12px;
+  min-height:57px;
+  background:#092846;
+  color:#fff;
+  font-size:16px;
+}
+#main-content .help-hub-form .form-actions button:hover{background:#15426c}
+#main-content .help-hub-form .form-actions button:disabled{opacity:.65;cursor:wait}
+#main-content .help-hub-form .form-error{
+  color:#aa2737!important;
+  background:#fff3f5;
+  padding:12px;
+  border:1px solid #f2cad0;
+  border-radius:9px;
+}
+#main-content .form-honeypot{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  margin:-1px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+@media(max-width:720px){
+  #main-content .nokhba-help-section{padding-top:38px;padding-bottom:70px}
+  #main-content .nokhba-help-section .container-narrow{width:calc(100% - 28px)}
+  #main-content .help-options-intro h2{font-size:clamp(28px,7.5vw,38px)}
+  #main-content .help-options-grid{grid-template-columns:minmax(0,1fr);gap:15px}
+  #main-content .help-option-card{
+    min-height:234px;
+    padding:24px;
+    border-radius:20px;
+  }
+  #main-content .help-option-card-top{margin-bottom:18px}
+  #main-content .help-option-icon{width:49px;height:49px;border-radius:14px}
+  #main-content .help-option-icon svg{width:27px;height:27px}
+  #main-content .help-option-card strong{font-size:23px}
+  #main-content .help-option-description{font-size:14px}
+  #main-content .help-hub-form .form-grid{grid-template-columns:minmax(0,1fr)}
+  #main-content .help-hub-form .form-shell{padding:23px 19px;border-radius:17px}
+  #main-content .help-hub-form .form-heading h2{font-size:27px}
+}
+@media(max-width:380px){
+  #main-content .help-option-card{padding:20px}
+  #main-content .help-hub-form .form-whatsapp-inputs{grid-template-columns:103px minmax(0,1fr);gap:7px}
+  #main-content .help-hub-form .form-whatsapp-inputs select{font-size:12px;padding:9px 5px}
+  #main-content .help-hub-form .form-whatsapp-inputs input{font-size:14px;padding-inline:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  #main-content .help-option-card{transition:none}
+  #main-content .help-option-card:hover{transform:none}
+}
