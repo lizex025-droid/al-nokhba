@@ -4,6 +4,7 @@ import { Footer } from '@/components/Footer';
 import { RevealObserver } from '@/components/Reveal';
 import { ScrollToPageStart } from '@/components/ScrollToPageStart';
 import './globals.css';
+import './help-options.css';
 
 export const metadata: Metadata = { title: { default: 'النخبة علوم التأهيل', template: '%s | النخبة علوم التأهيل' }, description: 'موقع النخبة الأكاديمي لطلبة كلية علوم التأهيل في الجامعة الأردنية.', robots: { index: true, follow: true }, applicationName: 'rehab ju', appleWebApp: { capable: true, title: 'rehab ju', statusBarStyle: 'default' }, manifest: '/manifest.webmanifest', icons: { icon: [{ url: '/al-nokhba-logo.png', type: 'image/png' }], apple: [{ url: '/al-nokhba-logo.png', type: 'image/png' }] } };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) { return <html lang="ar" dir="rtl"><head><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" /></head><body><ScrollToPageStart /><RevealObserver /><Navbar /><main id="main-content">{children}</main><Footer /></body></html>; }
