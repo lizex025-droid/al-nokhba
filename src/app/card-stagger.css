@@ -2,7 +2,8 @@
  * Staggered card entrance — lightweight CSS, single shared observer.
  * Animate only opacity + independent translate so the existing transform-based
  * hover interaction and card layout never conflict with the entrance animation.
- * Only the first eight cards in a grid are staggered; later cards have 0 delay.
+ * Cards revealed together get an 80ms stepped delay from RevealObserver.
+ * Later scroll batches start a new wave instead of accumulating long delays.
  */
 body.motion-ready #main-content [data-card-reveal] {
   --card-stagger-delay: 0ms;
@@ -18,21 +19,14 @@ body.motion-ready #main-content [data-card-reveal].is-visible {
   translate: 0 0;
 }
 
-/* Delay is positional only, never cumulative over an entire long list. */
-body.motion-ready #main-content [data-card-reveal]:nth-child(2) { --card-stagger-delay: 80ms; }
-body.motion-ready #main-content [data-card-reveal]:nth-child(3) { --card-stagger-delay: 160ms; }
-body.motion-ready #main-content [data-card-reveal]:nth-child(4) { --card-stagger-delay: 240ms; }
-body.motion-ready #main-content [data-card-reveal]:nth-child(5) { --card-stagger-delay: 320ms; }
-body.motion-ready #main-content [data-card-reveal]:nth-child(6) { --card-stagger-delay: 400ms; }
-body.motion-ready #main-content [data-card-reveal]:nth-child(7) { --card-stagger-delay: 480ms; }
-body.motion-ready #main-content [data-card-reveal]:nth-child(8) { --card-stagger-delay: 560ms; }
-
 /* Disabled motion must never leave an item invisible, even before hydration. */
 @media (prefers-reduced-motion: reduce) {
-  body.motion-ready #main-content [data-card-reveal] {
+  body.motion-ready #main-content [data-card-reveal],
+  body.motion-ready #main-content [data-reveal] {
     --card-stagger-delay: 0ms;
     opacity: 1;
     translate: none;
+    transform: none;
     transition-duration: 0ms;
     transition-delay: 0ms;
   }

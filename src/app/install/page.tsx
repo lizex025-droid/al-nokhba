@@ -20,21 +20,21 @@ export default function InstallPage() {
           <p>الوصول إلى مواد النخبة بسهولة على الهاتف أو الكمبيوتر، مباشرةً من موقعنا.</p>
         </div>
         <div className="install-choice-grid">
-          <article className="install-choice-card install-choice-ios">
+          <article className="install-choice-card install-choice-ios" data-card-reveal>
             <div className="install-choice-icon"><img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/svgs/brands/apple.svg" width="44" height="44" alt="" loading="lazy" decoding="async" /></div>
             <span className="install-choice-platform" dir="ltr">iPhone · iOS</span>
             <h2>تنزيل للآيفون</h2>
             <p>أضف الموقع إلى الشاشة الرئيسية عبر Safari، ليظهر باسم rehab ju وبأيقونة التطبيق.</p>
             <IphoneInstallGuide imageUrl={guideImage} />
           </article>
-          <article className="install-choice-card install-choice-desktop">
+          <article className="install-choice-card install-choice-desktop" data-card-reveal>
             <div className="install-choice-icon"><img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/svgs/solid/desktop.svg" width="44" height="44" alt="" loading="lazy" decoding="async" /></div>
             <span className="install-choice-platform" dir="ltr">Desktop · Web</span>
             <h2>تنزيل للكمبيوتر</h2>
             <p>افتح النخبة من متصفح الكمبيوتر مباشرةً، ويمكنك تثبيت اختصار للموقع من خيارات المتصفح إن كانت مدعومة.</p>
             <IphoneInstallGuide imageUrl={desktopGuideImage} device="الكمبيوتر" actionLabel="عرض طريقة التثبيت" />
           </article>
-          <article className="install-choice-card install-choice-android">
+          <article className="install-choice-card install-choice-android" data-card-reveal>
             <div className="install-choice-icon"><img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/svgs/brands/android.svg" width="44" height="44" alt="" loading="lazy" decoding="async" /></div>
             <span className="install-choice-platform" dir="ltr">Android</span>
             <h2>دعم الأندرويد</h2>

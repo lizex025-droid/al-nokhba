@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 
 /**
  * One IntersectionObserver for static and dynamically inserted reveal elements.
- * The first eight cards in each grid stagger via CSS (80ms steps). Cards beyond
- * the first eight have no artificial delay, avoiding long-list animation queues.
+ * Stagger cards that enter the viewport together, rather than delaying every
+ * item by its absolute position in a potentially very long list.
  */
 export function RevealObserver() {
   const pathname = usePathname();
@@ -26,8 +26,30 @@ export function RevealObserver() {
 
     const observer: IntersectionObserver | null = running
       ? new IntersectionObserver(entries => {
+          const cardsByParent = new Map<Element, HTMLElement[]>();
+
           for (const entry of entries) {
-            if (entry.isIntersecting) reveal(entry.target);
+            if (!entry.isIntersecting) continue;
+            const element = entry.target;
+            if (!(element instanceof HTMLElement) || !element.hasAttribute('data-card-reveal')) {
+              reveal(element);
+              continue;
+            }
+
+            const parent = element.parentElement ?? document.body;
+            const cards = cardsByParent.get(parent) ?? [];
+            cards.push(element);
+            cardsByParent.set(parent, cards);
+          }
+
+          for (const cards of cardsByParent.values()) {
+            // Use document order even if IntersectionObserver delivers its entries
+            // out of order. Limit the stagger to a single short visible wave.
+            cards.sort((a, b) => a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+            cards.forEach((card, index) => {
+              card.style.setProperty('--card-stagger-delay', `${Math.min(index, 7) * 80}ms`);
+              reveal(card);
+            });
           }
         }, { threshold: 0.04, rootMargin: '0px 0px -18px 0px' })
       : null;
