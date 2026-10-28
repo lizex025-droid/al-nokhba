@@ -47,6 +47,44 @@ function respond(payload: unknown, status: number, origin: string) {
   });
 }
 
+// For hosts without a secrets API integration, credentials are kept in
+// Supabase Vault and exposed only to the privileged Edge Function role.
+// The repository and client bundle never contain the actual token.
+async function loadCredentials(): Promise<{ botToken: string; chatId: string } | null> {
+  const directToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
+  const directChat = Deno.env.get("TELEGRAM_CHAT_ID");
+  if (directToken && directChat) return { botToken: directToken, chatId: directChat };
+
+  const url = Deno.env.get("SUPABASE_URL");
+  const legacyKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  let defaultKey = "";
+  try {
+    const keys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") || "{}");
+    defaultKey = keys.default || "";
+  } catch { /* Missing modern secret-key map; legacy key is used below. */ }
+  const key = legacyKey || defaultKey;
+  if (!url || !key) return null;
+
+  try {
+    const response = await fetch(url + "/rest/v1/rpc/nokhba_telegram_credentials", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: key,
+        Authorization: "Bearer " + key,
+      },
+      body: "{}",
+      signal: AbortSignal.timeout(5500),
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (typeof data.bot_token !== "string" || typeof data.chat_id !== "string") return null;
+    return { botToken: data.bot_token, chatId: data.chat_id };
+  } catch {
+    return null;
+  }
+}
+
 Deno.serve(async (request: Request) => {
   const origin = request.headers.get("origin") ?? "";
   if (!allowedOrigins.has(origin)) return respond({ ok: false }, 403, origin);
@@ -124,9 +162,9 @@ Deno.serve(async (request: Request) => {
     }
   }
 
-  const botToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
-  const chatId = Deno.env.get("TELEGRAM_CHAT_ID");
-  if (!botToken || !chatId) return respond({ ok: false, error: "not_configured" }, 503, origin);
+  const credentials = await loadCredentials();
+  if (!credentials) return respond({ ok: false, error: "not_configured" }, 503, origin);
+  const { botToken, chatId } = credentials;
 
   const lines = [
     form === "join" ? "طلب انضمام جديد — النخبة" : "طلب مساعدة دراسية جديد — النخبة",
