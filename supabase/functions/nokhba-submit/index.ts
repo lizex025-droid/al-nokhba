@@ -11,6 +11,7 @@ const allowedOrigins = new Set([
 const labels: Record<string, string> = {
   name: "الاسم",
   contact: "طريقة التواصل",
+  countryCode: "رمز الدولة",
   specialty: "التخصص",
   year: "السنة الدراسية",
   course: "المادة",
@@ -21,12 +22,12 @@ const labels: Record<string, string> = {
   notes: "ملاحظات",
   field: "مجال التطوع",
   role: "الدور المطلوب",
-  phone: "رقم التواصل",
+  phone: "رقم واتساب",
   reason: "سبب الانضمام",
 };
 const required: Record<string, string[]> = {
-  help: ["name", "contact", "specialty", "year", "course", "difficulty"],
-  join: ["name", "specialty", "year", "field", "role", "phone", "reason"],
+  help: ["name", "phone", "countryCode", "specialty", "year", "course"],
+  join: ["name", "specialty", "year", "field", "role", "phone", "countryCode"],
 };
 
 function clean(value: unknown, maxLength = 180): string {
@@ -200,6 +201,13 @@ Deno.serve(async (request: Request) => {
   for (const key of required[form]) {
     if (!clean(fields[key], 180)) return respond({ ok: false, error: "required_field_missing" }, 400, origin);
   }
+  const supportedCodes = new Set(["+962", "+970", "+966", "+971", "+965", "+974", "+973", "+968", "+20", "+92", "+90", "+1", "+44"]);
+  const dialCode = clean(fields.countryCode, 5);
+  const localPhone = clean(fields.phone, 25).replace(/[\\s\\-()]/g, "");
+  if (!supportedCodes.has(dialCode) || !/^\\d{6,15}$/.test(localPhone)) {
+    return respond({ ok: false, error: "invalid_whatsapp" }, 400, origin);
+  }
+  fields.phone = dialCode + " " + localPhone;
 
   // Optional protection: enable by setting TURNSTILE_SECRET_KEY and supplying
   // the token as 'turnstileToken' from a Cloudflare Turnstile widget.
