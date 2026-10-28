@@ -24,6 +24,7 @@ export function SiteLoader() {
     let secondFrame = 0;
     let scanFrame = 0;
     let observerCutoff: number | undefined;
+    let enteringPage = true;
 
     // The header and the original hero illustration use a CSS background image.
     // Checking its preload handles that visible image as well as <img> elements.
@@ -73,6 +74,7 @@ export function SiteLoader() {
 
     // Image 'load' and 'error' do not bubble, so listen during capture.
     const onImageFinish = (event: Event) => {
+      if (!enteringPage && pendingShow === undefined && maxWait === undefined) return;
       if (event.target instanceof HTMLImageElement) inspect();
     };
     document.addEventListener('load', onImageFinish, true);
@@ -96,7 +98,10 @@ export function SiteLoader() {
     observer?.observe(main!, { subtree: true, childList: true, attributes: true, attributeFilter: ['src', 'srcset'] });
     // Only examine newly-mounted page images around initial navigation.
     // Do not keep observing the entire site throughout the user's session.
-    observerCutoff = window.setTimeout(() => observer?.disconnect(), 1800);
+    observerCutoff = window.setTimeout(() => {
+      enteringPage = false;
+      observer?.disconnect();
+    }, 1800);
 
     // Give the route a paint before measuring above-the-fold images.
     firstFrame = window.requestAnimationFrame(() => {
