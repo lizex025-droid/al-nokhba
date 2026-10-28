@@ -13,7 +13,7 @@ export function SiteLoader() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(true);
   const initialRoute = useRef(true);
-  const fallbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fallbackTimer = useRef<number | null>(null);
 
   useEffect(() => {
     // The initial loader is rendered with the HTML so it covers slow hydration.
