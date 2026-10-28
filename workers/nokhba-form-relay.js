@@ -81,7 +81,7 @@ export default {
       consent?.version === LEGAL_POLICY_VERSION && consent?.form === form;
     if (consent !== undefined && !consentAccepted)
       return reply({ok:false,error:'invalid_consent'},400,origin);
-    if (env.REQUIRE_LEGAL_CONSENT === 'true' && !consentAccepted)
+    if (!consentAccepted)
       return reply({ok:false,error:'consent_required'},400,origin);
     if (text(data.website || '',100)) return reply({ok:true},200,origin); // honeypot
     const startedAt = Number(data.startedAt);

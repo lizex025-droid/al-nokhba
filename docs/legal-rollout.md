@@ -19,9 +19,9 @@ This change is prepared for review. It is **not** a record of a production deplo
 ## Safe deployment order after approval
 
 1. Ensure the team knows how to handle manual erasure requests in both Supabase and Telegram, while preserving records required for a live legal claim.
-2. Deploy the updated `supabase/functions/nokhba-submit/index.ts`, which initially supports both old and new frontend requests. If `workers/nokhba-form-relay.js` is active, update that Worker too.
+2. Deploy the updated `supabase/functions/nokhba-submit/index.ts` and verify required-consent enforcement after the frontends are live. If `workers/nokhba-form-relay.js` is active, update that Worker too.
 3. Deploy the frontend to *both* Cloudflare Pages and Vercel where accessible, check `/privacy`, `/terms`, and submit one test help and one test join form with explicit consent. Inspect the private request record for `legalConsentVersion` and `legalConsentAcceptedAt`.
-4. Only after every live form client sends consent, set `REQUIRE_LEGAL_CONSENT=true` for the active form endpoints to reject requests that bypass acceptance. Keep the version aligned with `LEGAL_VERSION` in `src/lib/legalPolicies.ts`.
+4. Both endpoint source files now reject missing or mismatched consent unconditionally. Keep the accepted version aligned with `LEGAL_VERSION` in `src/lib/legalPolicies.ts`. Previously cached form clients must reload before submitting requests.
 5. Verify copyright-removal contact, access controls, manual rights-request response process, and periodic checks that records still have a lawful purpose.
 
 ## Important legal limitation

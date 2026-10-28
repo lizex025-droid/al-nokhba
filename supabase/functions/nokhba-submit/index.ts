@@ -188,8 +188,8 @@ Deno.serve(async (request: Request) => {
   const form = clean(data.form, 15);
   if (!Object.hasOwn(required, form)) return respond({ ok: false, error: "invalid_form" }, 400, origin);
 
-  // Deploy in compatibility mode first, while the Cloudflare and Vercel sites
-  // are updated. Set REQUIRE_LEGAL_CONSENT=true only after both sites are live.
+  // Both public frontends require explicit policy acceptance. Reject requests
+  // without a matching record even when they bypass the visual checkbox.
   const consent = data.consent;
   const consentRecord = consent && typeof consent === 'object' && !Array.isArray(consent)
     ? consent as Record<string, unknown> : null;
@@ -199,7 +199,7 @@ Deno.serve(async (request: Request) => {
   if (consent !== undefined && !consentAccepted) {
     return respond({ ok: false, error: "invalid_consent" }, 400, origin);
   }
-  if (Deno.env.get('REQUIRE_LEGAL_CONSENT') === 'true' && !consentAccepted) {
+  if (!consentAccepted) {
     return respond({ ok: false, error: "consent_required" }, 400, origin);
   }
 
