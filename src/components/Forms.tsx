@@ -193,7 +193,7 @@ export function HelpHub() {
       <p>اختر نوع الطلب المناسب، والباقي علينا.</p>
     </header>
     <div className="help-options-grid">
-      <button type="button" className="help-option-card" onClick={() => setSelected('help')}>
+      <button type="button" className="help-option-card" data-card-reveal onClick={() => setSelected('help')}>
         <span className="help-option-card-top">
           <span className="help-option-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M12 7.5c-2.5-2-5-2.4-9-2v13c4-.4 6.5.1 9 2 2.5-1.9 5-2.4 9-2v-13c-4-.4-6.5 0-9 2Z"/><path d="M12 7.5v13"/></svg>
@@ -204,7 +204,7 @@ export function HelpHub() {
         <span className="help-option-description">ملخصات، شرح، مراجعات، وأسئلة تدريبية تساعدك في موادك.</span>
         <span className="help-option-open"><span>إرسال طلب المساعدة</span><ArrowIcon className="arrow-icon" /></span>
       </button>
-      <button type="button" className="help-option-card help-option-card-join" onClick={() => setSelected('join')}>
+      <button type="button" className="help-option-card help-option-card-join" data-card-reveal onClick={() => setSelected('join')}>
         <span className="help-option-card-top">
           <span className="help-option-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
