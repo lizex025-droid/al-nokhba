@@ -270,7 +270,7 @@
 #main-content .help-hub-form .form-field input::placeholder{color:#9aabba}
 #main-content .help-hub-form .form-whatsapp-inputs{
   display:grid;
-  grid-template-columns:minmax(110px,125px) minmax(0,1fr);
+  grid-template-columns:minmax(0,175px) minmax(0,1fr);
   gap:10px;
   align-items:stretch;
   width:100%;
@@ -278,7 +278,7 @@
 #main-content .help-hub-form .form-whatsapp-inputs select{
   padding:10px 8px;
   direction:ltr;
-  text-align:center;
+  text-align:start;
   font-size:13px;
 }
 #main-content .help-hub-form .form-whatsapp-inputs input{
@@ -377,11 +377,29 @@
 }
 @media(max-width:380px){
   #main-content .help-option-card{padding:20px}
-  #main-content .help-hub-form .form-whatsapp-inputs{grid-template-columns:103px minmax(0,1fr);gap:7px}
+  #main-content .help-hub-form .form-whatsapp-inputs{grid-template-columns:minmax(0,135px) minmax(0,1fr);gap:7px}
   #main-content .help-hub-form .form-whatsapp-inputs select{font-size:12px;padding:9px 5px}
   #main-content .help-hub-form .form-whatsapp-inputs input{font-size:14px;padding-inline:10px}
 }
 @media(prefers-reduced-motion:reduce){
   #main-content .help-option-card{transition:none}
   #main-content .help-option-card:hover{transform:none}
+}
+
+/* Full international dial-code menu: reserve space for flag and calling prefix. */
+#main-content .help-hub-form .form-country-code{
+  min-width:0;
+  width:100%;
+  text-overflow:ellipsis;
+  font-variant-numeric:tabular-nums;
+}
+@media(min-width:721px){
+  #main-content .help-hub-form .form-whatsapp-inputs{
+    grid-template-columns:minmax(0,185px) minmax(0,1fr);
+  }
+}
+@media(min-width:381px) and (max-width:720px){
+  #main-content .help-hub-form .form-whatsapp-inputs{
+    grid-template-columns:minmax(0,148px) minmax(0,1fr);
+  }
 }
