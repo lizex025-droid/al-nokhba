@@ -102,7 +102,6 @@ export const worldCountryDialCodes: ReadonlyArray<readonly [iso: string, dial: s
   ['HU', '+36'],
   ['ID', '+62'],
   ['IE', '+353'],
-  ['IL', '+972'],
   ['IM', '+44'],
   ['IN', '+91'],
   ['IO', '+246'],
