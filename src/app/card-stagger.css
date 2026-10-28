@@ -1,33 +1,36 @@
 /**
  * Staggered card entrance — lightweight CSS, single shared observer.
- * Animate only opacity + independent translate so the existing transform-based
- * hover interaction and card layout never conflict with the entrance animation.
+ * Keyframes guarantee an entrance even when the observer sets visibility in the
+ * first painted frame. The independent translate leaves hover transforms intact.
  * Cards revealed together get an 80ms stepped delay from RevealObserver.
  * Later scroll batches start a new wave instead of accumulating long delays.
  */
 body.motion-ready #main-content [data-card-reveal] {
   --card-stagger-delay: 0ms;
   opacity: 0;
-  translate: 0 20px;
-  transition-property: opacity, translate;
-  transition-duration: 520ms, 520ms;
-  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
-  transition-delay: var(--card-stagger-delay);
+  translate: 0 34px;
 }
 body.motion-ready #main-content [data-card-reveal].is-visible {
   opacity: 1;
   translate: 0 0;
+  animation: nokhba-card-rise 900ms cubic-bezier(.25, .1, .25, 1) var(--card-stagger-delay) both;
+}
+
+@keyframes nokhba-card-rise {
+  from { opacity: 0; translate: 0 34px; }
+  to { opacity: 1; translate: 0 0; }
 }
 
 /* Disabled motion must never leave an item invisible, even before hydration. */
 @media (prefers-reduced-motion: reduce) {
   body.motion-ready #main-content [data-card-reveal],
+  body.motion-ready #main-content [data-card-reveal].is-visible,
   body.motion-ready #main-content [data-reveal] {
     --card-stagger-delay: 0ms;
     opacity: 1;
     translate: none;
     transform: none;
-    transition-duration: 0ms;
-    transition-delay: 0ms;
+    animation: none;
+    transition: none;
   }
 }
