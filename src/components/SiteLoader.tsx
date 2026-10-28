@@ -1,134 +1,196 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { HeroArt } from './HeroArt';
 
 /**
- * Image-aware loading overlay.
+ * The orbital brand screen is visible immediately (including server HTML).
+ * It remains until the new route's DOM, critical viewport imagery, logo and
+ * fonts are ready. Lazy images below the fold never block navigation.
  *
- * Never show a loader merely because someone entered the site or clicked a
- * route. Only show the original homepage illustration when a visible,
- * above-the-fold image is still downloading beyond a short threshold.
- * Below-the-fold images stay lazy and do not hold up page interaction.
+ * Async page widgets can opt in by using data-page-loading="true" or
+ * aria-busy="true" while their essential initial data is still loading.
  */
 export function SiteLoader() {
   const pathname = usePathname();
-  const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [delayed, setDelayed] = useState(false);
+  const navigatingRef = useRef(false);
+  const navTimeoutRef = useRef<number | null>(null);
+
+  // Show the brand screen as soon as a user requests a different page,
+  // rather than waiting for the destination component to mount.
+  useEffect(() => {
+    const startNavigation = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 ||
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const anchor = target.closest('a[href]');
+      if (!(anchor instanceof HTMLAnchorElement) || anchor.target && anchor.target !== '_self' ||
+          anchor.hasAttribute('download')) return;
+
+      let targetUrl: URL;
+      try { targetUrl = new URL(anchor.href); }
+      catch { return; }
+      const here = new URL(window.location.href);
+      if (targetUrl.origin !== here.origin ||
+          (targetUrl.pathname === here.pathname && targetUrl.search === here.search)) return;
+
+      navigatingRef.current = true;
+      setDelayed(false);
+      setVisible(true);
+      if (navTimeoutRef.current !== null) window.clearTimeout(navTimeoutRef.current);
+      navTimeoutRef.current = window.setTimeout(() => setDelayed(true), 14000);
+    };
+
+    const onHistoryNavigation = () => {
+      navigatingRef.current = true;
+      setVisible(true);
+      setDelayed(false);
+      if (navTimeoutRef.current !== null) window.clearTimeout(navTimeoutRef.current);
+      navTimeoutRef.current = window.setTimeout(() => setDelayed(true), 14000);
+    };
+
+    document.addEventListener('click', startNavigation, true);
+    window.addEventListener('popstate', onHistoryNavigation);
+    return () => {
+      document.removeEventListener('click', startNavigation, true);
+      window.removeEventListener('popstate', onHistoryNavigation);
+      if (navTimeoutRef.current !== null) window.clearTimeout(navTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
-    let active = true;
-    let pendingShow: number | undefined;
-    let maxWait: number | undefined;
-    let firstFrame = 0;
-    let secondFrame = 0;
+    navigatingRef.current = false;
+    if (navTimeoutRef.current !== null) window.clearTimeout(navTimeoutRef.current);
+    navTimeoutRef.current = null;
+
+    let alive = true;
     let scanFrame = 0;
-    let observerCutoff: number | undefined;
-    let enteringPage = true;
+    let nextFrame = 0;
+    let minimumTimer: number | undefined;
+    let warningTimer: number | undefined;
+    let ready = false;
+    const beganAt = performance.now();
+    const MIN_DISPLAY_MS = 520;
 
-    // The header and the original hero illustration use a CSS background image.
-    // Checking its preload handles that visible image as well as <img> elements.
+    setVisible(true);
+    setDelayed(false);
+
+    // The central logo is a CSS background in HeroArt. Ensure it has loaded
+    // (or failed definitively) before removing the overlay.
     const logo = new window.Image();
-    logo.src = '/al-nokhba-logo.png?v=20261019';
+    logo.src = '/al-nokhba-logo.webp';
 
-    // A slow image must not trap a visitor on the loader indefinitely.
-    const finish = () => {
-      if (pendingShow !== undefined) window.clearTimeout(pendingShow);
-      pendingShow = undefined;
-      if (maxWait !== undefined) window.clearTimeout(maxWait);
-      maxWait = undefined;
-      if (active) setShow(false);
-    };
-
-    const imagesStillLoading = () => {
-      if (!logo.complete) return true;
-      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+    const aboveFoldImagesReady = () => {
+      const viewport = window.visualViewport?.height ?? window.innerHeight;
       const images = document.querySelectorAll<HTMLImageElement>('#main-content img, .site-header img');
       for (const img of images) {
-        if (img.complete) continue;
+        if (img.complete) continue; // Broken images cannot hold the site hostage.
         const rect = img.getBoundingClientRect();
-        // Images outside the viewport must remain lazy and never block the page.
-        if (rect.width < 1 || rect.height < 1) continue;
-        if (rect.bottom > 0 && rect.top < viewportHeight + 30) return true;
+        if (rect.width === 0 || rect.height === 0) continue;
+        if (rect.top < viewport + 40 && rect.bottom > -40) return false;
       }
-      return false;
+      return true;
     };
+
+    const essentialDataPending = () =>
+      document.querySelector(
+        '#main-content [data-page-loading="true"], #main-content [aria-busy="true"]'
+      ) !== null;
 
     const inspect = () => {
-      if (!active) return;
-      if (!imagesStillLoading()) {
-        finish();
+      scanFrame = 0;
+      if (!alive || navigatingRef.current || ready) return;
+      if (document.readyState !== 'complete' ||
+          !document.getElementById('main-content') ||
+          !logo.complete ||
+          (document.fonts && document.fonts.status !== 'loaded') ||
+          !aboveFoldImagesReady() ||
+          essentialDataPending()) return;
+
+      const elapsed = performance.now() - beganAt;
+      if (elapsed < MIN_DISPLAY_MS) {
+        minimumTimer = window.setTimeout(queueInspect, MIN_DISPLAY_MS - elapsed);
         return;
       }
-
-      // Fast or cached images never cause the loading screen to flash.
-      if (pendingShow === undefined && maxWait === undefined) {
-        pendingShow = window.setTimeout(() => {
-          pendingShow = undefined;
-          if (!active || !imagesStillLoading()) return;
-          setShow(true);
-          maxWait = window.setTimeout(finish, 4500);
-        }, 180);
-      }
+      ready = true;
+      setVisible(false);
+      setDelayed(false);
     };
 
-    // Image 'load' and 'error' do not bubble, so listen during capture.
-    const onImageFinish = (event: Event) => {
-      if (!enteringPage && pendingShow === undefined && maxWait === undefined) return;
-      if (event.target instanceof HTMLImageElement) inspect();
+    const queueInspect = () => {
+      if (!alive || scanFrame || ready) return;
+      scanFrame = window.requestAnimationFrame(inspect);
     };
-    document.addEventListener('load', onImageFinish, true);
-    document.addEventListener('error', onImageFinish, true);
-    logo.addEventListener('load', inspect);
-    logo.addEventListener('error', inspect);
-
-    // Dynamically rendered images can appear after a Next.js route transition.
-    // Observe only the page content, never the loader illustration itself.
-    const main = document.getElementById('main-content');
-    const scheduleInspect = () => {
-      if (scanFrame) return;
-      scanFrame = window.requestAnimationFrame(() => {
-        scanFrame = 0;
-        inspect();
-      });
+    const onResourceComplete = (event: Event) => {
+      if (event.target instanceof HTMLImageElement) queueInspect();
     };
-    const observer = main && typeof MutationObserver !== 'undefined'
-      ? new MutationObserver(scheduleInspect)
-      : null;
-    observer?.observe(main!, { subtree: true, childList: true, attributes: true, attributeFilter: ['src', 'srcset'] });
-    // Only examine newly-mounted page images around initial navigation.
-    // Do not keep observing the entire site throughout the user's session.
-    observerCutoff = window.setTimeout(() => {
-      enteringPage = false;
-      observer?.disconnect();
-    }, 1800);
+    const onReadyStateChange = () => queueInspect();
 
-    // Give the route a paint before measuring above-the-fold images.
-    firstFrame = window.requestAnimationFrame(() => {
-      secondFrame = window.requestAnimationFrame(inspect);
+    // Inspect after two paints, so hydrated/streamed page content is present.
+    scanFrame = window.requestAnimationFrame(() => {
+      scanFrame = 0;
+      nextFrame = window.requestAnimationFrame(queueInspect);
     });
 
+    const main = document.getElementById('main-content');
+    const observer = main && typeof MutationObserver !== 'undefined'
+      ? new MutationObserver(queueInspect) : null;
+    observer?.observe(main!, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['src', 'srcset', 'data-page-loading', 'aria-busy'],
+    });
+
+    logo.addEventListener('load', queueInspect);
+    logo.addEventListener('error', queueInspect);
+    document.addEventListener('load', onResourceComplete, true);
+    document.addEventListener('error', onResourceComplete, true);
+    document.addEventListener('readystatechange', onReadyStateChange);
+    window.addEventListener('load', onReadyStateChange);
+    document.fonts?.ready.then(queueInspect).catch(queueInspect);
+
+    // No arbitrary dismissal timer: wait for readiness. After 14 seconds,
+    // offer an explicit way out if a third-party resource never settles.
+    warningTimer = window.setTimeout(() => {
+      if (alive && !ready) setDelayed(true);
+    }, 14000);
+
     return () => {
-      active = false;
-      if (pendingShow !== undefined) window.clearTimeout(pendingShow);
-      if (maxWait !== undefined) window.clearTimeout(maxWait);
-      window.cancelAnimationFrame(firstFrame);
-      window.cancelAnimationFrame(secondFrame);
-      window.cancelAnimationFrame(scanFrame);
-      if (observerCutoff !== undefined) window.clearTimeout(observerCutoff);
-      logo.removeEventListener('load', inspect);
-      logo.removeEventListener('error', inspect);
-      document.removeEventListener('load', onImageFinish, true);
-      document.removeEventListener('error', onImageFinish, true);
+      alive = false;
+      if (scanFrame) window.cancelAnimationFrame(scanFrame);
+      if (nextFrame) window.cancelAnimationFrame(nextFrame);
+      if (minimumTimer !== undefined) window.clearTimeout(minimumTimer);
+      if (warningTimer !== undefined) window.clearTimeout(warningTimer);
       observer?.disconnect();
+      logo.removeEventListener('load', queueInspect);
+      logo.removeEventListener('error', queueInspect);
+      document.removeEventListener('load', onResourceComplete, true);
+      document.removeEventListener('error', onResourceComplete, true);
+      document.removeEventListener('readystatechange', onReadyStateChange);
+      window.removeEventListener('load', onReadyStateChange);
     };
   }, [pathname]);
 
-  // Render nothing on the server and on fast or image-free routes.
-  if (!show) return null;
+  if (!visible) return null;
 
-  return <div className="site-loader-screen" role="status" aria-live="polite" aria-label="جارٍ تحميل صور النخبة">
+  return <div className="site-loader-screen" role="status" aria-live="polite" aria-label="جارٍ تجهيز صفحة النخبة">
     <div className="site-loader-art" aria-hidden="true"><HeroArt /></div>
-    <span className="sr-only">جارٍ تحميل صور الصفحة</span>
+    <span className="site-loader-status">جارٍ تجهيز الصفحة…</span>
+    {delayed && <div className="site-loader-slow" role="alert">
+      <p>بعض المحتوى يستغرق وقتًا أطول من المعتاد.</p>
+      <button type="button" onClick={() => {
+        navigatingRef.current = false;
+        if (navTimeoutRef.current !== null) window.clearTimeout(navTimeoutRef.current);
+        navTimeoutRef.current = null;
+        setVisible(false);
+        setDelayed(false);
+      }}>عرض الصفحة الآن</button>
+    </div>}
   </div>;
 }
