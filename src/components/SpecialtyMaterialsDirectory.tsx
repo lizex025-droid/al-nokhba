@@ -93,7 +93,7 @@ export function SpecialtyMaterialsDirectory({ specialty }: { specialty: string }
           </div>
 
           {filtered.length > 0 ? <div className="specialty-material-grid">
-            {filtered.map((material, index) => <article className="specialty-course-card" key={`${material.code}-${material.title}`}>
+            {filtered.map((material, index) => <article className="specialty-course-card" data-card-reveal key={`${material.code}-${material.title}`}>
               <div className="course-card-top">
                 <span className="course-index">{String(index + 1).padStart(2, '0')}</span>
                 <span className="course-nature">{material.nature}</span>
