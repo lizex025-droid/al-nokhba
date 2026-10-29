@@ -1,0 +1,37 @@
+/*
+ * Image regions have their dimensions before the network finishes loading.
+ * The placeholder stays BEHIND each image, so cached images paint immediately
+ * without a temporary blank or waiting for React hydration.
+ */
+.material-art.has-image,
+.service-card-cover,
+.course-hero-art {
+  isolation: isolate;
+  background-color: #09233d;
+}
+.material-art.has-image::before,
+.service-card-cover::before,
+.course-hero-art::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 18%, rgba(255,255,255,.09) 46%, transparent 72%);
+  background-size: 200% 100%;
+  animation: nokhba-image-placeholder 1.4s ease-out 1 both;
+}
+.material-art.has-image > img,
+.service-card-cover > img,
+.course-hero-art > img {
+  z-index: 1;
+}
+@keyframes nokhba-image-placeholder {
+  from { background-position: 110% 0; }
+  to { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .material-art.has-image::before,
+  .service-card-cover::before,
+  .course-hero-art::before { animation: none; }
+}

@@ -14,7 +14,7 @@ export function CourseHero({ material, count }: { material: SpecialtyMaterial; c
       </ul>
     </div>
     <div className="course-hero-art" aria-hidden="true">
-      <Image src="/materials/university-requirements.png" alt="" width={1672} height={941} sizes="(max-width: 640px) 640px, 850px" />
+      <Image src="/materials/university-requirements.webp" alt="" width={1672} height={941} loading="eager" fetchPriority="high" sizes="(max-width: 640px) 640px, 850px" />
       <span className="course-orbit" /><span className="course-orbit course-orbit-second" />
     </div>
   </header>;

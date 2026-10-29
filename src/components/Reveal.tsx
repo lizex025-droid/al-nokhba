@@ -16,8 +16,6 @@ export function RevealObserver() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const observed = new WeakSet<Element>();
     const running = !reducedMotion.matches && 'IntersectionObserver' in window;
-    const waitingForLoader = new Set<Element>();
-    let releaseFrame = 0;
 
     document.body.classList.add('motion-ready');
 
@@ -52,17 +50,10 @@ export function RevealObserver() {
       }
     };
 
-    const loaderVisible = () => document.querySelector('.site-loader-screen') !== null;
     const observer: IntersectionObserver | null = running
       ? new IntersectionObserver(entries => {
           const entering = entries.filter(entry => entry.isIntersecting).map(entry => entry.target);
-          if (loaderVisible()) {
-            // The old animation finished underneath the page loader, which made
-            // cards look as if they popped into place when the loader vanished.
-            entering.forEach(element => waitingForLoader.add(element));
-          } else {
-            revealTogether(entering);
-          }
+          revealTogether(entering);
         }, { threshold: 0.01, rootMargin: '0px 0px -8px 0px' })
       : null;
 
@@ -91,21 +82,10 @@ export function RevealObserver() {
           if (node.nodeType === 1) addFrom(node as Element);
         }
       }
-      if (waitingForLoader.size && !loaderVisible() && !releaseFrame) {
-        // Start the first viewport's entrance on the paint after loader removal.
-        releaseFrame = window.requestAnimationFrame(() => {
-          releaseFrame = 0;
-          const elements = Array.from(waitingForLoader);
-          waitingForLoader.clear();
-          revealTogether(elements);
-        });
-      }
     });
     mutationObserver.observe(document.body, { subtree: true, childList: true });
 
     return () => {
-      if (releaseFrame) window.cancelAnimationFrame(releaseFrame);
-      waitingForLoader.clear();
       mutationObserver.disconnect();
       observer?.disconnect();
     };
